@@ -1,0 +1,27 @@
+.container-fluid {
+  padding: 0%;
+}
+
+#login-parent-div {
+  background-image: url("../images/Backgorund-Image-Login.png");
+  height: 100vh;
+  width: auto;
+}
+
+#login-child-div {
+  width: 700px;
+  height: 500px;
+}
+
+#side-image {
+  background-image: url("../images/WAJ-Costruction.png");
+  background-size: cover;
+  width: 350px;
+  height: 500px;
+}
+
+#login-form {
+  width: 350px;
+  height: 500px;
+  background-color: rgb(255, 255, 255);
+}

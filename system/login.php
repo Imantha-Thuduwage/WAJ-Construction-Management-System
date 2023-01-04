@@ -19,8 +19,8 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-center align-items-center  " id="login-parent-div">
             <div class="d-flex justify-content-center align-items-center  " id="login-child-div">
-                <div class="row col-8" id="side-image"></div>
-                <div class="row col-8" id="login-form">
+                <div class="row col-8 g-0" id="side-image"></div>
+                <div class="row col-8 g-0" id="login-form">
                     <form class="form-signin">
                         <img class="mb-4">
                         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>

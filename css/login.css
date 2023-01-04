@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 .container-fluid {
   padding: 0%;
 }
@@ -28,4 +34,58 @@
   background-color: rgb(255, 255, 255);
   padding-right: 10px;
   padding-left: 10px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#login-form h1 {
+  color: #1c8adb;
+  margin-bottom: 30px;
+}
+.input_box {
+  border-radius: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 100%;
+  border: 1px solid #999;
+  outline: none;
+}
+
+button {
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 15px;
+  margin: 10px 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.signup_btn {
+  background-color: #1c8adb;
+}
+.twitter_btn {
+  background-color: #21afde;
+}
+a {
+  text-decoration: none;
+}
+/* hr {
+  margin-top: 15px;
+  width: 80%;
+} */
+.or {
+  background: #abdbe3;
+  width: 30px;
+  margin: 12px auto;
+}
+#login-avtar {
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
 }

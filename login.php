@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+include 'function.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,15 +29,60 @@
                 <div class="row col-8 g-0" id="login-form">
                     <img src="./images/profile.jpg" id="login-avtar">
                     <h1>Sign Up Now</h1>
-                    <form>
-                        <input type="email" class="input_box" placeholder="Your Email">
-                        <input type="password" class="input_box" placeholder="Your Password">
+                    <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <?php
+                        // Cheking Submit button is clicked
+                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+                            extract($_POST);
+
+                            // create array
+                            $message = array();
+
+                            // Reuired Fields Validation
+                            if (empty($user_name)) {
+                                $message['error_user_name'] = "Email Field should not be empty";
+                            }
+                            if (empty($password)) {
+                                $message['error_password'] = "Password Field should not be empty";
+                            }
+
+                            // Advanced Validation
+                            if (empty($message)) {
+                                $db = dbConn();
+                                $sql = "SELECT *FROM tbl_user WHERE UserName='$user_name' AND Password = '$password'";
+                                $result = $db -> query($sql);
+
+                                if($result->num_rows <= 0){
+                                    $message['error_login'] = "Inavalid User Name or Password ...!";
+                                }else{
+                                    $row = $result->fetch_assoc();
+                                    $_SESSION['userId'] = $row['UserId'];
+                                    $_SESSION['firstName'] = $row['FirstName'];
+                                    $_SESSION['lastName'] = $row['LastName'];
+                                    $_SESSION['userRole'] = $row['UserRole'];
+                                    $_SESSION['email'] = $row['Email'];
+                                    header("Location: index.php");
+                                }
+                            }
+                        }
+
+                        ?>
+                        <div>
+                            <p class="text-danger"><?php echo @$message['error_user_name']; ?></p>
+                            <p class="text-danger"><?php echo @$message['error_password']; ?></p>
+                            <p class="text-danger"><?php echo @$message['error_login']; ?></p>
+                        </div>
+                        <input type="email" class="input_box" name="user_name" placeholder="Your Email" value="<?= @$user_name; ?>">
+                        <input type="password" class="input_box" name="password" placeholder="Your Password">
                         <p> <span><input type="checkbox"></span> I agree to the terms of services </p>
-                        <button type="button" class="signup_btn">Sign up</button>
+                        <button type="submit" class="signup_btn">Sign up</button>
                         <p class="or">OR</p>
                         <button type="button" class="twitter_btn">Login with twitter</button>
                         <p>Do you have an account?<a href="#">Sign in</a></p>
                     </form>
+
+
                 </div>
             </div>
         </div>

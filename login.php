@@ -2,6 +2,7 @@
 session_start();
 
 include 'function.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,6 @@ include 'function.php';
 
     <!-- Custom CSS File -->
     <link rel="stylesheet" href="./css/login.css">
-
 </head>
 
 <body>
@@ -28,12 +28,13 @@ include 'function.php';
                 <div class="row col-8 g-0" id="side-image"></div>
                 <div class="row col-8 g-0" id="login-form">
                     <img src="./images/profile.jpg" id="login-avtar">
-                    <h1>Sign Up Now</h1>
+                    <h1>Hello Again!</h1>
                     <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <?php
                         // Cheking Submit button is clicked
                         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+                            // This function uses array keys as variable names and values as variable values
                             extract($_POST);
 
                             // create array
@@ -41,21 +42,21 @@ include 'function.php';
 
                             // Reuired Fields Validation
                             if (empty($user_name)) {
-                                $message['error_user_name'] = "Email Field should not be empty";
+                                $message['error_user_name'] = "Email Field should not be empty!";
                             }
                             if (empty($password)) {
-                                $message['error_password'] = "Password Field should not be empty";
+                                $message['error_password'] = "Password Field should not be empty!";
                             }
 
                             // Advanced Validation
                             if (empty($message)) {
                                 $db = dbConn();
                                 $sql = "SELECT *FROM tbl_user WHERE UserName='$user_name' AND Password = '$password'";
-                                $result = $db -> query($sql);
+                                $result = $db->query($sql);
 
-                                if($result->num_rows <= 0){
+                                if ($result->num_rows <= 0) {
                                     $message['error_login'] = "Inavalid User Name or Password ...!";
-                                }else{
+                                } else {
                                     $row = $result->fetch_assoc();
                                     $_SESSION['userId'] = $row['UserId'];
                                     $_SESSION['firstName'] = $row['FirstName'];
@@ -76,10 +77,9 @@ include 'function.php';
                         <input type="email" class="input_box" name="user_name" placeholder="Your Email" value="<?= @$user_name; ?>">
                         <input type="password" class="input_box" name="password" placeholder="Your Password">
                         <p> <span><input type="checkbox"></span> I agree to the terms of services </p>
-                        <button type="submit" class="signup_btn">Sign up</button>
+                        <button type="submit" class="signup_btn">Sign In</button>
                         <p class="or">OR</p>
-                        <button type="button" class="twitter_btn">Login with twitter</button>
-                        <p>Do you have an account?<a href="#">Sign in</a></p>
+                        <p>Do you haven't an account?  <a href="#">Sign Up</a></p>
                     </form>
 
 

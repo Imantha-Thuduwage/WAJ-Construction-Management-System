@@ -18,7 +18,7 @@ include 'function.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./assets/css/login.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@ include 'function.php';
             <div class="d-flex justify-content-center align-items-center  " id="login-child-div">
                 <div class="row col-8 g-0" id="side-image"></div>
                 <div class="row col-8 g-0" id="login-form">
-                    <img src="./images/profile.jpg" id="login-avtar">
+                    <img src="./assets/images/profile.jpg" id="login-avtar">
                     <h1>Hello Again!</h1>
                     <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <?php
@@ -51,6 +51,9 @@ include 'function.php';
                             // Advanced Validation
                             if (empty($message)) {
                                 $db = dbConn();
+
+                                // Change password in to sha1 
+                                $password = sha1($password);
                                 $sql = "SELECT *FROM tbl_user WHERE UserName='$user_name' AND Password = '$password'";
                                 $result = $db->query($sql);
 

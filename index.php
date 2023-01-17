@@ -20,7 +20,7 @@ if(!isset($_SESSION['userId'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
 
 </head>
 
@@ -30,7 +30,7 @@ if(!isset($_SESSION['userId'])){
     <header class="py-3 mb-3 border-bottom">
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
             <div class="d-flex align-items-center" >
-                <img src="./images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">
+                <img src="./assets/images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">
                 <span class="navbar-brand mb-0 h1" id="company-name">WAJ Construction</span>
             </div>
 
@@ -44,8 +44,11 @@ if(!isset($_SESSION['userId'])){
                         <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
                     </ul>
+                </div>
+                <div class="nav-item text-nowrap">
+                Welcome,<?= $_SESSION['lastName']; ?>
                 </div>
             </div>
         </div>

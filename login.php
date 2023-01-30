@@ -3,10 +3,6 @@ session_start();
 
 include 'function.php';
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: login.php");
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +46,7 @@ if (!isset($_SESSION['userid'])) {
                             }
                             if (empty($password)) {
                                 $message['error_password'] = "Password Field should not be empty!";
-                            }
+                           }
 
                             // Advanced Validation
                             if (empty($message)) {

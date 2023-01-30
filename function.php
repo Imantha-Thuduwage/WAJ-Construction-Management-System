@@ -16,9 +16,9 @@ function dbConn()
     $server = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "bit_projrct_01";
+    $dbname = "waj";
 
-    //create mysqli object
+    //create mysqli connection object
     $conn = new mysqli($server, $username, $password, $dbname);
 
     //check db connection has error

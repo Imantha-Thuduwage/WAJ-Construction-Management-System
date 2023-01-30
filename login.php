@@ -3,6 +3,10 @@ session_start();
 
 include 'function.php';
 
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -51,21 +55,22 @@ include 'function.php';
                             // Advanced Validation
                             if (empty($message)) {
                                 $db = dbConn();
-
                                 // Change password in to sha1 
                                 $password = sha1($password);
-                                $sql = "SELECT *FROM tbl_user WHERE UserName='$user_name' AND Password = '$password'";
+                                $sql = "SELECT * FROM tbl_user WHERE userName='$user_name' AND password='$password'";
+
+                                // Passing Mmy SQL qurey in to inbuild query function
                                 $result = $db->query($sql);
 
                                 if ($result->num_rows <= 0) {
                                     $message['error_login'] = "Inavalid User Name or Password ...!";
                                 } else {
                                     $row = $result->fetch_assoc();
-                                    $_SESSION['userId'] = $row['UserId'];
-                                    $_SESSION['firstName'] = $row['FirstName'];
-                                    $_SESSION['lastName'] = $row['LastName'];
-                                    $_SESSION['userRole'] = $row['UserRole'];
-                                    $_SESSION['email'] = $row['Email'];
+                                    $_SESSION['userid'] = $row['userId'];
+                                    $_SESSION['firstname'] = $row['firstName'];
+                                    $_SESSION['lastname'] = $row['lastName'];
+                                    $_SESSION['userrole'] = $row['userRole'];
+                                    $_SESSION['email'] = $row['email'];
                                     header("Location: index.php");
                                 }
                             }
@@ -82,7 +87,7 @@ include 'function.php';
                         <p> <span><input type="checkbox"></span> I agree to the terms of services </p>
                         <button type="submit" class="signup_btn">Sign In</button>
                         <p class="or">OR</p>
-                        <p>Do you haven't an account?  <a href="#">Sign Up</a></p>
+                        <p>Do you haven't an account? <a href="#">Sign Up</a></p>
                     </form>
 
 

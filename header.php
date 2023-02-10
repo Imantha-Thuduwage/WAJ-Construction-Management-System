@@ -50,7 +50,7 @@ include 'config.php';
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
+            <li><a class="dropdown-item" href="<?= SYSTEM_PATH; ?>logout.php">Sign out</a></li>
           </ul>
         </div>
       </div>

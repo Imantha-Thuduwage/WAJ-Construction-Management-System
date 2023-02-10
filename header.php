@@ -5,6 +5,8 @@ if (!isset($_SESSION['userid'])) {
   header("Location: login.php");
 }
 
+include 'config.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@ if (!isset($_SESSION['userid'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <!-- Custom CSS File -->
-  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/dashboard.css">
 
 </head>
 
@@ -30,7 +32,7 @@ if (!isset($_SESSION['userid'])) {
   <header class="py-3 mb-3 border-bottom sticky-top">
     <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
       <div class="d-flex align-items-center">
-        <img src="./assets/images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">
+        <img src="<?= SYSTEM_PATH; ?>assets/images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">
         <span class="navbar-brand mb-0 h1" id="company-name">WAJ Construction</span>
       </div>
 

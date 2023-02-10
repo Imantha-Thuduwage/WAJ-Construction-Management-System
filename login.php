@@ -65,7 +65,7 @@ include 'function.php';
                                     $_SESSION['userid'] = $row['userId'];
                                     $_SESSION['firstname'] = $row['firstName'];
                                     $_SESSION['lastname'] = $row['lastName'];
-                                    $_SESSION['userrole'] = $row['userRole'];
+                                    $_SESSION['userrole'] = $row['userRoll'];
                                     $_SESSION['email'] = $row['email'];
                                     header("Location: index.php");
                                 }

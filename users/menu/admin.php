@@ -6,23 +6,17 @@
         <div class="position-sticky pt-3 sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a class="nav-link active" aria-current="page" href="<?= SYSTEM_PATH; ?>index.php">
                 <span data-feather="home" class="align-text-bottom"></span>
                 Dashboard
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH; ?>projects/project.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH; ?>users/user.php">
                 <span data-feather="file" class="align-text-bottom"></span>
                 Users
               </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="users" class="align-text-bottom"></span>
-                Customers
-              </a>
-            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="bar-chart-2" class="align-text-bottom"></span>
@@ -37,7 +31,7 @@
             </li>
           </ul>
 
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+          <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
             <span>Saved reports</span>
             <a class="link-secondary" href="#" aria-label="Add a new report">
               <span data-feather="plus-circle" class="align-text-bottom"></span>
@@ -68,7 +62,7 @@
                 Year-end sale
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
 
       </nav>

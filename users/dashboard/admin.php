@@ -1,15 +1,51 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-  <h2>Section title</h2>
+  <div class="row">
+    <div class="col">
+      <div class="card text-white bg-secondary mb-3">
+        <div class="card-body">
+          <h4 class="card-title">Total Users</h4>
+          <h3 class="card-title">25</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-body">
+          <h4 class="card-title">Active Users</h4>
+          <h3 class="card-title">12</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-body">
+          <h4 class="card-title">Deactivated Accounts</h4>
+          <h3 class="card-title">13</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Users</h1> 
+    <div class="d-flex justify-content-between flex-wrap  align-items-center">
+    <input type="search" id="adminSearch" class="form-control" placeholder="Search..." aria-label="Search">
+    <a href="#" type="button" class="btn btn-outline-success">Add New User</a>
+    </div>
+  </div>
+
   <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Header</th>
-          <th scope="col">Header</th>
-          <th scope="col">Header</th>
-          <th scope="col">Header</th>
+          <th scope="col">User ID</th>
+          <th scope="col">User Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Profile</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +55,7 @@
           <td>data</td>
           <td>placeholder</td>
           <td>text</td>
+          <td><a class="btn btn-primary" href="<?=SYSTEM_PATH; ?>users/updateUser.php" role="button">View More</a></td>
         </tr>
         <tr>
           <td>1,002</td>
@@ -26,6 +63,7 @@
           <td>irrelevant</td>
           <td>visual</td>
           <td>layout</td>
+          <td><button type="button" class="btn btn-outline-info">View More</button></td>
         </tr>
         <tr>
           <td>1,003</td>
@@ -33,6 +71,7 @@
           <td>rich</td>
           <td>dashboard</td>
           <td>tabular</td>
+          <td><button type="button" class="btn btn-outline-info">View More</button></td>
         </tr>
         <tr>
           <td>1,003</td>
@@ -40,6 +79,7 @@
           <td>placeholder</td>
           <td>illustrative</td>
           <td>data</td>
+          <td><button type="button" class="btn btn-outline-info btn-sm">View More</button></td>
         </tr>
         <tr>
           <td>1,004</td>

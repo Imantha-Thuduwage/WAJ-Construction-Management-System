@@ -24,7 +24,7 @@
     $message =  empty($name) ? "Project Name Should Not Empty" : "";
 
     ?>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-3">
             <label for="EnterProductName" class="form-label">Enter Project Name</label>
             <input type="text" class="form-control" id="project_name" name="pName" <?php echo @$message ?>>

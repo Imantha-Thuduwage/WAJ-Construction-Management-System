@@ -8,6 +8,13 @@ body {
   vertical-align: text-bottom;
 }
 
+/* Form Section for All Section */
+.form{
+padding-left: 50px;
+padding-right: 100px;
+padding-bottom: 50px;
+}
+
 /*Styles for Nav Bar Section */
 #company-name {
   padding-left: 10px;
@@ -20,6 +27,11 @@ body {
 
 #emp-position{
   padding-right: 10px;
+}
+
+/* Dashboard Search Bar */
+#adminSearch{
+  width: 60%;
 }
 
 /* Side Bar Menu */

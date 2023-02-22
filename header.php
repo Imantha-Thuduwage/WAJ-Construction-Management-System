@@ -6,6 +6,7 @@ if (!isset($_SESSION['userid'])) {
 }
 
 include 'config.php';
+include 'function.php';
 
 ?>
 
@@ -29,7 +30,7 @@ include 'config.php';
 <body>
 
   <!-- Header Section with Nav Bar -->
-  <header class="py-3 mb-3 border-bottom sticky-top">
+  <header class="py-3 mb-3 border-bottom sticky-top bg-light">
     <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
       <div class="d-flex align-items-center">
         <img src="<?= SYSTEM_PATH; ?>assets/images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">

@@ -6,7 +6,7 @@
         <h1 class="h2">Add New Project</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a href="../product.php" type="button" class="btn btn-sm btn-outline-secondary">View Project</a>
+                <a href="<?= SYSTEM_PATH; ?>projects/project.php" type="button" class="btn btn-sm btn-outline-secondary">View Project</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
             </div>
             <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -17,36 +17,55 @@
     </div>
 
     <?php
-    $name = @$_POST['pName'];
-    $price = @$_POST['pCost'];
-    $qty = @$_POST['pManager'];
+    // Cheking Submit button is clicked
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $message =  empty($name) ? "Project Name Should Not Empty" : "";
+        // This function uses array keys as variable names and values as variable values
+        extract($_POST);
+
+        // create array
+        $message = array();
+
+        // Reuired Fields Validation
+        if (empty($pName)) {
+            $message['error_pName'] = "Please Enter Your Project Name";
+        }
+        if (empty($pCost)) {
+            $message['error_pCost'] = "Please Enter Your Project Cost";
+        }
+        if (empty($pManager)) {
+            $message['error_pManager'] = "Please Enter Your Project Manager";
+        }
+
+        // Adavanced Validation
+        if (!empty($pName)) {
+            $sql = "SELECT * FROM tbl_project WHERE project_name = '$pName'";
+            $db = dbConn();
+            $result = $db->query($sql);
+
+            if ($result->num_rows > 0) {
+                $message['error_pName'] = "The Project Name is Already Exist!";
+            }
+        }
+    }
 
     ?>
-    <form method="post" class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" class="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
         <div class="mb-3">
-            <label for="EnterProductName" class="form-label">Enter Project Name</label>
-            <input type="text" class="form-control" id="project_name" name="pName" <?php echo @$message ?>>
+            <label for="project_name" class="form-label">Enter Project Name</label>
+            <input type="text" class="form-control" id="project_name" name="pName" value="<?php echo @$pName; ?>">
+            <div class="text-danger"><?php echo @$message['error_pName']; ?></div>
         </div>
         <div class="mb-3">
-            <label for="EnterProductQuantity" class="form-label">Cost </label>
-            <input type="text" class="form-control" id="project_cost" name="pCost" <?php echo @$message ?>>
+            <label for="project_cost" class="form-label">Cost </label>
+            <input type="number" class="form-control" id="project_cost" name="pCost" value="<?php echo @$pCost; ?>">
+            <div class="text-danger"><?php echo @$message['error_pCost']; ?></div>
         </div>
         <div class="mb-3">
-            <label for="EnterProductName" class="form-label">Project Manger</label>
-            <input type="text" class="form-control" id="project_manager" name="pManager" <?php echo @$message ?>>
+            <label for="project_manager" class="form-label">Project Manger</label>
+            <input type="text" class="form-control" id="project_manager" name="pManager" value="<?php echo @$pManager; ?>">
+            <div class="text-danger"><?php echo @$message['error_pManager']; ?></div>
         </div>
-        <!-- <div class="mb-3">
-            <label for="EnterProductQuantity" class="form-label">Enter Project Year</label>
-            <select name="pYr" id="product_year" class="form-control">
-                <?php
-                for ($y = 2000; $y < date('Y'); $y++) {
-                ?>
-                    <option value="<?= $y; ?>"><?= $y; ?></option>
-                <?php } ?>
-            </select>
-        </div> -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </main>

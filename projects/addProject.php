@@ -33,6 +33,9 @@
         if (empty($pCost)) {
             $message['error_pCost'] = "Please Enter Your Project Cost";
         }
+        if (empty($pLocation)) {
+            $message['error_pLocation'] = "Please Enter Your Project Location";
+        }
         if (empty($pManager)) {
             $message['error_pManager'] = "Please Enter Your Project Manager";
         }
@@ -47,12 +50,23 @@
                 $message['error_pName'] = "The Project Name is Already Exist!";
             }
         }
+        // Check Validation is Completed
+        if (empty($message)) {
+            // Retrieving values for fields that are not in the form
+            $addUser = $_SESSION['userid'];
+            $add_date = date('y-m-d');
+
+            // Calling to DB Connection
+            $sql = "INSERT INTO tbl_project(project_name,cost,p_location,project_manager,add_user,add_date) VALUES('$pName','$pCost','$pLocation','$pManager','$addUser','$add_date')";
+            $db = dbConn();
+            $db->query($sql);
+        }
     }
 
     ?>
     <form method="post" class="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
         <div class="mb-3">
-            <label for="project_name" class="form-label">Enter Project Name</label>
+            <label for="project_name" class="form-label">Project Name</label>
             <input type="text" class="form-control" id="project_name" name="pName" value="<?php echo @$pName; ?>">
             <div class="text-danger"><?php echo @$message['error_pName']; ?></div>
         </div>
@@ -60,6 +74,11 @@
             <label for="project_cost" class="form-label">Cost </label>
             <input type="number" class="form-control" id="project_cost" name="pCost" value="<?php echo @$pCost; ?>">
             <div class="text-danger"><?php echo @$message['error_pCost']; ?></div>
+        </div>
+        <div class="mb-3">
+            <label for="project_manager" class="form-label">Location</label>
+            <input type="text" class="form-control" id="project_manager" name="pLocation" value="<?php echo @$pManager; ?>">
+            <div class="text-danger"><?php echo @$message['error_pLocation']; ?></div>
         </div>
         <div class="mb-3">
             <label for="project_manager" class="form-label">Project Manger</label>

@@ -63,7 +63,7 @@
         </div>
         <div class="mb-3">
             <label for="project_cost" class="form-label">Condition</label>
-            <input type="number" class="form-control" id="project_cost" name="rCondition" value="<?php echo @$rCondition; ?>">
+            <input type="text" class="form-control" id="project_cost" name="rCondition" value="<?php echo @$rCondition; ?>">
             <div class="text-danger"><?php echo @$message['error_rCondition'] ?></div>
         </div>
         <div class="mb-3">

@@ -73,15 +73,14 @@ include 'function.php';
                         }
 
                         ?>
-                        <div>
-                            <p class="text-danger"><?php echo @$message['error_user_name']; ?></p>
-                            <p class="text-danger"><?php echo @$message['error_password']; ?></p>
-                            <p class="text-danger"><?php echo @$message['error_login']; ?></p>
-                        </div>
+                       
                         <input type="email" class="input_box" name="user_name" placeholder="Your Email" value="<?= @$user_name; ?>">
+                        <span class="text-danger"><?php echo @$message['error_user_name']; ?></span>
                         <input type="password" class="input_box" name="password" placeholder="Your Password">
-                        <p> <span><input type="checkbox"></span> I agree to the terms of services </p>
+                        <span class="text-danger"><?php echo @$message['error_password']; ?></span>
                         <button type="submit" class="signup_btn">Sign In</button>
+                        <a href="forgotPass.php">Forgot Password</a>
+                        <span class="text-danger"><?php echo @$message['error_login']; ?></span>
                         <p class="or">OR</p>
                         <p>Do you haven't an account? <a href="#">Sign Up</a></p>
                     </form>

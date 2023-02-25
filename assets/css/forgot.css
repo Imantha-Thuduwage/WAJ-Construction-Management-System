@@ -1,0 +1,15 @@
+.input_box {
+    border-radius: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 30%;
+    border: 1px solid #999;
+    outline: none;
+  }
+
+  .card-header {
+    padding: 1.5rem 1rem;
+  }

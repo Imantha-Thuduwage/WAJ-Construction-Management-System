@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'function.php';
+include '../function.php';
 
 ?>
 
@@ -18,7 +18,7 @@ include 'function.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Custom CSS File -->
-    <link rel="stylesheet" href="./assets/css/login.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@ include 'function.php';
             <div class="d-flex justify-content-center align-items-center  " id="login-child-div">
                 <div class="row col-8 g-0" id="side-image"></div>
                 <div class="row col-8 g-0" id="login-form">
-                    <img src="./assets/images/profile.jpg" id="login-avtar">
+                    <img src="../assets/images/profile.png" id="login-avtar">
                     <h1>Hello Again!</h1>
                     <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <?php
@@ -53,7 +53,7 @@ include 'function.php';
                                 $db = dbConn();
                                 // Change password in to sha1 
                                 $password = sha1($password);
-                                $sql = "SELECT * FROM tbl_user WHERE userName='$user_name' AND password='$password'";
+                                $sql = "SELECT * FROM tbl_user WHERE user_name='$user_name' AND password='$password'";
 
                                 // Passing Mmy SQL qurey in to inbuild query function
                                 $result = $db->query($sql);
@@ -62,12 +62,12 @@ include 'function.php';
                                     $message['error_login'] = "Inavalid User Name or Password ...!";
                                 } else {
                                     $row = $result->fetch_assoc();
-                                    $_SESSION['userid'] = $row['userId'];
-                                    $_SESSION['firstname'] = $row['firstName'];
-                                    $_SESSION['lastname'] = $row['lastName'];
-                                    $_SESSION['userrole'] = $row['userRoll'];
+                                    $_SESSION['userid'] = $row['user_id'];
+                                    $_SESSION['firstname'] = $row['first_name'];
+                                    $_SESSION['lastname'] = $row['last_name'];
+                                    $_SESSION['userrole'] = $row['user_role'];
                                     $_SESSION['email'] = $row['email'];
-                                    header("Location: index.php");
+                                    header("Location: ../index.php");
                                 }
                             }
                         }
@@ -80,9 +80,7 @@ include 'function.php';
                         <span class="text-danger"><?php echo @$message['error_password']; ?></span>
                         <button type="submit" class="signup_btn">Sign In</button>
                         <a href="forgotPass.php">Forgot Password</a>
-                        <span class="text-danger"><?php echo @$message['error_login']; ?></span>
-                        <p class="or">OR</p>
-                        <p>Do you haven't an account? <a href="#">Sign Up</a></p>
+                        <div class="text-danger"><?php echo @$message['error_login']; ?></div>
                     </form>
 
 

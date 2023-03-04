@@ -16,16 +16,16 @@ function send_email($to=null,$toname=null,$subject=null,$body=null,$altbody=null
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host = 'smtp.gmail.com';                    // Set the SMTP server to send through
         $mail->SMTPAuth = true;                                   // Enable SMTP authentication
-        $mail->Username = 'imantha997@gmail.com';                     // SMTP username
-        $mail->Password = 'lljvchvgypdsjqnf';                               // SMTP password
+        $mail->Username = 'waj.construct@gmail.com';                     // SMTP username
+        $mail->Password = 'kdhvirtxzlaqmnaf';                               // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
         //Recipients
-        $mail->setFrom('imantha997@gmail.com', 'WAJ Construction');
+        $mail->setFrom('waj.construct@gmail.com', 'WAJ Construction');
 	
         $mail->addAddress($to, $toname);     // Add a recipient
         // Name is optional
-        $mail->addReplyTo('info@example.com', 'Information');
+        $mail->addReplyTo('waj.construct@gmail.com', 'Information');
         //$mail->addCC('cc@example.com');
         //$mail->addBCC('bcc@example.com');
         // Attachments
@@ -43,12 +43,5 @@ function send_email($to=null,$toname=null,$subject=null,$body=null,$altbody=null
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
-$body="<h1>Registration</h1>";
-$customer_email="mpsarathw@gmail.com";
-$customer="Saman";
-$subject="My Subject Email";
-send_email($customer_email,$customer,$subject,$body,"Hello")
-
-        
-        
+      
 ?>

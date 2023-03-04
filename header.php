@@ -33,7 +33,7 @@ include 'function.php';
   <header class="py-3 mb-3 border-bottom sticky-top bg-light">
     <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
       <div class="d-flex align-items-center">
-        <img src="<?= SYSTEM_PATH; ?>assets/images/WAJ-Logo.png" alt="mdo" width="40" class="rounded-circle">
+        <img src="<?= SYSTEM_PATH; ?>assets/images/waj-Logo.png" alt="mdo" width="40" class="rounded-circle">
         <span class="navbar-brand mb-0 h1" id="company-name">WAJ Construction</span>
       </div>
 
@@ -51,7 +51,7 @@ include 'function.php';
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" href="<?= SYSTEM_PATH; ?>logout.php">Sign out</a></li>
+            <li><a class="dropdown-item" href="<?= SYSTEM_PATH; ?>login/login.php">Sign out</a></li>
           </ul>
         </div>
       </div>

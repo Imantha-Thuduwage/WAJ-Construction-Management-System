@@ -46,7 +46,7 @@ include '../function.php';
                             }
                             if (empty($password)) {
                                 $message['error_password'] = "Password Field should not be empty!";
-                           }
+                            }
 
                             // Advanced Validation
                             if (empty($message)) {
@@ -73,14 +73,13 @@ include '../function.php';
                         }
 
                         ?>
-                       
+                        <label class="text-danger"><?php echo @$message['error_login']; ?></label>
                         <input type="email" class="input_box" name="user_name" placeholder="Your Email" value="<?= @$user_name; ?>">
                         <span class="text-danger"><?php echo @$message['error_user_name']; ?></span>
                         <input type="password" class="input_box" name="password" placeholder="Your Password">
                         <span class="text-danger"><?php echo @$message['error_password']; ?></span>
                         <button type="submit" class="signup_btn">Sign In</button>
                         <a href="forgotPass.php">Forgot Password</a>
-                        <div class="text-danger"><?php echo @$message['error_login']; ?></div>
                     </form>
 
 

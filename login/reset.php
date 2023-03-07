@@ -74,9 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql = "UPDATE tbl_user SET `password`= sha1('$new_password') WHERE user_name='$userName'";
                     $result = $db->query($sql);
 
-                    // If Success Redirecting to the Login Page
                     if ($result) {
-                        header('LOCATION: login.php');
+
+                        // When Password is updated Genarate new Token to Expire Previous One
+                        $update_token = md5(rand());
+                        $sql = "UPDATE tbl_user SET reset_token = '$update_token' WHERE reset_token='$token'";
+                        $result = $db->query($sql);
+
+                        $_SESSION['status'] = "Updated Sucess";
+                        header('LOCATION: login.php'); // If Success Redirecting to the Login Page
                     } else {
                         $_SESSION['status'] = "Something Wrong!";
                         header('LOCATION: reset.php?token=' . $token);

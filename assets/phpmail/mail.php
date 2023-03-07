@@ -16,16 +16,16 @@ function send_email($to=null,$toname=null,$subject=null,$body=null,$altbody=null
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host = 'smtp.gmail.com';                    // Set the SMTP server to send through
         $mail->SMTPAuth = true;                                   // Enable SMTP authentication
-        $mail->Username = 'waj.construct@gmail.com';                     // SMTP username
-        $mail->Password = 'kdhvirtxzlaqmnaf';                               // SMTP password
+        $mail->Username = 'waj.cons@gmail.com';                     // SMTP username
+        $mail->Password = 'gjzusrycdffxsefo';                               // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
         //Recipients
-        $mail->setFrom('waj.construct@gmail.com', 'WAJ Construction');
+        $mail->setFrom('waj.cons@gmail.com', 'WAJ Construction');
 	
         $mail->addAddress($to, $toname);     // Add a recipient
         // Name is optional
-        $mail->addReplyTo('waj.construct@gmail.com', 'Information');
+        $mail->addReplyTo('waj.cons@gmail.com', 'Information');
         //$mail->addCC('cc@example.com');
         //$mail->addBCC('bcc@example.com');
         // Attachments

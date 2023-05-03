@@ -53,7 +53,8 @@ include '../function.php';
                                 $db = dbConn();
                                 // Change password in to sha1 
                                 $password = sha1($password);
-                                $sql = "SELECT * FROM tbl_user WHERE user_name='$user_name' AND password='$password'";
+                                $sql = "SELECT u.`user_id`,u.`user_name`,u.`password`,u.`first_name`,u.`full_name`,r.`role_id`,r.`user_role` 
+                                FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE user_name='$user_name' AND `password`='$password'";
 
                                 // Passing Mmy SQL qurey in to inbuild query function
                                 $result = $db->query($sql);
@@ -64,7 +65,7 @@ include '../function.php';
                                     $row = $result->fetch_assoc();
                                     $_SESSION['userid'] = $row['user_id'];
                                     $_SESSION['firstname'] = $row['first_name'];
-                                    $_SESSION['lastname'] = $row['last_name'];
+                                    $_SESSION['fullname'] = $row['full_name'];
                                     $_SESSION['userrole'] = $row['user_role'];
                                     $_SESSION['email'] = $row['email'];
                                     header("Location: ../index.php");

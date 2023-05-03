@@ -104,10 +104,9 @@ form button:hover {
   background-color: #265df2;
 }
 
-.d-none{
+.d-none {
   display: none !important;
 }
-
 
 /* Hide Input Number Arrows */
 input::-webkit-outer-spin-button,
@@ -116,11 +115,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.error {
+  border-color: rgb(255, 0, 0) !important;
+}
 
-/* Table Styling */
+/* Setting Placeholder and Text Color in to red */
+.placeholder-set::placeholder {
+  color: red !important;
+}
 
-th {
-  background-color: rgb(0 33 88) !important;
-  /* background-color: rgb(10 10 41) !important; */
-  color: white;
+.option-color-set {
+  color: red !important;
+}
+option:not(:first-of-type) {
+  color: #333;
 }

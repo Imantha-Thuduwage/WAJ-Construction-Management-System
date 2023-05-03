@@ -1,4 +1,3 @@
-<!-- Form Values Cleaning Section -->
 <?php
 function clean_input($input)
 {
@@ -28,5 +27,19 @@ function dbConn()
         return $conn;
     }
 }
+
+// function showMessage(){
+//     $alert = "Swal.fire(
+//         'Recorded',
+//         'Data Saved in Data Base Successfully',
+//         'success'
+//       )";
+
+//       echo "<script>";
+//       echo "window.onload = (event) => {";
+//       echo $alert;
+//       echo "}";
+//       echo "</script>";
+// }
 
 ?>

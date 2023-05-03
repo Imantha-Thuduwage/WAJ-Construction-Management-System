@@ -15,244 +15,227 @@
         </div>
     </div>
 
-    <?php
-    // Cheking Submit button is clicked
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        // This function uses array keys as variable names and values as variable values
-        extract($_POST);
 
-        // create array
-        $message = array();
-
-        // Reuired Fields Validation
-        if (empty($pName)) {
-            $message['error_pName'] = "Please Enter Project Name";
-        }
-        if (empty($pLocation)) {
-            $message['error_pLocation'] = "Please Enter Location";
-        }
-        if ($abcStatus == "Pick an Option") {
-            $message['error_abc'] = "Please Select Value";
-        }
-        if ($primeStatus == "Pick an Option") {
-            $message['error_primeCoat'] = "Please Select Value";
-        }
-        if ($tackStatus == "Pick an Option") {
-            $message['error_tackCoat'] = "Please Select Value";
-        }
-        if ($asphaltStatus == "Pick an Option") {
-            $message['error_asphalt'] = "Please Select Value";
-        }
-        if ($concreteStatus == "Pick an Option") {
-            $message['error_concrete'] = "Please Select Value";
-        }
-        if ($markingStatus == "Pick an Option") {
-            $message['error_marking'] = "Please Select Value";
-        }
-        if (empty($bridges)) {
-            $message['error_bridges'] = "Please Enter Bridge Count";
-        }
-        if (empty($pCost)) {
-            $message['error_pCost'] = "Please Enter Total Cost";
-        }
-
-        // Adavanced Validation
-        if (!empty($pName)) {
-            $sql = "SELECT * FROM tbl_project WHERE project_name = '$pName'";
-            $db = dbConn();
-            $result = $db->query($sql);
-
-            if ($result->num_rows > 0) {
-                $message['error_pName'] = "The Project Name is Already Exist!";
-            }
-        }
-        // Check Validation is Completed
-        if (empty($message)) {
-            // Retrieving values for fields that are not in the form
-            $addUser = $_SESSION['userid'];
-            $addDate = date('y-m-d');
-
-            // Calling to DB Connection
-            $sql = "INSERT INTO tbl_project
-            (project_name,p_location,abc_status,abc_unit,abc_quantity,abc_rate,prime_status,prime_unit,prime_quantity,prime_rate,tack_status,tack_unit,tack_quantity,
-            tack_rate,asphalt_status,asphalt_thickness,asphalt_unit,asphalt_quantity,asphalt_rate,concrete_status,concrete_unit,concrete_quantity,concrete_rate,marking_status,bridges,total_cost,add_user,add_date) 
-            VALUES('$pName','$pLocation','$abcStatus','$abcUnit','$abcQuantity','$abcRate','$primeStatus','$primeUnit','$primeQuantity','$primeRate','$tackStatus','$tackUnit','$tackQuantity',
-            '$tackRate','$asphaltStatus','$asphaltThicknes','$asphaltUnit','$asphaltQuantity','$asphaltRate','$concreteStatus','$concreteUnit','$concreteQuantity','$concreteRate','$markingStatus','$bridges','$pCost','$addUser','$addDate')";
-            $db = dbConn();
-            $db->query($sql);
-            showMessage();
-        }
-        
-    }
-
-    ?>
+    <!-- Alert Box for Showing Error Message in Input Fields -->
     <div class="card shadow" id="form-card">
         <div class="card-body">
-            <form method="post" class="form mt-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <div id="message">
+
+            </div>
+
+            <form method="post" class="form mt-3" id="project-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                 <div class="field">
                     <div class="input-field field-3">
                         <label for="project_name">Project Name</label>
-                        <input class="p-3 bg-body" type="text" placeholder="Enter Project Name" name="pName" value="<?php echo @$pName; ?>">
-                        <label class="text-danger hh"><?php echo @$message['error_pName']; ?></label>
+                        <input class="p-3 bg-body" id="pName" type="text" placeholder="Enter Project Name" name="pName" value="">
                     </div>
                     <div class="input-field field-3">
                         <label for="project_location">Location</label>
-                        <input class="p-3 bg-body" type="text" placeholder="Enter Project Location" name="pLocation" value="<?php echo @$pLocation; ?>">
-                        <label class="text-danger"><?php echo @$message['error_pLocation']; ?></label>
+                        <input class="p-3 bg-body" id="pLocation" type="text" placeholder="Enter Project Location" name="pLocation" value="">
+                    </div>
+                    <div class="input-field field-3">
+                        <label for="start_date">Start Date</label>
+                        <input class="p-3 bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="">
+                    </div>
+                    <div class="input-field field-3">
+                        <label for="end_date">End Date</label>
+                        <input class="p-3 bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="">
+                    </div>
+                    <div class="input-field field-3">
+                        <label for="project_manager">Project Manager</label>
+                        <select class="bg-body" id="proManager" name="proManager">
+                            <option value="" selected disabled hidden>Select Project Manager</option>
+
+                            <?php
+                            // Retrieve data from MySQL database
+                            $sql = "SELECT u.`user_id`,u.`full_name`,r.`role_id`,r.`user_role` 
+                            FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'Project_Manager'";
+                            $db = dbConn();
+                            $result = $db->query($sql);
+
+                            // Display options in dropdown list
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['role_id'] . "'>" . $row['full_name'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="input-field field-3">
                         <label>Is ABC include in this?</label>
-                        <select class="bg-body" name="abcStatus" onchange="enableAbcDetails(this)">
-                            <option>Pick an Option</option>
+                        <select class="bg-body " id="abcStatus" name="abcStatus" onchange="enableAbcDetails(this)">
+                            <option value="">Pick an Option</option>
                             <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="2">No</option>
                         </select>
-                        <label class="text-danger"><?php echo @$message['error_abc']; ?></label>
                     </div>
                     <div id="abc-details-1" class="input-field field-3 d-none">
                         <label>ABC Unit</label>
-                        <select class="bg-body" name="abcUnit">
-                            <option>Pick an Unit</option>
-                            <option value="0">Square Meter(Sq. M.)</option>
-                            <option value="1">No</option>
+                        <select class="bg-body" id="abcUnit" name="abcUnit">
+                            <option value="">Pick an Unit</option>
+
+                            <?php
+                            // Retrieve data from MySQL database
+                            $sql = "SELECT unit_id,unit_short_name FROM tbl_measurement_unit";
+                            $db = dbConn();
+                            $result = $db->query($sql);
+
+                            // Display options in dropdown list
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+
+                                    // Step 4: Check if the option value matches the selected value from the database
+                                    $selected = ($row['unit_id'] == $selectedValue) ? 'selected' : '';
+
+                                    echo "<option value='" . $row['unit_id'] . "'" . $selected . ">" . $row['unit_short_name'] . "</option>";
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div id="abc-details-2" class="input-field field-3 d-none">
                         <label>ABC Quantity</label>
-                        <input class="p-3 bg-body " type="number" placeholder="Enter Quantity" name="abcQuantity" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body" id="abcQuantity" type="number" placeholder="Enter Quantity" name="abcQuantity" value="">
                     </div>
                     <div id="abc-details-3" class="input-field field-3 d-none">
                         <label>ABC Rate (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Rate for One Unit" name="abcRate" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body" id="abcRate" type="Number" placeholder="Rate for One Unit" name="abcRate" value="">
                     </div>
                     <div class="input-field field-3">
                         <label>Is Prime Coat include in Project?</label>
-                        <select class="bg-body" name="primeStatus" onchange="enablePrimeDetails(this)">
-                            <option>Pick an Option</option>
+                        <select class="bg-body" id="primeStatus" name="primeStatus" onchange="enablePrimeDetails(this)">
+                            <option value="">Pick an Option</option>
                             <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="2">No</option>
                         </select>
-                        <label class="text-danger"><?php echo @$message['error_primeCoat']; ?></label>
                     </div>
                     <div id="prime-coat-details-1" class="input-field field-3 d-none">
                         <label>Prime Coat Unit</label>
-                        <select class="bg-body" name="primeUnit">
-                            <option>Pick an Unit</option>
-                            <option value="0">Square Meter(Sq. M.)</option>
-                            <option value="1">No</option>
+                        <select class="bg-body" id="primeUnit" name="primeUnit">
+                            <option value="">Pick an Unit</option>
+
+                            <?php
+                            // Retrieve data from MySQL database
+                            $sql = "SELECT unit_id,unit_short_name FROM tbl_measurement_unit";
+                            $db = dbConn();
+                            $result = $db->query($sql);
+
+                            // Display options in dropdown list
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['unit_id'] . "'>" . $row['unit_short_name'] . "</option>";
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div id="prime-coat-details-2" class="input-field field-3 d-none">
                         <label>Prime Coat Quantity</label>
-                        <input class="p-3 bg-body " type="number" placeholder="Enter Quantity" name="primeQuantity" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body" id="primeQuantity" type="number" placeholder="Enter Quantity" name="primeQuantity" value="">
                     </div>
                     <div id="prime-coat-details-3" class="input-field field-3 d-none">
                         <label>Prime Coat Rate (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Rate for One Unit" name="primeRate" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body" id="primeRate" type="Number" placeholder="Rate for One Unit" name="primeRate" value="">
                     </div>
                     <div class="input-field field-3">
                         <label for="tackStatus">Is Tack Coat include in Project?</label>
-                        <select class="bg-body" name="tackStatus" onchange="enableTackDetails(this)">
-                            <option>Pick an Option</option>
+                        <select class="bg-body" id="tackStatus" name="tackStatus" onchange="enableTackDetails(this)">
+                            <option value="">Pick an Option</option>
                             <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="2">No</option>
                         </select>
-                        <label class="text-danger"><?php echo @$message['error_tackCoat']; ?></label>
                     </div>
                     <div id="tack-coat-details-1" class="input-field field-3 d-none">
                         <label>Tack Coat Unit</label>
-                        <select class="bg-body" name="tackUnit">
-                            <option>Pick an Unit</option>
-                            <option value="0">Square Meter(Sq. M.)</option>
-                            <option value="1">No</option>
+                        <select class="bg-body" id="tackUnit" name="tackUnit">
+                            <option value="">Pick an Unit</option>
+
+                            <?php
+                            // Retrieve data from MySQL database
+                            $sql = "SELECT unit_id,unit_short_name FROM tbl_measurement_unit";
+                            $db = dbConn();
+                            $result = $db->query($sql);
+
+                            // Display options in dropdown list
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['unit_id'] . "'>" . $row['unit_short_name'] . "</option>";
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div id="tack-coat-details-2" class="input-field field-3 d-none">
                         <label>Tack Coat Quantity</label>
-                        <input class="p-3 bg-body " type="number" placeholder="Enter Quantity" name="tackQuantity" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body " id="tackQuantity" type="number" placeholder="Enter Quantity" name="tackQuantity" value="">
                     </div>
                     <div id="tack-coat-details-3" class="input-field field-3 d-none">
                         <label>Tack Coat Rate (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Rate for One Unit" name="tackRate" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body " id="tackRate" type="Number" placeholder="Rate for One Unit" name="tackRate" value="">
                     </div>
                     <div class="input-field field-3">
-                        <label >Is Tack Asphalt Laying include in Project?</label>
-                        <select class="bg-body" name="asphaltStatus" onchange="enableAsphaltDetails(this)">
-                            <option>Pick an Option</option>
+                        <label>Is Asphalt Laying include in Project?</label>
+                        <select class="bg-body " id="asphaltStatus" name="asphaltStatus" onchange="enableAsphaltDetails(this)">
+                            <option value="">Pick an Option</option>
                             <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="2">No</option>
                         </select>
-                        <label class="text-danger"><?php echo @$message['error_asphalt']; ?></label>
                     </div>
                     <div id="asphalt-details-2" class="input-field field-3 d-none">
                         <label>Asphalt Thickness (mm)</label>
-                        <input class="p-3 bg-body " type="number" placeholder="Enter Thickness" name="asphaltThicknes" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body " id="asphaltThicknes" type="number" placeholder="Enter Thickness" name="asphaltThicknes" value="">
                     </div>
                     <div id="asphalt-details-1" class="input-field field-3 d-none">
                         <label>Asphalt Unit</label>
-                        <select class="bg-body" name="asphaltUnit">
-                            <option>Pick an Unit</option>
-                            <option value="0">Square Meter(Sq. M.)</option>
-                            <option value="1">No</option>
+                        <select class="bg-body" id="asphaltUnit" name="asphaltUnit">
+                            <option value="">Pick an Unit</option>
+
+                            <?php
+                            // Retrieve data from MySQL database
+                            $sql = "SELECT unit_id,unit_short_name FROM tbl_measurement_unit";
+                            $db = dbConn();
+                            $result = $db->query($sql);
+
+                            // Display options in dropdown list
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['unit_id'] . "'>" . $row['unit_short_name'] . "</option>";
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div id="asphalt-details-3" class="input-field field-3 d-none">
                         <label>Asphalt Quantity (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Enter Quantity" name="asphaltQuantity" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body " id="asphaltQuantity" type="Number" placeholder="Enter Quantity" name="asphaltQuantity" value="">
                     </div>
                     <div id="asphalt-details-4" class="input-field field-3 d-none">
                         <label>Asphalt Rate (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Rate for One Unit" name="asphaltRate" value="<?php echo @$pManager; ?>">
+                        <input class="p-3 bg-body " id="asphaltRate" type="Number" placeholder="Rate for One Unit" name="asphaltRate" value="">
                     </div>
-                    <div class="input-field field-3">
-                        <label for="concreteStatus">Is Concrete Wall include in Project?</label>
-                        <select class="bg-body" name="concreteStatus" onchange="enableConcreteDetails(this)">
-                            <option>Pick an Option</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                        <label class="text-danger"><?php echo @$message['error_concrete']; ?></label>
-                    </div>
-                    <div id="concrete-details-1" class="input-field field-3 d-none">
-                        <label>Concrete Unit</label>
-                        <select class="bg-body" name="concreteUnit">
-                            <option>Pick an Unit</option>
-                            <option value="0">Square Meter(Sq. M.)</option>
-                            <option value="1">No</option>
-                        </select>
-                    </div>
-                    <div id="concrete-details-2" class="input-field field-3 d-none">
-                        <label>Concrete Quantity</label>
-                        <input class="p-3 bg-body " type="number" placeholder="Enter Quantity" name="concreteQuantity" value="<?php echo @$pManager; ?>">
-                    </div>
-                    <div id="concrete-details-3" class="input-field field-3 d-none">
-                        <label>Concrete Rate (Rs.)</label>
-                        <input class="p-3 bg-body " type="Number" placeholder="Rate for One Unit" name="concreteRate" value="<?php echo @$pManager; ?>">
-                    </div>
+
                     <div class="input-field field-3">
                         <label>Marking the roads?</label>
-                        <select class="bg-body" name="markingStatus">
-                            <option>Pick an Option</option>
+                        <select class="bg-body " id="markingStatus" name="markingStatus">
+                            <option value="">Pick an Option</option>
                             <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="2">No</option>
                         </select>
-                        <label class="text-danger"><?php echo @$message['error_marking']; ?></label>
                     </div>
                     <div class="input-field field-3">
                         <label>How Many Bridges in Road?</label>
-                        <input class="p-3 bg-body" type="Number" placeholder="Enter Total Bridges" name="bridges" value="<?php echo @$pManager; ?>">
-                        <label class="text-danger hh"><?php echo @$message['error_bridges']; ?></label>
+                        <input class="p-3 bg-body" id="bridges" type="Number" placeholder="Enter Total Bridges" name="bridges" value="">
                     </div>
                     <div class="input-field field-3">
                         <label>Total Cost (Rs.)</label>
-                        <input class="p-3 bg-body" type="Number" placeholder="Total Cost" name="pCost" value="<?php echo @$pManager; ?>">
-                        <label class="text-danger hh"><?php echo @$message['error_pCost']; ?></label>
+                        <input class="p-3 bg-body" id="pCost" type="Number" placeholder="Total Cost" name="pCost" value="">
                     </div>
                 </div>
 
-                <button class="nextBtn" type="submit">
-                    <span class="btnText">Next</span>
+                <button class="nextBtn" type="submit" id="submit">
+                    <span class="btnText">Save</span>
                     <i class="uil uil-navigator"></i>
                 </button>
             </form>
@@ -261,4 +244,5 @@
 </main>
 
 <script src="<?= SYSTEM_PATH; ?>assets/js/project.js"></script>
+
 <?php include '../footer.php'; ?>

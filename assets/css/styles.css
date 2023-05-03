@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+  font-family: "Poppins", sans-serif !important;
+}
+
 body {
   font-size: 0.875rem;
 }
@@ -8,29 +14,22 @@ body {
   vertical-align: text-bottom;
 }
 
-/* Form Section for All Section */
-.form{
-padding-left: 50px;
-padding-right: 100px;
-padding-bottom: 50px;
-}
-
 /*Styles for Nav Bar Section */
 #company-name {
   padding-left: 10px;
 }
 
-.py-3{
-  padding-top: 0.75rem!important;
-  padding-bottom: 0.75rem!important;
+.py-3 {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }
 
-#emp-position{
+#emp-position {
   padding-right: 10px;
 }
 
 /* Dashboard Search Bar */
-#adminSearch{
+#adminSearch {
   width: 60%;
 }
 
@@ -82,3 +81,18 @@ padding-bottom: 50px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
+
+button {
+  background: #ebeef1;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 8px 8px 8px -1px rgba(10, 99, 169, 0.16),
+    8px 8px 8px -1px rgba(255, 255, 255, 0.7) !important;
+}
+
+button:hover {
+  background-color: #4fe5ff;
+}
+

@@ -1,0 +1,65 @@
+/* Styles for Header Section of Body */
+#form-header {
+  position: fixed;
+  z-index: 100;
+  background-color: #fff;
+}
+
+#form-header > h4 {
+  padding-right: 550px !important;
+  color: #33515c;
+}
+
+#form-card {
+  margin-top: 65px;
+}
+
+.col-4 {
+  border-color: #333;
+}
+
+label{
+  color: #99807f;
+}
+
+/* Styles for Form Data Displaying Section */
+.display-data {
+  background-color: #43e0b1 !important;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+.display-data p{
+  margin: 0;
+}
+/* .id-section{
+  background-color: #20c997 !important;
+} */
+
+/* Styles for Update Button */
+.nextBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  max-width: 200px;
+  width: 100%;
+  margin: 25px 0;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 2px;
+  background-color: #4070f4;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+.nextBtn:hover {
+  background-color: #265df2;
+}
+
+/* Change Div Color When Value is Empty */
+.empty-value {
+  background-color: #f8ff74 !important; 
+  /* background-color: #ffde19 !important; */
+}

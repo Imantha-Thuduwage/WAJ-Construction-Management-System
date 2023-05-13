@@ -116,7 +116,6 @@ if (!empty($errors)) {
             '$tackStatus','$tackUnit','$tackQuantity','$tackRate','$asphaltStatus','$asphaltThicknes','$asphaltUnit','$asphaltQuantity','$asphaltRate',
             '$markingStatus','$bridges','$pCost','$addUser','$addDate')";
     $db = dbConn();
-    $db->query($sql);
     if ($db->query($sql)) {
         echo json_encode(array('success' => "Form submitted successfully"));
     } else {

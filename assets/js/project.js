@@ -62,22 +62,6 @@ function enableAsphaltDetails(answer) {
   }
 }
 
-// Function for Hiding and Showing the input Fields of Tack Coat Deatils Based on Drop Down
-function enableConcreteDetails(answer) {
-  if (answer.value == 1) {
-    for (var i = 1; i <= 3; i++) {
-      const id = document.getElementById("concrete-details-" + i.toString());
-      id.classList.remove("d-none");
-    }
-  } else {
-    for (var i = 1; i <= 3; i++) {
-      document
-        .getElementById("conrete-details-" + i.toString())
-        .classList.add("d-none");
-    }
-  }
-}
-
 // JQuery Function function for submitting data using AJAX
 $(document).ready(function () {
   $("#submit").click(function (event) {
@@ -97,15 +81,15 @@ $(document).ready(function () {
       success: function (response) {
         //Checking if Form data is Successfully Submitted
         if (response.hasOwnProperty("success")) {
-          // Send Successfull Alert Messsage to User
-          Swal.fire("Completed", response.success, "success");
           // Clear form data
           $("#project-form")[0].reset();
+          // Send Successfull Alert Messsage to User
+          Swal.fire("Completed", response.success, "success");
         }
         // Check for errors
         if (response.hasOwnProperty("error_pName")) {
-          $("#pName")
-            .addClass("error")
+          // $("#pName").val('');
+          $("#pName").addClass("error")
             .attr("placeholder", response.error_pName)
             .addClass("placeholder-set");
         }
@@ -289,8 +273,7 @@ $(document).ready(function () {
         }
       },
       error: function (response) {
-        // alert("heelo");
-        // $("#message").html(response); // Display error message
+        Swal.fire("Failed", response.error, "error");
       },
     });
   });

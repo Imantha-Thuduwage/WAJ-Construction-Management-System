@@ -54,7 +54,7 @@
                                     <td class="align-middle"><?= $row['project_manager']; ?></td>
                                     <td class="align-middle"><?= number_format($row['total_cost'],2); ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='editProject.php?project_id=<?= $row['project_id']; ?>'">
+                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewProject.php?project_id=<?= $row['project_id']; ?>'">
                                             View More
                                         </button>
                                     </td>

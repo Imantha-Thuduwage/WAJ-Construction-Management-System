@@ -81,10 +81,10 @@ $(document).ready(function () {
       success: function (response) {
         //Checking if Form data is Successfully Submitted
         if (response.hasOwnProperty("success")) {
-          // Clear form data
-          $("#project-form")[0].reset();
           // Send Successfull Alert Messsage to User
           Swal.fire("Completed", response.success, "success");
+          // Clear form data
+          $("#project-form")[0].reset();
         }
         // Check for errors
         if (response.hasOwnProperty("error_pName")) {

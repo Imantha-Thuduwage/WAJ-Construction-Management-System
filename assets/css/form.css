@@ -13,29 +13,25 @@
   margin-top: 75px;
 }
 
+h6{
+  color: #8e8f8f;
+  font-weight: 300;
+}
+
 /* ---------------------------------------------------------- */
 
 form .field {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+}
+
+ .input-field {
+  display: flex; 
+  flex-direction: column;  
+   margin: 4px 0;
   flex-wrap: wrap;
-}
+ } 
 
-.input-field {
-  display: flex;
-  flex-direction: column;
-  margin: 4px 0;
-  /* flex-wrap: wrap; */
-}
 
-.field-2 {
-  width: calc(100% / 2 - 15px);
-}
-
-.field-3 {
-  width: calc(100% / 3 - 15px);
-}
 
 .input-field label {
   font-size: 12px;

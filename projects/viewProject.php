@@ -57,7 +57,7 @@
         <div class="card-body">
             <div class="container">
                 <div class="row justify-content-start gx-5">
-                    <div class="pb-3 col-sm-3">
+                    <div class="col-sm-3">
                         <div class="border bg-light">
                             <div class="card id-section text-center">
                                 <div class="card-body">
@@ -104,7 +104,7 @@
                 <div class="row justify-content-start gx-5">
                     <div class="col-sm">
                         <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
-                            <div class="col-6 ">
+                            <div class="col-6 pt-3">
                                 <div class="p-1 border bg-light display-data"><label>Project Manager</label>
                                     <?php
                                     // Retrieve data from MySQL database
@@ -118,7 +118,7 @@
                                         } ?></p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-6 pt-3">
                                 <div class="p-1 border bg-light display-data"><label>Location</label>
                                     <p><?php echo $pLocation; ?></p>
                                 </div>
@@ -150,6 +150,8 @@
                                 <?php
                                 if (empty($abcUnit)) {
                                     $abcUnitEmpty = "empty-value";
+                                } else {
+                                    $abcUnitEmpty = "";
                                 }
                                 ?>
                                 <div class="p-1 border bg-light display-data <?php echo $abcUnitEmpty; ?>">
@@ -458,7 +460,7 @@
                         </button>
                     </div>
                     <div class="col-2">
-                        <button class="nextBtn" onclick="document.location='<?= SYSTEM_PATH; ?>projects/editProject.php'">
+                        <button class="nextBtn" onclick="document.location='editProject.php?project_id=<?= $pId; ?>'">
                             <span class="btnText">Update</span>
                             <i class="uil uil-navigator"></i>
                         </button>

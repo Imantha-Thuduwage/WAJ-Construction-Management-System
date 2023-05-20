@@ -16,8 +16,6 @@
     </div>
 
 
-
-    <!-- Alert Box for Showing Error Message in Input Fields -->
     <div class="card shadow" id="form-card">
         <div class="card-body">
 
@@ -59,7 +57,7 @@
                                     <div class="input-field">
                                         <label for="project_manager">Project Manager</label>
                                         <select class="bg-body" id="proManager" name="proManager">
-                                            <option value="" selected disabled hidden>Select Project Manager</option>
+                                            <option value = "" selected disabled hidden>Select Project Manager</option>
 
                                             <?php
                                             // Retrieve data from MySQL database

@@ -88,12 +88,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="p-1 border bg-light display-data"><label>Starting Date</label>
+                                <div class="p-1 border bg-light display-data">
+                                    <label>Starting Date</label>
                                     <p><?php echo $startDate; ?></p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="p-1 border bg-light display-data"><label>Ending Date</label>
+                                <div class="p-1 border bg-light display-data">
+                                    <label>Ending Date</label>
                                     <p><?php echo $endDate; ?></p>
                                 </div>
                             </div>

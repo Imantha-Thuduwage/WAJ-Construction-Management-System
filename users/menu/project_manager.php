@@ -24,9 +24,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>schedules/schedule.php">
                 <span data-feather="users" class="align-text-bottom"></span>
-                Customers
+                Schedules
               </a>
             </li>
             <li class="nav-item">

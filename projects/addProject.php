@@ -352,6 +352,6 @@
     </div>
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/project.js"></script>
+<script src="<?= SYSTEM_PATH; ?>assets/js/projects/project.js"></script>
 
 <?php include '../footer.php'; ?>

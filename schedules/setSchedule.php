@@ -60,7 +60,7 @@
                     if ($db3->query($sql3)) {
 
                         // Construct the URL for the desired page
-                        $anotherPageUrl = SYSTEM_PATH . 'schedules/addSchedule.php?project_id=' . $pId;
+                        $anotherPageUrl = SYSTEM_PATH . 'schedules/schedule.php?project_id=';
 
                         // Redirect the user to the desired page
                         echo '<meta http-equiv="refresh" content="0;url=' . $anotherPageUrl . '">';

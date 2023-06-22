@@ -20,7 +20,7 @@
 
         extract($_GET);
 
-        echo $sql = "SELECT * FROM tbl_project WHERE project_id='$project_id'";
+        $sql = "SELECT * FROM tbl_project WHERE project_id='$project_id'";
         $db = dbConn();
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
@@ -52,84 +52,6 @@
         $pCost = $row['total_cost'];
     }
 
-    // Cheking Submit button is clicked
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    //     // This function uses array keys as variable names and values as variable values
-    //     extract($_POST);
-
-    //     // create array
-    //     $message = array();
-
-    //     // Reuired Fields Validation
-    //     if (empty($pName)) {
-    //         $message['error_pName'] = "Please Enter Project Name";
-    //     }
-    //     if (empty($pLocation)) {
-    //         $message['error_pLocation'] = "Please Enter Location";
-    //     }
-    //     if ($abcStatus == "Pick an Option") {
-    //         $message['error_abc'] = "Please Select Value";
-    //     }
-    //     if ($primeStatus == "Pick an Option") {
-    //         $message['error_primeCoat'] = "Please Select Value";
-    //     }
-    //     if ($tackStatus == "Pick an Option") {
-    //         $message['error_tackCoat'] = "Please Select Value";
-    //     }
-    //     if ($asphaltStatus == "Pick an Option") {
-    //         $message['error_asphalt'] = "Please Select Value";
-    //     }
-    //     if ($markingStatus == "Pick an Option") {
-    //         $message['error_marking'] = "Please Select Value";
-    //     }
-    //     if (empty($bridges)) {
-    //         $message['error_bridges'] = "Please Enter Bridge Count";
-    //     }
-    //     if (empty($pCost)) {
-    //         $message['error_pCost'] = "Please Enter Total Cost";
-    //     }
-
-    //     // Adavanced Validation
-    //     if (!empty($pName)) {
-    //         $sql = "SELECT * FROM tbl_project WHERE project_name = '$pName'";
-    //         $db = dbConn();
-    //         $result = $db->query($sql);
-
-    //         if ($result->num_rows > 0) {
-    //             $message['error_pName'] = "The Project Name is Already Exist!";
-    //         }
-    //     }
-    //     // Check Validation is Completed
-    //     if (empty($message)) {
-    //         // Retrieving values for fields that are not in the form
-    //         $addUser = $_SESSION['userid'];
-    //         $addDate = date('y-m-d');
-
-
-    //         $sql = "UPDATE tbl_products SET ProductName='$pName', ProductQty='$pQty', ProductPrice='$pPrice', ProductDescription='$pDescription',ProductImage='$file_name_new', ProductStatus='$pStatus', UpdateDate='$UpdateDate', UpdateUser='$UpdateUser' WHERE ProductId='$ProductId'";
-    //         $db = dbConn();
-    //         $db->query($sql);
-
-    //         $sql = "DELETE FROM tbl_product_sizes WHERE ProductId='$ProductId'";
-    //         $db->query($sql);
-    //         // Calling to DB Connection
-    //         $sql = "UPDATE tbl_project SET 
-    //         project_name = '$pName',p_location = '$pLocation',abc_status = '$abcStatus',abc_unit = '$abcUnit',abc_quantity = '$abcQuantity',
-    //         abc_rate = '$abcRate',prime_status = '$primeStatus',prime_unit = '$primeUnit',prime_quantity = '$primeQuantity',prime_rate = '$primeRate',
-    //         tack_status = '$tackStatus',tack_unit = '$tackUnit',tack_quantity = '$tackQuantity',
-    //         tack_rate = '$tackRate',asphalt_status = '$asphaltStatus',asphalt_thickness  = '$asphaltThicknes',
-    //         asphalt_unit = '$asphaltUnit',asphalt_quantity ='$asphaltQuantity',asphalt_rate ='$asphaltRate',
-    //         concrete_status = '$concreteStatus',concrete_unit = '$concreteUnit',concrete_quantity = '$concreteQuantity',
-    //         concrete_rate ='$concreteRate',
-    //         marking_status= '$markingStatus',bridges ='$bridges',total_cost = '$pCost',
-    //         update_user = '$addUser',update_date = '$addDate' WHERE project_id = '$pId'";
-    //         $db = dbConn();
-    //         $db->query($sql);
-    //         showMessage();
-    //     }
-    // }
-
     ?>
     <div class="card shadow" id="form-card">
         <div class="card-body">
@@ -148,21 +70,19 @@
                                     <div class="input-field">
                                         <label for="project_name">Project ID</label>
                                         <input class="p-3 bg-body" type="num" name="pId" value="<?php echo @$pId; ?>">
-                                        <label class="text-danger hh"><?php echo @$message['error_pId']; ?></label>
+                                        <label class="text-danger hh"></label>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="input-field">
                                         <label for="project_name">Project Name</label>
-                                        <input class="p-3 bg-body" type="text" placeholder="Enter Project Name" name="pName" value="<?php echo @$pName; ?>">
-                                        <label class="text-danger hh"><?php echo @$message['error_pName']; ?></label>
+                                        <input class="p-3 bg-body" id="pName" type="text" placeholder="Enter Project Name" name="pName" value="<?php echo @$pName; ?>">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="input-field">
                                         <label for="project_location">Location</label>
-                                        <input class="p-3 bg-body" type="text" placeholder="Enter Project Location" name="pLocation" value="<?php echo @$pLocation; ?>">
-                                        <label class="text-danger"><?php echo @$message['error_pLocation']; ?></label>
+                                        <input class="p-3 bg-body" id="pLocation" type="text" placeholder="Enter Project Location" name="pLocation" value="<?php echo @$pLocation; ?>">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -432,15 +352,13 @@
                                 <div class="col-4">
                                     <div id="asphalt-details-3" class="input-field">
                                         <label>Asphalt Quantity (Rs.)</label>
-                                        <input class="p-3 bg-body " id="asphaltQuantity" type="Number" placeholder="Enter Quantity" 
-                                        name="asphaltQuantity" value="<?php echo $asphaltQuantity ?>">
+                                        <input class="p-3 bg-body " id="asphaltQuantity" type="Number" placeholder="Enter Quantity" name="asphaltQuantity" value="<?php echo $asphaltQuantity ?>">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div id="asphalt-details-4" class="input-field">
                                         <label>Asphalt Rate (Rs.)</label>
-                                        <input class="p-3 bg-body " id="asphaltRate" type="Number" placeholder="Rate for One Unit" 
-                                        name="asphaltRate" value="<?php echo $asphaltRate ?>">
+                                        <input class="p-3 bg-body " id="asphaltRate" type="Number" placeholder="Rate for One Unit" name="asphaltRate" value="<?php echo $asphaltRate ?>">
                                     </div>
                                 </div>
                             </div>
@@ -467,8 +385,7 @@
                                 <div class="col-4">
                                     <div class="input-field">
                                         <label>How Many Bridges in Road?</label>
-                                        <input class="p-3 bg-body" id="bridges" type="Number" placeholder="Enter Total Bridges" 
-                                        name="bridges" value="<?php echo $bridges ?>">
+                                        <input class="p-3 bg-body" id="bridges" type="Number" placeholder="Enter Total Bridges" name="bridges" value="<?php echo $bridges ?>">
                                     </div>
                                 </div>
                             </div>
@@ -572,5 +489,6 @@
         });
     });
 </script>
+<script src="<?= SYSTEM_PATH; ?>assets/js/projects/editProject.js"></script>
 
 <?php include '../footer.php'; ?>

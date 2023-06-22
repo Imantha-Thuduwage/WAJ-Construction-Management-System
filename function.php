@@ -28,18 +28,18 @@ function dbConn()
     }
 }
 
-// function showMessage(){
-//     $alert = "Swal.fire(
-//         'Recorded',
-//         'Data Saved in Data Base Successfully',
-//         'success'
-//       )";
+function showMessage(){
+    $alert = "Swal.fire(
+        'Recorded',
+        'Data Saved in Data Base Successfully',
+        'success'
+      )";
 
-//       echo "<script>";
-//       echo "window.onload = (event) => {";
-//       echo $alert;
-//       echo "}";
-//       echo "</script>";
-// }
+      echo "<script>";
+      echo "window.onload = (event) => {";
+      echo $alert;
+      echo "}";
+      echo "</script>";
+}
 
 ?>

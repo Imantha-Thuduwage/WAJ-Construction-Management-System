@@ -39,6 +39,7 @@
                             <th scope="col">Project Manager</th>
                             <th scope="col">Total Cost (Rs)</th>
                             <th scope="col">More Details</th>
+                            <th scope="col">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,10 +53,17 @@
                                     <td class="align-middle"><?= $row['project_name']; ?></td>
                                     <td class="align-middle"><?= $row['p_location']; ?></td>
                                     <td class="align-middle"><?= $row['project_manager']; ?></td>
-                                    <td class="align-middle"><?= number_format($row['total_cost'],2); ?></td>
+                                    <td class="align-middle"><?= number_format($row['total_cost'], 2); ?></td>
                                     <td>
                                         <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewProject.php?project_id=<?= $row['project_id']; ?>'">
                                             View More
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-info btn-sm">
+                                            <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='return confirmDelete()'>
+                                                <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
+                                            </a>
                                         </button>
                                     </td>
                                 </tr>
@@ -71,3 +79,11 @@
 </main>
 
 <?php include '../footer.php'; ?>
+
+<script>
+    
+        function confirmDelete() {
+    return confirm("Are you sure you want to delete this record?");
+  }
+    
+</script>

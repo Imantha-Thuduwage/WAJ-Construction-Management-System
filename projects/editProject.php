@@ -66,13 +66,7 @@
                     <div class="row justify-content-start gx-5">
                         <div class="col-sm">
                             <div class="row row-cols-2 row-cols-lg-1">
-                                <div class="col-4 ">
-                                    <div class="input-field">
-                                        <label for="project_name">Project ID</label>
-                                        <input class="p-3 bg-body" type="num" name="pId" value="<?php echo @$pId; ?>">
-                                        <label class="text-danger hh"></label>
-                                    </div>
-                                </div>
+                                <input class="p-3 bg-body" type="hidden" name="pId" value="<?php echo @$pId; ?>">
                                 <div class="col-4">
                                     <div class="input-field">
                                         <label for="project_name">Project Name</label>

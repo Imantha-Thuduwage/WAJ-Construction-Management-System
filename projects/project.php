@@ -9,12 +9,126 @@
             <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/addProject.php'">
                 Add Project
             </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Filter
             </button>
         </div>
     </div>
 
+    <!-- Modal for Popup Filters -->
+    <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="filter-form">
+                        <div class="row row-cols-2 row-cols-lg-1">
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>Project ID</label>
+                                    <select class="bg-body" id="proId" name="proId">
+                                        <option value="" selected disabled hidden>Select Project ID</option>
+
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `project_id` FROM tbl_project";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
+
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['project_id'] . "'>" . $row['project_id'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>Project Name</label>
+                                    <select class="bg-body" id="proName" name="proName">
+                                        <option value="" selected disabled hidden>Select Project Name</option>
+
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `project_id`, `project_name` FROM tbl_project";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
+
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['project_id'] . "'>" . $row['project_name'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label for="project_manager">Project Manager</label>
+                                    <select class="bg-body" id="proManager" name="proManager">
+                                        <option value="" selected disabled hidden>Select Project Manager</option>
+
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT u.`user_id`,u.`full_name`,r.`role_id`,r.`user_role` 
+                                            FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'Project_Manager'";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
+
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['user_id'] . "'>" . $row['full_name'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row row-cols-2 row-cols-lg-1">
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="startDate">From</label>
+                                        <input class="bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="startDate">To</label>
+                                        <input class="bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-cols-2 row-cols-lg-1">
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="total_cost">Min Total Cost</label>
+                                        <input class="bg-body" id="minCost" type="Number" placeholder="Total Cost" name="minCost" value="">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="total_cost">Max Total Cost</label>
+                                        <input class="bg-body" id="maxCost" type="Number" placeholder="Total Cost" name="maxCost" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="btn-filter" class="btn btn-primary">Apply Filter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
@@ -22,7 +136,7 @@
             <div class="table-responsive">
                 <?php
                 // Create SQL Query
-                $sql = "SELECT `project_id`,`project_name`,`p_location`,`project_manager`,`total_cost` FROM tbl_project";
+                $sql = "SELECT `project_id`,`project_name`,`p_location`,`start_date`,`end_date`,`project_manager`,`total_cost` FROM tbl_project";
 
                 // Calling to the Connection
                 $db = dbConn();
@@ -36,41 +150,15 @@
                             <th scope="col">Project ID</th>
                             <th scope="col">Project Name</th>
                             <th scope="col">Location</th>
+                            <th scope="col">Starting Date</th>
+                            <th scope="col">Ending Date</th>
                             <th scope="col">Project Manager</th>
                             <th scope="col">Total Cost (Rs)</th>
                             <th scope="col">More Details</th>
                             <th scope="col">Remove</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-
-                        ?>
-                                <tr class="shadow-sm">
-                                    <td class="align-middle"><?= $row['project_id']; ?></td>
-                                    <td class="align-middle"><?= $row['project_name']; ?></td>
-                                    <td class="align-middle"><?= $row['p_location']; ?></td>
-                                    <td class="align-middle"><?= $row['project_manager']; ?></td>
-                                    <td class="align-middle"><?= number_format($row['total_cost'], 2); ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewProject.php?project_id=<?= $row['project_id']; ?>'">
-                                            View More
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-info btn-sm">
-                                            <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='return confirmDelete()'>
-                                                <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
-                                            </a>
-                                        </button>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        }
-                        ?>
+                    <tbody id="table-body">
                     </tbody>
                 </table>
             </div>
@@ -81,9 +169,40 @@
 <?php include '../footer.php'; ?>
 
 <script>
-    
-        function confirmDelete() {
-    return confirm("Are you sure you want to delete this record?");
-  }
-    
+    // Function to delete selected Record From the Project Table
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this record?");
+    }
+
+    $(document).ready(function() {
+        // AJAX request to get all records initially
+        $.ajax({
+            url: 'getAllRecords.php',
+            method: 'POST',
+            data: '',
+            success: function(response) {
+                $('#table-body').html(response);
+            }
+        });
+
+        // AJAX request to filter records
+        $('#btn-filter').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'projectFilter.php',
+                method: 'POST',
+                data: $('#filter-form').serialize(),
+                success: function(response) {
+                    // Close the modal
+                    $('#filterModal').modal('hide');
+
+                    // Showing data inside HTML Table
+                    $('#table-body').html(response);
+
+                    // Clear Modal FormData
+                    $("#filter-form")[0].reset();
+                }
+            });
+        });
+    });
 </script>

@@ -116,6 +116,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.blur-overlay {
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 /* Table Styling */
 

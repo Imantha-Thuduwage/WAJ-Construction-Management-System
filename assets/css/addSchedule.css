@@ -133,6 +133,7 @@ form button:hover {
   cursor: pointer;
   box-shadow: none !important;
 }
+
 .resource-btn:hover {
   background-color: rgb(0 33 88);
   color: white !important;
@@ -159,6 +160,23 @@ form button:hover {
   color: rgb(0 33 88) !important;
 }
 
+.task-btn {
+  height: 35px;
+  border: 2px solid black;
+  border-color: #2196F3;
+  color: dodgerblue;
+  width: 100%;
+  color: rgb(0 33 88);
+  border-radius: 2px;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.3s linear;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+.task-btn:hover {
+  background-color: rgb(153, 186, 241);
+  color: rgb(0 33 88) !important;
+}
 .d-none {
   display: none !important;
 }

@@ -257,11 +257,9 @@
                                             while ($row = $result->fetch_assoc()) {
                                         ?>
                                                 <tr>
-                                                    <td class="align-middle"><?= $row['task_id']; ?></td>
-                                                    <td class="align-middle"><?= $row['task_name']; ?></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
-                                                            Update
+                                                        <button type="button" class="task-btn" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
+                                                             <?= $row['task_name'] ?> Is Added. Click to More  
                                                         </button>
                                                     </td>
                                                 </tr>

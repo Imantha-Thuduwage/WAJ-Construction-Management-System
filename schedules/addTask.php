@@ -16,6 +16,7 @@
     </div>
 
     <?php
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         extract($_GET);
@@ -41,9 +42,7 @@
                         <div class="card shadow" id="form-card">
                             <div class="card-body">
 
-                                <form method="post" class="form" id="project-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-
-                                    <div class="row justify-content-start gx-5">
+                            <div class="row justify-content-start gx-5">
                                         <div class="col-sm">
 
                                             <!-- Get count of existing task related to relevant schedule -->
@@ -59,13 +58,19 @@
                                                 if ($count == 0) { ?>
                                                     <h6 class="pt-3 pb-2 mb-0">Task 01</h6>
                                                 <?php } else { ?>
-                                                    <h6 class="pt-3 pb-2 mb-0">Task <?php echo $count; ?></h6>
+                                                    <h6 class="pt-3 pb-2 mb-0">Task <?php echo ($count + 1); ?></h6>
                                                 <?php }
                                             }  ?>
                                             
 
                                         </div>
                                     </div>
+
+                                <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+
+                                    <!-- Store Value of Schedule ID to Further Use -->
+                                    <input class="p-3 bg-body" id="scheduleId" type="hidden" name="scheduleId" value="<?php echo $schId ?>">
+
                                     <div class="row justify-content-start gx-5">
                                         <div class="col-sm">
                                             <div class="row row-cols-2 row-cols-lg-1">
@@ -91,7 +96,7 @@
                                                     <div class="input-field">
                                                         <label for="currentStatus">Current Status</label>
                                                         <select class="bg-body " id="currentStatus" name="currentStatus">
-                                                            <option value="">Pick an Option</option>
+                                                            <option value="" selected disabled hidden>Pick an Option</option>
                                                             <option value="1">Not Started</option>
                                                             <option value="2">On Going</option>
                                                             <option value="3">Holding</option>
@@ -208,10 +213,10 @@
                                         <div class="col-sm">
                                             <div class="row row-cols-2 row-cols-lg-1">
                                                 <div class="col-2">
-                                                    <button type="button" class="nextBtn" id="add">Next</button>
+                                                    <button type="submit" class="nextBtn" id="add-task">Next</button>
                                                 </div>
                                                 <div class="col-2">
-                                                    <button class="nextBtn" type="submit" id="submit">
+                                                    <button class="nextBtn" type="submit" id="complete">
                                                         <span class="btnText">Complete</span>
                                                         <i class="uil uil-navigator"></i>
                                                     </button>
@@ -232,15 +237,7 @@
                                 <div class="row justify-content-start gx-5">
                                     <div class="col-sm">
                                         <div class="row row-cols-2 row-cols-lg-1">
-                                            <div class="col-2">
-                                                <button type="button" class="nextBtn" id="add">Next</button>
-                                            </div>
-                                            <div class="col-2">
-                                                <button class="nextBtn" type="submit" id="submit">
-                                                    <span class="btnText">Complete</span>
-                                                    <i class="uil uil-navigator"></i>
-                                                </button>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +252,7 @@
 
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/schedules/addSchedule.js"></script>
+<script src="<?= SYSTEM_PATH; ?>assets/js/schedules/saveTask.js"></script>
 <Script>
     $(document).ready(function() {
         $('#add-equipment').click(function() {

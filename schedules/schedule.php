@@ -15,7 +15,6 @@
         </div>
     </div>
 
-
     <div class="card shadow" id="form-card">
         <div class="card-body">
             <h4>List of Schedules</h4>

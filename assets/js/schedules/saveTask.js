@@ -34,6 +34,12 @@ $(document).ready(function () {
           });
         }
         // Check for errors
+        if (response.hasOwnProperty("error_taskName")) {
+          $("#taskName")
+            .addClass("error")
+            .attr("placeholder", response.error_taskName)
+            .addClass("placeholder-set");
+        }
         if (response.hasOwnProperty("error_startDate")) {
           $("#startDate")
             .addClass("error")
@@ -109,6 +115,12 @@ $(document).ready(function () {
           });
         }
         // Check for errors
+        if (response.hasOwnProperty("error_taskName")) {
+          $("#taskName")
+            .addClass("error")
+            .attr("placeholder", response.error_taskName)
+            .addClass("placeholder-set");
+        }
         if (response.hasOwnProperty("error_startDate")) {
           $("#startDate")
             .addClass("error")

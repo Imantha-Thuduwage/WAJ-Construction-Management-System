@@ -42,29 +42,29 @@
                         <div class="card shadow" id="form-card">
                             <div class="card-body">
 
-                            <div class="row justify-content-start gx-5">
-                                        <div class="col-sm">
+                                <div class="row justify-content-start gx-5">
+                                    <div class="col-sm">
 
-                                            <!-- Get count of existing task related to relevant schedule -->
-                                            <?php
-                                            $sql = "SELECT COUNT(`schedule_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
-                                            $db = dbConn();
-                                            $result = $db->query($sql);
+                                        <!-- Get count of existing task related to relevant schedule -->
+                                        <?php
+                                        $sql = "SELECT COUNT(`schedule_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
 
-                                            if ($result) {
-                                                $row = $row = $result->fetch_assoc();
-                                                $count = $row['COUNT(`schedule_id`)'];
+                                        if ($result) {
+                                            $row = $row = $result->fetch_assoc();
+                                            $count = $row['COUNT(`schedule_id`)'];
 
-                                                if ($count == 0) { ?>
-                                                    <h6 class="pt-3 pb-2 mb-0">Task 01</h6>
-                                                <?php } else { ?>
-                                                    <h6 class="pt-3 pb-2 mb-0">Task <?php echo ($count + 1); ?></h6>
-                                                <?php }
-                                            }  ?>
-                                            
+                                            if ($count == 0) { ?>
+                                                <h6 class="pt-3 pb-2 mb-0">Task 01</h6>
+                                            <?php } else { ?>
+                                                <h6 class="pt-3 pb-2 mb-0">Task <?php echo ($count + 1); ?></h6>
+                                        <?php }
+                                        }  ?>
 
-                                        </div>
+
                                     </div>
+                                </div>
 
                                 <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
@@ -74,6 +74,12 @@
                                     <div class="row justify-content-start gx-5">
                                         <div class="col-sm">
                                             <div class="row row-cols-2 row-cols-lg-1">
+                                                <div class="col-4">
+                                                    <div class="input-field">
+                                                        <label for="startDate">Task Name</label>
+                                                        <input class="p-3 bg-body" id="taskName" type="text" placeholder="Enter Task Name" name="taskName" value="">
+                                                    </div>
+                                                </div>
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="startDate">Starting Date</label>
@@ -233,14 +239,38 @@
                     <div class="col-4">
 
                         <div class="card shadow" id="form-card">
-                            <div class="card-body">
-                                <div class="row justify-content-start gx-5">
-                                    <div class="col-sm">
-                                        <div class="row row-cols-2 row-cols-lg-1">
+                            <div class="card-body p-0">
+                                <?php
+                                // Create SQL Query
+                                $sql = "SELECT `task_id`,`schedule_id`,`task_name` FROM tbl_schedule_task WHERE schedule_id = '$schId'";
 
-                                        </div>
-                                    </div>
-                                </div>
+                                // Calling to the Connection
+                                $db = dbConn();
+
+                                // Get Result
+                                $result = $db->query($sql);
+                                ?>
+                                <table class="table table-sm m-0">
+                                    <tbody>
+                                        <?php
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                                <tr>
+                                                    <td class="align-middle"><?= $row['task_id']; ?></td>
+                                                    <td class="align-middle"><?= $row['task_name']; ?></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
+                                                            Update
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

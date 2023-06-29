@@ -144,7 +144,7 @@
                 // Get Result
                 $result = $db->query($sql);
                 ?>
-                <table class="table">
+                <table class="table table-sm">
                     <thead class="shadow">
                         <tr>
                             <th scope="col">Project ID</th>

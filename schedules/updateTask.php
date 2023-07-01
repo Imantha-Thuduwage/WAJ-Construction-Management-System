@@ -4,7 +4,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Create New Task</h4>
+        <h4>Update Task Details</h4>
         <div>
             <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
                 View Schedules
@@ -16,19 +16,24 @@
     </div>
 
     <?php
-
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         extract($_GET);
 
-        $sql = "SELECT * FROM tbl_schedule WHERE schedule_id = '$schedule_id'";
+        $sql = "SELECT * FROM tbl_schedule_task WHERE `task_id` = '$task_id'";
         $db = dbConn();
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
 
+        $taskId = $row['task_id'];
         $schId = $row['schedule_id'];
-        $proId = $row['project_id'];
-        $proName = $row['project_name'];
+        $taskName = $row['task_name'];
+        $startDate = $row['starting_date'];
+        $endDate = $row['ending_date'];
+        $description = $row['description'];
+        $currentStatus = $row['current_status'];
+        $cost = $row['cost'];
+        $labourCount = $row['labour_count'];
     }
 
     ?>
@@ -44,31 +49,14 @@
 
                                 <div class="row justify-content-start gx-5">
                                     <div class="col-sm">
-
-                                        <!-- Get count of existing task related to relevant schedule -->
-                                        <?php
-                                        $sql = "SELECT COUNT(`schedule_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
-                                        $db = dbConn();
-                                        $result = $db->query($sql);
-
-                                        if ($result) {
-                                            $row = $row = $result->fetch_assoc();
-                                            $count = $row['COUNT(`schedule_id`)'];
-
-                                            if ($count == 0) { ?>
-                                                <h6 class="pt-3 pb-2 mb-0">Task 01</h6>
-                                            <?php } else { ?>
-                                                <h6 class="pt-3 pb-2 mb-0">Task <?php echo ($count + 1); ?></h6>
-                                        <?php }
-                                        }  ?>
-
-
+                                        <h6 class="pt-3 pb-2 mb-0">Task <?php echo $taskId; ?></h6>
                                     </div>
                                 </div>
 
                                 <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
-                                    <!-- Store Value of Schedule ID to Further Use -->
+                                    <!-- Store Value of Schedule ID And Task ID to Further Use -->
+                                    <input class="p-3 bg-body" id="taskId" type="hidden" name="taskId" value="<?php echo $taskId ?>">
                                     <input class="p-3 bg-body" id="scheduleId" type="hidden" name="scheduleId" value="<?php echo $schId ?>">
 
                                     <div class="row justify-content-start gx-5">
@@ -77,25 +65,25 @@
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="startDate">Task Name</label>
-                                                        <input class="p-3 bg-body" id="taskName" type="text" placeholder="Enter Task Name" name="taskName" value="">
+                                                        <input class="p-3 bg-body" id="taskName" type="text" placeholder="Enter Task Name" name="taskName" value="<?php echo $taskName ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="startDate">Starting Date</label>
-                                                        <input class="p-3 bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="">
+                                                        <input class="p-3 bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="<?php echo $startDate ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="endDate">Ending Date</label>
-                                                        <input class="p-3 bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="">
+                                                        <input class="p-3 bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="<?php echo $endDate ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col ">
                                                     <div class="input-field">
                                                         <label for="description">Description</label>
-                                                        <textarea class="p-3 bg-body" id="description" type="text" placeholder="Enter Brief Description" name="description" value=""></textarea>
+                                                        <textarea class="p-3 bg-body" id="description" type="text" placeholder="Enter Brief Description" name="description"><?php echo $description ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -103,40 +91,31 @@
                                                         <label for="currentStatus">Current Status</label>
                                                         <select class="bg-body " id="currentStatus" name="currentStatus">
                                                             <option value="" selected disabled hidden>Pick an Option</option>
-                                                            <option value="1">Not Started</option>
-                                                            <option value="2">On Going</option>
-                                                            <option value="3">Holding</option>
-                                                            <option value="4">Completed</option>
-                                                            <option value="4">Closed</option>
+                                                            <option value="1" <?php if ($currentStatus == '1') echo "selected"; ?>>Not Started</option>
+                                                            <option value="2" <?php if ($currentStatus == '2') echo "selected"; ?>>On Going</option>
+                                                            <option value="3" <?php if ($currentStatus == '3') echo "selected"; ?>>Holding</option>
+                                                            <option value="4" <?php if ($currentStatus == '4') echo "selected"; ?>>Completed</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="cost">Actual Cost</label>
-                                                        <input class="p-3 bg-body" id="cost" type="Number" placeholder="Total Cost" name="cost" value="">
+                                                        <input class="p-3 bg-body" id="cost" type="Number" placeholder="Total Cost" name="cost" value="<?php echo $cost ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="input-field">
                                                         <label for="cost">Labour Count</label>
-                                                        <input class="p-3 bg-body" id="labourCount" type="Number" placeholder="Labour Count" name="labourCount" value="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="input-field">
-                                                        <label for="cost">Add Resoucers</label>
-                                                        <button type="button" class="resource-btn" id="add">
-                                                            <i class="fa-sharp fa-regular fa-plus fa-2xl"></i>
-                                                        </button>
+                                                        <input class="p-3 bg-body" id="labourCount" type="Number" placeholder="Labour Count" name="labourCount" value="<?php echo $labourCount ?>">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row row-cols-2 row-cols-lg-1 d-none" id="resource-table">
-                                                <div class="table-responsive col-6" id="equipment-table">
+                                            <div class="row row-cols-2 row-cols-lg-1" id="resource-table">
+                                                <div class="table-responsive col-6">
                                                     <?php
                                                     // Create SQL Query
-                                                    $sql = "SELECT `resource_id`,`resource_name` FROM tbl_resource";
+                                                    $sql = "SELECT * FROM tbl_project_resource WHERE `schedule_id` = '$schId'";
 
                                                     // Calling to the Connection
                                                     $db = dbConn();
@@ -144,11 +123,12 @@
                                                     // Get Result
                                                     $result = $db->query($sql);
                                                     ?>
-                                                    <table class="table">
+                                                    <table class="table table-sm">
                                                         <thead class="shadow">
                                                             <tr>
+                                                                <th scope="col">Allocate ID</th>
                                                                 <th scope="col">Resource Name</th>
-                                                                <th scope="col">Select</th>
+                                                                <th scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -158,11 +138,13 @@
 
                                                             ?>
                                                                     <tr class="shadow-sm">
+                                                                        <td class="align-middle"><?= $row['allocate_id']; ?></td>
                                                                         <td class="align-middle"><?= $row['resource_name']; ?></td>
-                                                                        <td class="align-middle">
-                                                                            <button type="button" class="resource-btn-add" id="add-equipment" 
-                                                                            data-resource-id="<?= $row['resource_id']; ?>" data-resource-name="<?= $row['resource_name']; ?>">
-                                                                                <i class="fa-sharp fa-regular fa-plus fa-2xl"></i>
+                                                                        <td>
+                                                                            <button type="button" class="resource-btn-add">
+                                                                                <a href='deleteResource.php?allocate_id=<?= $row['allocate_id']; ?>' onclick='return confirmDelete()'>
+                                                                                    <img src="<?= SYSTEM_PATH; ?>assets/icons/minus-button.png">
+                                                                                </a>
                                                                             </button>
                                                                         </td>
                                                                     </tr>
@@ -176,7 +158,7 @@
                                                 <div class="table-responsive col-6">
                                                     <?php
                                                     // Create SQL Query
-                                                    $sql = "SELECT `machine_id`, `machine_name` FROM tbl_machine";
+                                                    $sql = "SELECT * FROM tbl_project_machine WHERE `schedule_id` = '$schId'";
 
                                                     // Calling to the Connection
                                                     $db = dbConn();
@@ -184,11 +166,12 @@
                                                     // Get Result
                                                     $result = $db->query($sql);
                                                     ?>
-                                                    <table class="table">
+                                                    <table class="table table-sm">
                                                         <thead class="shadow">
                                                             <tr>
+                                                                <th scope="col">Allocate ID</th>
                                                                 <th scope="col">Machine Name</th>
-                                                                <th scope="col">Select</th>
+                                                                <th scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -198,11 +181,13 @@
 
                                                             ?>
                                                                     <tr class="shadow-sm">
+                                                                        <td class="align-middle"><?= $row['allocate_id']; ?></td>
                                                                         <td class="align-middle"><?= $row['machine_name']; ?></td>
-                                                                        <td class="align-middle">
-                                                                        <button type="button" class="resource-btn-add" id="add-machine" 
-                                                                            data-machine-id="<?= $row['machine_id']; ?>" data-machine-name="<?= $row['machine_name']; ?>">
-                                                                                <i class="fa-sharp fa-regular fa-plus fa-2xl"></i>
+                                                                        <td>
+                                                                            <button type="button" class="resource-btn-add">
+                                                                                <a href='deleteMachine.php?allocate_id=<?= $row['allocate_id']; ?>' onclick='return confirmDelete()'>
+                                                                                    <img src="<?= SYSTEM_PATH; ?>assets/icons/minus-button.png">
+                                                                                </a>
                                                                             </button>
                                                                         </td>
                                                                     </tr>
@@ -222,11 +207,8 @@
                                         <div class="col-sm">
                                             <div class="row row-cols-2 row-cols-lg-1">
                                                 <div class="col-2">
-                                                    <button type="submit" class="nextBtn" id="add-task">Next</button>
-                                                </div>
-                                                <div class="col-2">
                                                     <button class="nextBtn" type="submit" id="complete">
-                                                        <span class="btnText">Complete</span>
+                                                        <span class="btnText">Update</span>
                                                         <i class="uil uil-navigator"></i>
                                                     </button>
                                                 </div>
@@ -261,8 +243,8 @@
                                         ?>
                                                 <tr>
                                                     <td>
-                                                        <button type="button" class="task-btn" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
-                                                            <?= $row['task_name'] ?> Is Added. Click to More
+                                                        <button type="button" class="task-btn" onclick="document.location='updateTask.php?task_id=<?= $row['task_id']; ?>'">
+                                                            Task <b><?= $row['task_name'] ?> </b>. Click to More or Edit
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -283,82 +265,7 @@
 
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/schedules/saveTask.js"></script>
-<Script>
-    // AJAX Function to add Equipments to Project
-$(document).on('click', '#add-equipment', function() {
-    var resourceId = $(this).data('resource-id');
-    var resourceName = $(this).data('resource-name');
-    var proId = <?php echo $proId; ?>;
-    var schId = <?php echo $schId; ?>;
+<script src="<?= SYSTEM_PATH; ?>assets/js/schedules/updateTask.js"></script>
 
-    // Send AJAX request to the PHP script
-    $.ajax({
-        url: 'saveResource.php',
-        method: 'POST',
-        data: {
-            resource_id: resourceId,
-            resource_name: resourceName,
-            project_id: proId,
-            schedule_id: schId
-        },
-        success: function(response) {
-            alert(response); // Display a success message or perform any other action
-
-            // Remove "+" icon from button
-            $(this).find('i').remove();
-
-            // Add Correct sign to Button
-            $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
-
-            // Disable the button
-            $(this).prop('disabled', true);
-
-        }.bind(this),
-
-        error: function() {
-            alert('Error occurred while saving the resource.'); // Display an error message
-        }
-    });
-});
-
-// AJAX Function to add Machines to Project
-$(document).on('click', '#add-machine', function() {
-    var machineId = $(this).data('machine-id');
-    var machineName = $(this).data('machine-name');
-    var proId = <?php echo $proId; ?>;
-    var schId = <?php echo $schId; ?>;
-
-    // Send AJAX request to the PHP script
-    $.ajax({
-        url: 'saveMachine.php',
-        method: 'POST',
-        data: {
-            machine_id: machineId,
-            machine_name: machineName,
-            project_id: proId,
-            schedule_id: schId
-        },
-        success: function(response) {
-            alert(response); // Display a success message or perform any other action
-
-            // Remove "+" icon from button
-            $(this).find('i').remove();
-
-            // Add Correct sign to Button
-            $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
-
-            // Disable the button
-            $(this).prop('disabled', true);
-
-        }.bind(this),
-
-        error: function() {
-            alert('Error occurred while saving the resource.'); // Display an error message
-        }
-    });
-});
-
-</Script>
 
 <?php include '../footer.php'; ?>

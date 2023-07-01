@@ -86,8 +86,6 @@ if (empty($pCost)) {
     $errors['error_pCost'] = "Total Cost s Required";
 }
 
-
-
 // Advanced Validation 
 else if (!empty($pName)) {
     $sql = "SELECT * FROM tbl_project WHERE project_name = '$pName' AND project_id <> '$pId'";

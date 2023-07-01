@@ -34,7 +34,7 @@ if (empty($labourCount)) {
 
 // Advanced Validation 
 else if (!empty($taskName)) {
-    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName'";
+    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName' AND schedule_id <> '$scheduleId'";
     $db = dbConn();
     $result = $db->query($sql);
 
@@ -45,8 +45,8 @@ else if (!empty($taskName)) {
     // Check Validation is Completed
     else if (empty($_SESSION['status'])) {
         // Retrieving values for fields that are not in the form
-        $addUser = $_SESSION['userid'];
-        $addDate = date('y-m-d');
+        $updateUser = $_SESSION['userid'];
+        $updateDate = date('y-m-d');
     }
 }
 
@@ -54,9 +54,10 @@ if (!empty($errors)) {
     echo json_encode($errors);
 } else {
     // Calling to DB Connection
-    $sql = "INSERT INTO tbl_schedule_task
-            (`schedule_id`,`task_name`,`starting_date`,`ending_date`,`description`,`current_status`,`cost`,`labour_count`,`add_user`,`add_date`) 
-            VALUES('$scheduleId','$taskName','$startDate','$endDate','$description','$currentStatus','$cost','$labourCount','$addUser','$addDate')";
+    $sql = "UPDATE tbl_schedule_task
+    SET `task_name` = '$taskName', `starting_date` = '$startDate', `ending_date` = '$endDate', `description` = '$description',
+    `current_status` = '$currentStatus', `cost` = '$cost', `labour_count` = '$labourCount',`update_user` = '$updateUser', `update_date` = '$updateDate'
+    WHERE `task_id` = '$taskId'";
     $db = dbConn();
     if ($db->query($sql)) {
         echo json_encode(array('success' => "Form submitted successfully"));

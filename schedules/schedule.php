@@ -29,12 +29,13 @@
                 // Get Result
                 $result = $db->query($sql);
                 ?>
-                <table class="table">
+                <table class="table table-sm">
                     <thead class="shadow">
                         <tr>
                             <th scope="col">Schedule ID</th>
                             <th scope="col">Project ID</th>
                             <th scope="col">Project Name</th>
+                            <th scope="col">Tasks</th>
                             <th scope="col">More</th>
                         </tr>
                     </thead>
@@ -51,6 +52,11 @@
                                     <td>
                                         <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
                                             Create Tasks
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
+                                            View Tasks
                                         </button>
                                     </td>
                                 </tr>

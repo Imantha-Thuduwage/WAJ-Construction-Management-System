@@ -34,7 +34,7 @@ if (empty($labourCount)) {
 
 // Advanced Validation 
 else if (!empty($taskName)) {
-    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName' AND schedule_id = '$schId'";
+    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName' AND schedule_id = '$scheduleId'";
     $db = dbConn();
     $result = $db->query($sql);
 
@@ -55,8 +55,8 @@ if (!empty($errors)) {
 } else {
     // Calling to DB Connection
     $sql = "INSERT INTO tbl_schedule_task
-            (`schedule_id`,`task_name`,`starting_date`,`ending_date`,`description`,`current_status`,`cost`,`labour_count`,`add_user`,`add_date`) 
-            VALUES('$scheduleId','$taskName','$startDate','$endDate','$description','$currentStatus','$cost','$labourCount','$addUser','$addDate')";
+            (`project_id`, `schedule_id`, `task_name`,`starting_date`,`ending_date`,`description`,`current_status`,`cost`,`labour_count`,`add_user`,`add_date`) 
+            VALUES('$proId','$scheduleId','$taskName','$startDate','$endDate','$description','$currentStatus','$cost','$labourCount','$addUser','$addDate')";
     $db = dbConn();
     if ($db->query($sql)) {
         echo json_encode(array('success' => "Form submitted successfully"));

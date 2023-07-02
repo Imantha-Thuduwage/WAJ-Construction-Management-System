@@ -51,24 +51,44 @@
         $bridges = $row['bridges_count'];
         $pCost = $row['total_cost'];
     }
+
+    // SQL Functioin for get data to showing project progress using Chart
+    $sql = "SELECT COUNT(*) as total_tasks FROM tbl_schedule_task WHERE project_id = $project_id";
+    $db = dbConn();
+    $result = $db->query($sql);
+    $row_total_tasks = $result->fetch_assoc(); // Fetch the result and assign it to $row_total_tasks
+    $total_tasks = $row_total_tasks['total_tasks'];
+
+    $sql = "SELECT COUNT(*) as completed_tasks FROM tbl_schedule_task WHERE project_id = $project_id AND current_status = 4";
+    $db = dbConn();
+    $result = $db->query($sql);
+    $row_completed_tasks = $result->fetch_assoc(); // Fetch the result and assign it to $row_completed_tasks
+    $completed_tasks = $row_completed_tasks['completed_tasks'];
+
+    // Calculate the progress percentage
+    $progress = ($total_tasks > 0) ? (($completed_tasks / $total_tasks) * 100) : 0;
+
+    // Pass the progress value to JavaScript
+    echo '<script>const projectProgress = ' . $progress . ';</script>';
+
     ?>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
             <div class="container">
+                <div class="row justify-content-start mb-4" style="background-color:rgb(0 33 88);">
+                    <div class="col-sm">
+                        <h4 class="pt-3 text-center" style="color: white;">Project Details of <?php echo $pName?></h4>
+                    </div>
+                </div>
                 <div class="row justify-content-start gx-5">
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="border bg-light">
                             <div class="card id-section text-center">
-                                <div class="card-body">
-                                    <h5 class="card-title">Details of</h5>
-                                    <h5>
-                                        <span class="badge bg-secondary"><?php echo @$pId; ?></span>
-                                    </h5>
-                                    <h5>
-                                        <p class="card-text">Project</p>
-                                    </h5>
-                                    </h5>
+                                <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+                                    <div class="p-1 border border-0">
+                                        <canvas id="progress-chart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -99,14 +119,7 @@
                                     <p><?php echo $endDate; ?></p>
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-start gx-5">
-                    <div class="col-sm">
-                        <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
-                            <div class="col-6 pt-3">
+                            <div class="col-12 pt-3">
                                 <div class="p-1 border bg-light display-data"><label>Project Manager</label>
                                     <?php
                                     // Retrieve data from MySQL database
@@ -120,7 +133,7 @@
                                         } ?></p>
                                 </div>
                             </div>
-                            <div class="col-6 pt-3">
+                            <div class="col-12 pt-3">
                                 <div class="p-1 border bg-light display-data"><label>Location</label>
                                     <p><?php echo $pLocation; ?></p>
                                 </div>
@@ -473,5 +486,39 @@
     </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Access the projectProgress variable from PHP
+    const progress = projectProgress;
+
+    // Create the chart
+    const ctx = document.getElementById('progress-chart').getContext('2d');
+
+    const data = {
+        labels: ['Progress', 'Remaining'],
+        datasets: [{
+            data: [progress, 100 - progress],
+            backgroundColor: ['#002158', '#f0e51a'],
+            borderWidth: 0
+        }]
+    };
+
+    const config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Progress of Project'
+                }
+            }
+        }
+    };
+
+    new Chart(ctx, config);
+</script>
 
 <?php include '../footer.php'; ?>

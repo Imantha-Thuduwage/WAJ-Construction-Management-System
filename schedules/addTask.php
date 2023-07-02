@@ -68,8 +68,9 @@
 
                                 <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
-                                    <!-- Store Value of Schedule ID to Further Use -->
+                                    <!-- Store Value of Schedule ID and Project ID to Further Use -->
                                     <input class="p-3 bg-body" id="scheduleId" type="hidden" name="scheduleId" value="<?php echo $schId ?>">
+                                    <input class="p-3 bg-body" id="proId" type="hidden" name="proId" value="<?php echo $proId ?>">
 
                                     <div class="row justify-content-start gx-5">
                                         <div class="col-sm">

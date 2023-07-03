@@ -108,7 +108,7 @@
                                                             <option value="2">On Going</option>
                                                             <option value="3">Holding</option>
                                                             <option value="4">Completed</option>
-                                                            <option value="4">Closed</option>
+                                                            <option value="5">Closed</option>
                                                         </select>
                                                     </div>
                                                 </div>

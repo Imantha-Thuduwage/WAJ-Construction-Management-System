@@ -1,6 +1,4 @@
-<?php include '../../header.php'; ?>
 <link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/form.css">
-<?php include '../../menu.php'; ?>
 
 <?php
 
@@ -372,5 +370,3 @@ if ($result) {
     }
   });
 </script>
-
-<?php include '../../footer.php'; ?>

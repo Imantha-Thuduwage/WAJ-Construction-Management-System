@@ -159,16 +159,6 @@
                                             <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="">
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="input-field">
-                                            <label for="employee_status">Employee Status</label>
-                                            <select class="bg-body " id="empStatus" name="empStatus">
-                                                <option value="">Pick an Option</option>
-                                                <option value="1">Active</option>
-                                                <option value="2">Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>

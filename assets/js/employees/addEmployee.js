@@ -103,15 +103,6 @@ $(document).ready(function () {
             .attr("placeholder", response.error_tackRate)
             .addClass("placeholder-set");
         }
-        if (response.hasOwnProperty("error_empStatus")) {
-          $("#empStatus").addClass("error").addClass("option-color-set");
-          $("#empStatus").change(function () {
-            var selectedValue = $(this).val();
-            if (selectedValue != "") {
-              $("#empStatus").removeClass("option-color-set");
-            }
-          });
-        }
       },
       error: function (response) {
         Swal.fire("Failed", response.error, "error");

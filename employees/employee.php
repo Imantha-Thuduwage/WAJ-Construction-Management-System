@@ -162,7 +162,7 @@
 <script>
     // Function to delete selected Record From the Project Table
     function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+        return confirm("Are you sure you want to inactive this employee?");
     }
 
     $(document).ready(function() {

@@ -37,9 +37,6 @@ if (empty($joinDate)) {
 if (empty($basicSal)) {
     $errors['error_basicSal'] = "Basic Salary is Required";
 }
-if (empty($empStatus)) {
-    $errors['error_empStatus'] = "Employee Status is Required";
-}
 
 // Advanced Validation 
 else if (!empty($nicNumber)) {
@@ -113,6 +110,9 @@ if (empty($errors)) {
         $errors['error_profileImg'] = "Profile Image is Required";
     }
 }
+
+// Set employee status
+$empStatus = 1;
 
 if (!empty($errors)) {
     echo json_encode($errors);

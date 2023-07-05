@@ -4,7 +4,7 @@ session_start();
 include '../function.php';
 include '../config.php';
 
-$sql = "SELECT * FROM tbl_employee";
+$sql = "SELECT * FROM tbl_employee WHERE employee_status = 1";
 $db = dbConn();
 $result = $db->query($sql);
 

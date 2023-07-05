@@ -34,7 +34,6 @@ if (!empty($where)) {
 $sql = "SELECT * FROM tbl_employee $where";
 $db = dbConn();
 $result = $db->query($sql);
-echo $sql;
 
 ?>
 

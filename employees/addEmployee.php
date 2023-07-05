@@ -1,92 +1,193 @@
 <?php include '../header.php'; ?>
+<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/addEmployee.css">
 <?php include '../menu.php'; ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Add New Project</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <a href="<?= SYSTEM_PATH; ?>projects/project.php" type="button" class="btn btn-sm btn-outline-secondary">View Project</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar" class="align-text-bottom"></span>
-                Update Project
+    <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
+        <h4>Add New Employee</h4>
+        <div>
+            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+                View Emplyees
+            </button>
+            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
+                Filters
             </button>
         </div>
     </div>
 
-    <?php
-    // Cheking Submit button is clicked
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        // This function uses array keys as variable names and values as variable values
-        extract($_POST);
+    <div class="card shadow" method="POST" id="form-card" action="saveEmployee.php" enctype="multipart/form-data">
+        <div class="card-body">
 
-        // create array
-        $message = array();
+            <form method="post" class="form" id="employee-form">
+                <div class="container field p-0">
+                    <div class="row justify-content-start gx-5">
+                        <div class="col-sm">
+                            <h6 class="pt-3 pb-2 mb-0">Basic Details</h6>
+                        </div>
+                    </div>
+                    <div class="row justify-content-start gx-5">
+                        <div class="col-sm">
+                            <label for="title" class="mb-1">Title</label>
+                            <div class="form-group mb-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="title" id="title1" value="1" checked>
+                                    <label class="form-check-label" for="title1">
+                                        Mr
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="title" id="title2" value="2">
+                                    <label class="form-check-label" for="title2">
+                                        Miss
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="title" id="title3" value="3">
+                                    <label class="form-check-label" for="title3">
+                                        Mrs
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-        // Reuired Fields Validation
-        if (empty($pName)) {
-            $message['error_pName'] = "Please Enter Your Project Name";
-        }
-        if (empty($pCost)) {
-            $message['error_pCost'] = "Please Enter Your Project Cost";
-        }
-        if (empty($pLocation)) {
-            $message['error_pLocation'] = "Please Enter Your Project Location";
-        }
-        if (empty($pManager)) {
-            $message['error_pManager'] = "Please Enter Your Project Manager";
-        }
+                        <div class="row justify-content-start gx-5">
+                            <div class="col-sm-10">
+                                <div class="row row-cols-2 row-cols-lg-1">
 
-        // Adavanced Validation
-        if (!empty($pName)) {
-            $sql = "SELECT * FROM tbl_project WHERE project_name = '$pName'";
-            $db = dbConn();
-            $result = $db->query($sql);
+                                    <div class="col-6">
+                                        <div class="input-field">
+                                            <label for="first_name">First Name</label>
+                                            <input class="p-3 bg-body" id="firstName" type="text" placeholder="First Name" name="firstName" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-field">
+                                            <label for="last_name">Last Name</label>
+                                            <input class="p-3 bg-body" id="lastName" type="text" placeholder="Last Name" name="lastName" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-field">
+                                            <label for="nic_number">NIC Number</label>
+                                            <input class="p-3 bg-body" id="nicNumber" type="text" placeholder="NIC Number" name="nicNumber" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 rounded-circle border border-success">
+                            </div>
+                        </div>
+                        <div class="row justify-content-start gx-5">
+                            <div class="col-sm">
+                                <div class="row row-cols-2 row-cols-lg-1">
+                                    <div class="col-4">
+                                        <label for="gender" class="mb-1">Gender</label>
+                                        <div class="form-group mb-2">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="1" checked>
+                                                <label class="form-check-label" for="gender1">
+                                                    Male
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="2">
+                                                <label class="form-check-label" for="gender2">
+                                                    Female
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender3" value="3">
+                                                <label class="form-check-label" for="gender3">
+                                                    Other
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-field">
+                                            <label for="date_birth">Date of Birth</label>
+                                            <input class="p-3 bg-body" id="dob" type="text" onfocus="(this.type='date')" placeholder="Date of Birth" name="dob" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-start gx-5">
+                            <div class="col-sm">
+                                <div class="row row-cols-2 row-cols-lg-1">
+                                    <div class="col-6">
+                                        <div class="input-field">
+                                            <label for="street_line1">Address -> Street Line 01</label>
+                                            <input class="p-3 bg-body" id="street1" type="text" placeholder="Street Line 01" name="street1" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-field">
+                                            <label for="street_line2">Address -> Street Line 02(Optional)</label>
+                                            <input class="p-3 bg-body" id="street2" type="text" placeholder="Street Line 02" name="street2" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 ">
+                                        <div class="input-field">
+                                            <label for="street_line2">City</label>
+                                            <input class="p-3 bg-body" id="city" type="text" placeholder="City" name="city" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            if ($result->num_rows > 0) {
-                $message['error_pName'] = "The Project Name is Already Exist!";
-            }
-        }
-        // Check Validation is Completed
-        if (empty($message)) {
-            // Retrieving values for fields that are not in the form
-            $addUser = $_SESSION['userid'];
-            $add_date = date('y-m-d');
-
-            // Calling to DB Connection
-            $sql = "INSERT INTO tbl_project(project_name,cost,p_location,project_manager,add_user,add_date) VALUES('$pName','$pCost','$pLocation','$pManager','$addUser','$add_date')";
-            $db = dbConn();
-            $db->query($sql);
-        }
-    }
-
-    ?>
-    <form method="post" class="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <div class="mb-3">
-            <label for="project_name" class="form-label">Project Name</label>
-            <input type="text" class="form-control" id="project_name" name="pName" value="<?php echo @$pName; ?>">
-            <div class="text-danger"><?php echo @$message['error_pName']; ?></div>
+                        <div class="row justify-content-start gx-5">
+                            <div class="col-sm">
+                                <div class="row row-cols-2 row-cols-lg-1">
+                                    <div class="col-4">
+                                        <div class="input-field">
+                                            <label for="mobile_number">Phone Number</label>
+                                            <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-field">
+                                            <label for="date_birth">Joined Date</label>
+                                            <input class="p-3 bg-body" id="joinDate" type="text" onfocus="(this.type='date')" placeholder="Joined Date" name="joinDate" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 ">
+                                        <div class="input-field">
+                                            <label for="basic_salary">Basic Salary</label>
+                                            <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-field">
+                                            <label for="employee_status">Employee Status</label>
+                                            <select class="bg-body " id="empStatus" name="empStatus">
+                                                <option value="">Pick an Option</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="input-field">
+                                            <label for="formFile">Upload Profile Image</label>
+                                            <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="nextBtn" type="submit" id="submit">
+                        <span class="btnText">Save</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="project_cost" class="form-label">Cost </label>
-            <input type="number" class="form-control" id="project_cost" name="pCost" value="<?php echo @$pCost; ?>">
-            <div class="text-danger"><?php echo @$message['error_pCost']; ?></div>
-        </div>
-        <div class="mb-3">
-            <label for="project_manager" class="form-label">Location</label>
-            <input type="text" class="form-control" id="project_manager" name="pLocation" value="<?php echo @$pManager; ?>">
-            <div class="text-danger"><?php echo @$message['error_pLocation']; ?></div>
-        </div>
-        <div class="mb-3">
-            <label for="project_manager" class="form-label">Project Manger</label>
-            <input type="text" class="form-control" id="project_manager" name="pManager" value="<?php echo @$pManager; ?>">
-            <div class="text-danger"><?php echo @$message['error_pManager']; ?></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 </main>
+
+<script src="<?= SYSTEM_PATH; ?>assets/js/employees/addEmployee.js"></script>
 
 <?php include '../footer.php'; ?>

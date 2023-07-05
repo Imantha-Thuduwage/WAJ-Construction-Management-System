@@ -1,151 +1,199 @@
 <?php include '../header.php'; ?>
+<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/project.css">
 <?php include '../menu.php'; ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Products</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <a href="<?= SYSTEM_PATH; ?>projects/addProject.php" type="button" class="btn btn-sm btn-outline-secondary">Add New Product</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar" class="align-text-bottom"></span>
-                Update Product
+    <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
+        <h4>Manage Employees </h4>
+        <div>
+            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>employees/addEmployee.php'">
+                Add Employee
+            </button>
+            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Filter
             </button>
         </div>
     </div>
 
+    <!-- Modal for Popup Filters -->
+    <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="filter-form">
+                        <div class="row row-cols-2 row-cols-lg-1">
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>Employee ID</label>
+                                    <select class="bg-body" id="empId" name="empId">
+                                        <option value="" selected disabled hidden>Select Employee ID</option>
 
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `employee_id` FROM tbl_employee";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
 
-    <h2>Product list</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Product name</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Category</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                </tr>
-                <tr>
-                    <td>1,002</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                </tr>
-                <tr>
-                    <td>1,003</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                </tr>
-                <tr>
-                    <td>1,003</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,004</td>
-                    <td>text</td>
-                    <td>random</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                </tr>
-                <tr>
-                    <td>1,005</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                </tr>
-                <tr>
-                    <td>1,006</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,007</td>
-                    <td>placeholder</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>irrelevant</td>
-                </tr>
-                <tr>
-                    <td>1,008</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                </tr>
-                <tr>
-                    <td>1,009</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                </tr>
-                <tr>
-                    <td>1,010</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                </tr>
-                <tr>
-                    <td>1,011</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,012</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                </tr>
-                <tr>
-                    <td>1,013</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>visual</td>
-                </tr>
-                <tr>
-                    <td>1,014</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,015</td>
-                    <td>random</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>text</td>
-                </tr>
-            </tbody>
-        </table>
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>First Name</label>
+                                    <select class="bg-body" id="empName" name="empName">
+                                        <option value="" selected disabled hidden>Select First Name</option>
+
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `employee_id`, `first_name` FROM tbl_employee";
+                                        $result = $db->query($sql);
+
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['first_name'] . "'>" . $row['first_name'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>NIC Number</label>
+                                    <select class="bg-body" id="nicNum" name="nicNum">
+                                        <option value="" selected disabled hidden>Select NIC Number</option>
+
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `employee_id`, `nic_number` FROM tbl_employee";
+                                        $result = $db->query($sql);
+
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['nic_number'] . "'>" . $row['nic_number'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row row-cols-2 row-cols-lg-1">
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="joinedDate">Date of Joined</label>
+                                        <input class="bg-body" id="joinedDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="joinedDate" value="">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-field">
+                                    <label for="phone_number">Phone Number</label>
+                                        <input class="bg-body" id="contactNum" type="text" placeholder="Contact Number" name="contactNum" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-cols-2 row-cols-lg-1">
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="dob">Date of Birth</label>
+                                        <input class="bg-body" id="dob" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="dob" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="btn-filter" class="btn btn-primary">Apply Filter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="card shadow" id="form-card">
+        <div class="card-body">
+            <h4>List of Projects</h4>
+            <div class="table-responsive">
+                <?php
+                // Create SQL Query
+                $sql = "SELECT `employee_id`,`first_name`,`last_name`,`nic_number`,`date_of_birth`,`city`,`contact_number`,`date_of_joining` FROM tbl_employee";
+
+                // Calling to the Connection
+                $db = dbConn();
+
+                // Get Result
+                $result = $db->query($sql);
+                ?>
+                <table class="table table-sm">
+                    <thead class="shadow">
+                        <tr>
+                            <th scope="col">Employee ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">NIC Number</th>
+                            <th scope="col">Date of Birth</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Joined Date</th>
+                            <th scope="col">More Details</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
 </main>
 
 <?php include '../footer.php'; ?>
+
+<script>
+    // Function to delete selected Record From the Project Table
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this record?");
+    }
+
+    $(document).ready(function() {
+        // AJAX request to get all records initially
+        $.ajax({
+            url: 'getAllRecords.php',
+            method: 'POST',
+            data: '',
+            success: function(response) {
+                $('#table-body').html(response);
+            }
+        });
+
+        // AJAX request to filter records
+        $('#btn-filter').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'getFilteredRecord.php',
+                method: 'POST',
+                data: $('#filter-form').serialize(),
+                success: function(response) {
+                    // Close the modal
+                    $('#filterModal').modal('hide');
+
+                    // Showing data inside HTML Table
+                    $('#table-body').html(response);
+
+                    // Clear Modal FormData
+                    $("#filter-form")[0].reset();
+                }
+            });
+        });
+    });
+</script>

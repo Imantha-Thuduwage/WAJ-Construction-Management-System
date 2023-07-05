@@ -63,7 +63,7 @@
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['project_id'] . "'>" . $row['project_name'] . "</option>";
+                                                echo "<option value='" . $row['project_name'] . "'>" . $row['project_name'] . "</option>";
                                             }
                                         }
                                         ?>

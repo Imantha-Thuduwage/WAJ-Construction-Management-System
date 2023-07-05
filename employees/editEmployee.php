@@ -15,11 +15,48 @@
         </div>
     </div>
 
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    <div class="card shadow" id="form-card">
+        extract($_GET);
+
+        $sql = "SELECT * FROM tbl_project WHERE project_id='$project_id'";
+        $db = dbConn();
+        $result = $db->query($sql);
+        $row = $result->fetch_assoc();
+        $pId = $row['project_id'];
+        $pName = $row['project_name'];
+        $pLocation = $row['p_location'];
+        $startDate = $row['start_date'];
+        $endDate = $row['end_date'];
+        $proManager = $row['project_manager'];
+        $abcStatus = $row['abc_status'];
+        $abcUnit = $row['abc_unit'];
+        $abcQuantity = $row['abc_quantity'];
+        $abcRate = $row['abc_rate'];
+        $primeStatus = $row['prime_status'];
+        $primeUnit = $row['prime_unit'];
+        $primeQuantity = $row['prime_quantity'];
+        $primeRate = $row['prime_rate'];
+        $tackUnit = $row['tack_unit'];
+        $tackQuantity = $row['tack_quantity'];
+        $tackStatus = $row['tack_status'];
+        $tackRate = $row['tack_rate'];
+        $asphaltStatus = $row['asphalt_status'];
+        $asphaltThicknes = $row['asphalt_thickness'];
+        $asphaltUnit = $row['asphalt_unit'];
+        $asphaltQuantity = $row['asphalt_quantity'];
+        $asphaltRate = $row['asphalt_rate'];
+        $markingStatus = $row['marking_status'];
+        $bridges = $row['bridges_count'];
+        $pCost = $row['total_cost'];
+    }
+    ?>
+
+    <div class="card shadow" method="POST" id="form-card" action="saveEmployee.php" enctype="multipart/form-data">
         <div class="card-body">
 
-            <form method="post" class="form" id="project-form">
+            <form method="post" class="form" id="employee-form">
                 <div class="container field p-0">
                     <div class="row justify-content-start gx-5">
                         <div class="col-sm">
@@ -31,19 +68,19 @@
                             <label for="title" class="mb-1">Title</label>
                             <div class="form-group mb-2">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title1" value="" checked>
+                                    <input class="form-check-input" type="radio" name="title" id="title1" value="1" checked>
                                     <label class="form-check-label" for="title1">
                                         Mr
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title2" value="">
+                                    <input class="form-check-input" type="radio" name="title" id="title2" value="2">
                                     <label class="form-check-label" for="title2">
                                         Miss
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title3" value="">
+                                    <input class="form-check-input" type="radio" name="title" id="title3" value="3">
                                     <label class="form-check-label" for="title3">
                                         Mrs
                                     </label>
@@ -85,19 +122,19 @@
                                         <label for="gender" class="mb-1">Gender</label>
                                         <div class="form-group mb-2">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="" checked>
+                                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="1" checked>
                                                 <label class="form-check-label" for="gender1">
                                                     Male
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="2">
                                                 <label class="form-check-label" for="gender2">
                                                     Female
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender3" value="">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender3" value="3">
                                                 <label class="form-check-label" for="gender3">
                                                     Other
                                                 </label>
@@ -118,13 +155,13 @@
                                 <div class="row row-cols-2 row-cols-lg-1">
                                     <div class="col-6">
                                         <div class="input-field">
-                                            <label for="street_line1">Address (Street Line 01)</label>
+                                            <label for="street_line1">Address -> Street Line 01</label>
                                             <input class="p-3 bg-body" id="street1" type="text" placeholder="Street Line 01" name="street1" value="">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="input-field">
-                                            <label for="street_line2">Address (Street Line 02)</label>
+                                            <label for="street_line2">Address -> Street Line 02(Optional)</label>
                                             <input class="p-3 bg-body" id="street2" type="text" placeholder="Street Line 02" name="street2" value="">
                                         </div>
                                     </div>
@@ -156,7 +193,7 @@
                                     <div class="col-4 ">
                                         <div class="input-field">
                                             <label for="basic_salary">Basic Salary</label>
-                                            <input class="p-3 bg-body " id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="">
+                                            <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -167,6 +204,12 @@
                                                 <option value="1">Active</option>
                                                 <option value="2">Inactive</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="input-field">
+                                            <label for="formFile">Upload Profile Image</label>
+                                            <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
                                         </div>
                                     </div>
                                 </div>
@@ -182,6 +225,6 @@
     </div>
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/projects/project.js"></script>
+<script src="<?= SYSTEM_PATH; ?>assets/js/employees/addEmployee.js"></script>
 
 <?php include '../footer.php'; ?>

@@ -30,7 +30,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>employees/addEmployee.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>employees/employee.php">
                 <span data-feather="bar-chart-2" class="align-text-bottom"></span>
                Employees
               </a>

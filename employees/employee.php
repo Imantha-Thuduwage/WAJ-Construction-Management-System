@@ -146,7 +146,7 @@
                             <th scope="col">Contact Number</th>
                             <th scope="col">Joined Date</th>
                             <th scope="col">More Details</th>
-                            <th scope="col">Remove</th>
+                            <th scope="col">Inactive</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">

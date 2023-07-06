@@ -75,8 +75,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 rounded-circle border border-success">
-                            </div>
                         </div>
                         <div class="row justify-content-start gx-5">
                             <div class="col-sm">

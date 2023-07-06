@@ -20,36 +20,24 @@
 
         extract($_GET);
 
-        $sql = "SELECT * FROM tbl_project WHERE project_id='$project_id'";
+        $sql = "SELECT * FROM tbl_employee WHERE employee_id='$employee_id'";
         $db = dbConn();
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
-        $pId = $row['project_id'];
-        $pName = $row['project_name'];
-        $pLocation = $row['p_location'];
-        $startDate = $row['start_date'];
-        $endDate = $row['end_date'];
-        $proManager = $row['project_manager'];
-        $abcStatus = $row['abc_status'];
-        $abcUnit = $row['abc_unit'];
-        $abcQuantity = $row['abc_quantity'];
-        $abcRate = $row['abc_rate'];
-        $primeStatus = $row['prime_status'];
-        $primeUnit = $row['prime_unit'];
-        $primeQuantity = $row['prime_quantity'];
-        $primeRate = $row['prime_rate'];
-        $tackUnit = $row['tack_unit'];
-        $tackQuantity = $row['tack_quantity'];
-        $tackStatus = $row['tack_status'];
-        $tackRate = $row['tack_rate'];
-        $asphaltStatus = $row['asphalt_status'];
-        $asphaltThicknes = $row['asphalt_thickness'];
-        $asphaltUnit = $row['asphalt_unit'];
-        $asphaltQuantity = $row['asphalt_quantity'];
-        $asphaltRate = $row['asphalt_rate'];
-        $markingStatus = $row['marking_status'];
-        $bridges = $row['bridges_count'];
-        $pCost = $row['total_cost'];
+        $empId = $row['employee_id'];
+        $title = $row['title'];
+        $firstName = $row['first_name'];
+        $lastName = $row['last_name'];
+        $nicNumber = $row['nic_number'];
+        $dob = $row['date_of_birth'];
+        $gender = $row['gender'];
+        $street1 = $row['street_line_one'];
+        $street2 = $row['street_line_two'];
+        $city = $row['city'];
+        $phoneNum = $row['contact_number'];
+        $joinDate = $row['date_of_joining'];
+        $basicSal = $row['basic_salary'];
+        $profileImg = $row['profile_image'];
     }
     ?>
 
@@ -59,62 +47,68 @@
             <form method="post" class="form" id="employee-form">
                 <div class="container field p-0">
                     <div class="row justify-content-start gx-5">
+                        <div class="col-sm-5">
+                            <div class="card id-section d-flex align-items-start border-0">
+                                <div class="card-body mb-2 p-2" style="display: flex; justify-content: center; align-items: center;">
+                                    <img class="img-fluid rounded-circle" src="<?= SYSTEM_PATH; ?>assets/images/profileImages/<?= !empty($profileImg)?$profileImg:'myProfile.png' ?>" style="width: 300px; height: 300px;">
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="col-sm">
-                            <h6 class="pt-3 pb-2 mb-0">Basic Details</h6>
+                            <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
+                                <div class="col-sm-6">
+                                    <label for="title" class="mb-1">Title</label>
+                                    <div class="form-group mb-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="title" id="title1" value="1" <?php if ($title == '1') echo "checked"; ?>>
+                                            <label class="form-check-label" for="title1">
+                                                Mr
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="title" id="title2" value="2" <?php if ($title == '2') echo "checked"; ?>>
+                                            <label class="form-check-label" for="title2">
+                                                Miss
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="title" id="title3" value="3" <?php if ($title == '3') echo "checked"; ?>>
+                                            <label class="form-check-label" for="title3">
+                                                Mrs
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="row row-cols-2 row-cols-lg-1">
+                                        <div class="col-6">
+                                            <div class="input-field">
+                                                <label for="first_name">First Name</label>
+                                                <input class="p-3 bg-body" id="firstName" type="text" placeholder="First Name" name="firstName" value="<?php echo @$firstName; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-field">
+                                                <label for="last_name">Last Name</label>
+                                                <input class="p-3 bg-body" id="lastName" type="text" placeholder="Last Name" name="lastName" value="<?php echo @$lastName; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="input-field">
+                                                <label for="nic_number">NIC Number</label>
+                                                <input class="p-3 bg-body" id="nicNumber" type="text" placeholder="NIC Number" name="nicNumber" value="<?php echo @$nicNumber; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <input class="p-3 bg-body" type="hidden" name="empId" value="<?php echo @$empId; ?>">
                     <div class="row justify-content-start gx-5">
-                        <div class="col-sm">
-                            <label for="title" class="mb-1">Title</label>
-                            <div class="form-group mb-2">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title1" value="1" checked>
-                                    <label class="form-check-label" for="title1">
-                                        Mr
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title2" value="2">
-                                    <label class="form-check-label" for="title2">
-                                        Miss
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="title" id="title3" value="3">
-                                    <label class="form-check-label" for="title3">
-                                        Mrs
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row justify-content-start gx-5">
-                            <div class="col-sm-10">
-                                <div class="row row-cols-2 row-cols-lg-1">
-
-                                    <div class="col-6">
-                                        <div class="input-field">
-                                            <label for="first_name">First Name</label>
-                                            <input class="p-3 bg-body" id="firstName" type="text" placeholder="First Name" name="firstName" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-field">
-                                            <label for="last_name">Last Name</label>
-                                            <input class="p-3 bg-body" id="lastName" type="text" placeholder="Last Name" name="lastName" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="input-field">
-                                            <label for="nic_number">NIC Number</label>
-                                            <input class="p-3 bg-body" id="nicNumber" type="text" placeholder="NIC Number" name="nicNumber" value="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 rounded-circle border border-success">
-                            </div>
-                        </div>
                         <div class="row justify-content-start gx-5">
                             <div class="col-sm">
                                 <div class="row row-cols-2 row-cols-lg-1">
@@ -122,19 +116,19 @@
                                         <label for="gender" class="mb-1">Gender</label>
                                         <div class="form-group mb-2">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="1" checked>
+                                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="1" <?php if ($gender == '1') echo "checked"; ?>>
                                                 <label class="form-check-label" for="gender1">
                                                     Male
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="2">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="2" <?php if ($gender == '2') echo "checked"; ?>>
                                                 <label class="form-check-label" for="gender2">
                                                     Female
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender3" value="3">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender3" value="3" <?php if ($gender == '3') echo "checked"; ?>>
                                                 <label class="form-check-label" for="gender3">
                                                     Other
                                                 </label>
@@ -144,7 +138,7 @@
                                     <div class="col-4">
                                         <div class="input-field">
                                             <label for="date_birth">Date of Birth</label>
-                                            <input class="p-3 bg-body" id="dob" type="text" onfocus="(this.type='date')" placeholder="Date of Birth" name="dob" value="">
+                                            <input class="p-3 bg-body" id="dob" type="text" onfocus="(this.type='date')" placeholder="Date of Birth" name="dob" value="<?php echo @$dob; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -156,19 +150,19 @@
                                     <div class="col-6">
                                         <div class="input-field">
                                             <label for="street_line1">Address -> Street Line 01</label>
-                                            <input class="p-3 bg-body" id="street1" type="text" placeholder="Street Line 01" name="street1" value="">
+                                            <input class="p-3 bg-body" id="street1" type="text" placeholder="Street Line 01" name="street1" value="<?php echo @$street1; ?>">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="input-field">
                                             <label for="street_line2">Address -> Street Line 02(Optional)</label>
-                                            <input class="p-3 bg-body" id="street2" type="text" placeholder="Street Line 02" name="street2" value="">
+                                            <input class="p-3 bg-body" id="street2" type="text" placeholder="Street Line 02" name="street2" value="<?php echo @$street2; ?>">
                                         </div>
                                     </div>
                                     <div class="col-4 ">
                                         <div class="input-field">
                                             <label for="street_line2">City</label>
-                                            <input class="p-3 bg-body" id="city" type="text" placeholder="City" name="city" value="">
+                                            <input class="p-3 bg-body" id="city" type="text" placeholder="City" name="city" value="<?php echo @$city; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -181,35 +175,27 @@
                                     <div class="col-4">
                                         <div class="input-field">
                                             <label for="mobile_number">Phone Number</label>
-                                            <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="">
+                                            <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="<?php echo @$phoneNum; ?>">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="input-field">
                                             <label for="date_birth">Joined Date</label>
-                                            <input class="p-3 bg-body" id="joinDate" type="text" onfocus="(this.type='date')" placeholder="Joined Date" name="joinDate" value="">
+                                            <input class="p-3 bg-body" id="joinDate" type="text" onfocus="(this.type='date')" placeholder="Joined Date" name="joinDate" value="<?php echo @$joinDate; ?>">
                                         </div>
                                     </div>
                                     <div class="col-4 ">
                                         <div class="input-field">
                                             <label for="basic_salary">Basic Salary</label>
-                                            <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="input-field">
-                                            <label for="employee_status">Employee Status</label>
-                                            <select class="bg-body " id="empStatus" name="empStatus">
-                                                <option value="">Pick an Option</option>
-                                                <option value="1">Active</option>
-                                                <option value="2">Inactive</option>
-                                            </select>
+                                            <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="<?php echo @$basicSal; ?>">
                                         </div>
                                     </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>
                                             <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
+                                            <!-- Set prvious image value to save DB when user is not update new image -->
+                                            <input type="hidden" name="sameProfileImg" value="<?php echo @$profileImg; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -225,6 +211,6 @@
     </div>
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/employees/addEmployee.js"></script>
+<script src="<?= SYSTEM_PATH; ?>assets/js/employees/editEmployee.js"></script>
 
 <?php include '../footer.php'; ?>

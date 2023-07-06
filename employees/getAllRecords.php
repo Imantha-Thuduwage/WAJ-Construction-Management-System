@@ -30,9 +30,9 @@ $result = $db->query($sql);
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-info btn-sm">
+                    <button type="button" class="btn btn-outline-info btn-sm inactive-circle">
                         <a href='inactiveEmployee.php?employee_id=<?= $row['employee_id']; ?>' onclick='return confirmDelete()'>
-                            <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
+                            <img src="<?= SYSTEM_PATH; ?>assets/icons/inactive.png">
                         </a>
                     </button>
                 </td>

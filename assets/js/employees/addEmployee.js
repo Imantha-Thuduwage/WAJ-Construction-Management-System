@@ -91,18 +91,6 @@ $(document).ready(function () {
             .attr("placeholder", response.error_basicSal)
             .addClass("placeholder-set");
         }
-        if (response.hasOwnProperty("error_tackQuantity")) {
-          $("#tackQuantity")
-            .addClass("error")
-            .attr("placeholder", response.error_tackQuantity)
-            .addClass("placeholder-set");
-        }
-        if (response.hasOwnProperty("error_tackRate")) {
-          $("#tackRate")
-            .addClass("error")
-            .attr("placeholder", response.error_tackRate)
-            .addClass("placeholder-set");
-        }
       },
       error: function (response) {
         Swal.fire("Failed", response.error, "error");

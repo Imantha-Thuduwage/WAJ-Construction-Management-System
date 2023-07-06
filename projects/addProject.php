@@ -61,7 +61,7 @@
 
                                             <?php
                                             // Retrieve data from MySQL database
-                                            $sql = "SELECT u.`user_id`,u.`full_name`,r.`role_id`,r.`user_role` 
+                                            $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
                                             FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'Project_Manager'";
                                             $db = dbConn();
                                             $result = $db->query($sql);
@@ -69,7 +69,7 @@
                                             // Display options in dropdown list
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
-                                                    echo "<option value='" . $row['user_id'] . "'>" . $row['full_name'] . "</option>";
+                                                    echo "<option value='" . $row['user_id'] . "'>" . $row['last_name'] . "</option>";
                                                 }
                                             }
                                             ?>

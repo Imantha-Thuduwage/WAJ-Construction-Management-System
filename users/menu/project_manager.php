@@ -6,7 +6,7 @@
         <div class="position-sticky pt-3 sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?= SYSTEM_PATH; ?>users/dashboard/project_manager.php">
+              <a class="nav-link active" aria-current="page" href="<?= SYSTEM_PATH; ?>index.php">
                 <span data-feather="home" class="align-text-bottom"></span>
                 Dashboard
               </a>
@@ -36,9 +36,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>resources/addResource.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>users/user.php">
                 <span data-feather="layers" class="align-text-bottom"></span>
-                Resources
+                Users
               </a>
             </li>
           </ul>

@@ -62,8 +62,8 @@ else if (!empty($nicNumber)) {
 // Check Validation is Completed
 if (empty($_SESSION['status'])) {
     // Retrieving values for fields that are not in the form
-    $addUser = $_SESSION['userid'];
-    $addDate = date('y-m-d');
+    $updateUser = $_SESSION['userid'];
+    $updateDate = date('y-m-d');
 }
 
 if (empty($errors) && !empty($pImage = $_FILES['profileImg']['name'])) {
@@ -111,9 +111,6 @@ if (empty($errors) && !empty($pImage = $_FILES['profileImg']['name'])) {
     $fileNameNew = $sameProfileImg;
 }
 
-// Set employee status
-$empStatus = 1;
-
 if (!empty($errors)) {
     echo json_encode($errors);
 } else {
@@ -122,7 +119,7 @@ if (!empty($errors)) {
     SET `title` = '$title', `first_name` = '$firstName', `last_name` = '$lastName', `nic_number` = '$nicNumber', `date_of_birth` = '$dob',
     `gender` = '$gender', `street_line_one` = '$street1', `street_line_two` = '$street2', `city` = '$city',
     `contact_number` = '$phoneNum', `date_of_joining` = '$joinDate', `basic_salary` = '$basicSal', `profile_image` = '$fileNameNew',
-     `update_user` = '$addUser', `update_date` = '$addDate'
+     `update_user` = '$updateUser', `update_date` = '$updateDate'
     WHERE `employee_id` = '$empId'";
     $db = dbConn();
     if ($db->query($sql)) {

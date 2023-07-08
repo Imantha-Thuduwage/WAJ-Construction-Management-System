@@ -18,9 +18,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>resources/resource.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>machines/machine.php">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                Resources
+                Machines
               </a>
             </li>
             <li class="nav-item">

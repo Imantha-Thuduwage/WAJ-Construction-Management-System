@@ -24,17 +24,16 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>schedules/schedule.php">
-                <span data-feather="users" class="align-text-bottom"></span>
-                Schedules
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>tools/assign/assign.php">
+                <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+               Tool Assign
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>employees/employee.php">
-                <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-               Employees
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>machines/assign/assign.php">
+                <span data-feather="users" class="align-text-bottom"></span>
+                Machine Assigning
               </a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= SYSTEM_PATH ?>users/user.php">
                 <span data-feather="layers" class="align-text-bottom"></span>

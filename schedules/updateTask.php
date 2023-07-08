@@ -115,7 +115,7 @@
                                                 <div class="table-responsive col-6">
                                                     <?php
                                                     // Create SQL Query
-                                                    $sql = "SELECT * FROM tbl_project_resource WHERE `schedule_id` = '$schId'";
+                                                    $sql = "SELECT * FROM tbl_project_tool WHERE `schedule_id` = '$schId'";
 
                                                     // Calling to the Connection
                                                     $db = dbConn();
@@ -127,7 +127,7 @@
                                                         <thead class="shadow">
                                                             <tr>
                                                                 <th scope="col">Allocate ID</th>
-                                                                <th scope="col">Resource Name</th>
+                                                                <th scope="col">Tool Name</th>
                                                                 <th scope="col">Remove</th>
                                                             </tr>
                                                         </thead>

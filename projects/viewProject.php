@@ -123,13 +123,13 @@
                                 <div class="p-1 border bg-light display-data"><label>Project Manager</label>
                                     <?php
                                     // Retrieve data from MySQL database
-                                    $sql = "SELECT u.`user_id`,u.`full_name`,r.`role_id`,r.`user_role` 
+                                    $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
                                     FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_id` = $proManager";
                                     $result = $db->query($sql);
                                     ?>
                                     <p><?php if ($result->num_rows > 0) {
                                             $row = $result->fetch_assoc();
-                                            echo  $row['full_name'];
+                                            echo  $row['last_name'];
                                         } ?></p>
                                 </div>
                             </div>

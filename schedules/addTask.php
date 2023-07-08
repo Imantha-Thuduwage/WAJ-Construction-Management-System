@@ -137,7 +137,7 @@
                                                 <div class="table-responsive col-6" id="equipment-table">
                                                     <?php
                                                     // Create SQL Query
-                                                    $sql = "SELECT `resource_id`,`resource_name` FROM tbl_resource";
+                                                    $sql = "SELECT `tool_id`,`tool_name` FROM tbl_tool";
 
                                                     // Calling to the Connection
                                                     $db = dbConn();
@@ -148,7 +148,7 @@
                                                     <table class="table">
                                                         <thead class="shadow">
                                                             <tr>
-                                                                <th scope="col">Resource Name</th>
+                                                                <th scope="col">Tool Name</th>
                                                                 <th scope="col">Select</th>
                                                             </tr>
                                                         </thead>
@@ -159,10 +159,9 @@
 
                                                             ?>
                                                                     <tr class="shadow-sm">
-                                                                        <td class="align-middle"><?= $row['resource_name']; ?></td>
+                                                                        <td class="align-middle"><?= $row['tool_name']; ?></td>
                                                                         <td class="align-middle">
-                                                                            <button type="button" class="resource-btn-add" id="add-equipment" 
-                                                                            data-resource-id="<?= $row['resource_id']; ?>" data-resource-name="<?= $row['resource_name']; ?>">
+                                                                            <button type="button" class="resource-btn-add" id="add-equipment" data-resource-id="<?= $row['tool_id']; ?>" data-resource-name="<?= $row['tool_name']; ?>">
                                                                                 <i class="fa-sharp fa-regular fa-plus fa-2xl"></i>
                                                                             </button>
                                                                         </td>
@@ -201,8 +200,7 @@
                                                                     <tr class="shadow-sm">
                                                                         <td class="align-middle"><?= $row['machine_name']; ?></td>
                                                                         <td class="align-middle">
-                                                                        <button type="button" class="resource-btn-add" id="add-machine" 
-                                                                            data-machine-id="<?= $row['machine_id']; ?>" data-machine-name="<?= $row['machine_name']; ?>">
+                                                                            <button type="button" class="resource-btn-add" id="add-machine" data-machine-id="<?= $row['machine_id']; ?>" data-machine-name="<?= $row['machine_name']; ?>">
                                                                                 <i class="fa-sharp fa-regular fa-plus fa-2xl"></i>
                                                                             </button>
                                                                         </td>
@@ -287,79 +285,78 @@
 <script src="<?= SYSTEM_PATH; ?>assets/js/schedules/saveTask.js"></script>
 <Script>
     // AJAX Function to add Equipments to Project
-$(document).on('click', '#add-equipment', function() {
-    var resourceId = $(this).data('resource-id');
-    var resourceName = $(this).data('resource-name');
-    var proId = <?php echo $proId; ?>;
-    var schId = <?php echo $schId; ?>;
+    $(document).on('click', '#add-equipment', function() {
+        var resourceId = $(this).data('resource-id');
+        var resourceName = $(this).data('resource-name');
+        var proId = <?php echo $proId; ?>;
+        var schId = <?php echo $schId; ?>;
 
-    // Send AJAX request to the PHP script
-    $.ajax({
-        url: 'saveResource.php',
-        method: 'POST',
-        data: {
-            resource_id: resourceId,
-            resource_name: resourceName,
-            project_id: proId,
-            schedule_id: schId
-        },
-        success: function(response) {
-            alert(response); // Display a success message or perform any other action
+        // Send AJAX request to the PHP script
+        $.ajax({
+            url: 'saveResource.php',
+            method: 'POST',
+            data: {
+                resource_id: resourceId,
+                resource_name: resourceName,
+                project_id: proId,
+                schedule_id: schId
+            },
+            success: function(response) {
+                alert(response); // Display a success message or perform any other action
 
-            // Remove "+" icon from button
-            $(this).find('i').remove();
+                // Remove "+" icon from button
+                $(this).find('i').remove();
 
-            // Add Correct sign to Button
-            $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
+                // Add Correct sign to Button
+                $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
 
-            // Disable the button
-            $(this).prop('disabled', true);
+                // Disable the button
+                $(this).prop('disabled', true);
 
-        }.bind(this),
+            }.bind(this),
 
-        error: function() {
-            alert('Error occurred while saving the resource.'); // Display an error message
-        }
+            error: function() {
+                alert('Error occurred while saving the resource.'); // Display an error message
+            }
+        });
     });
-});
 
-// AJAX Function to add Machines to Project
-$(document).on('click', '#add-machine', function() {
-    var machineId = $(this).data('machine-id');
-    var machineName = $(this).data('machine-name');
-    var proId = <?php echo $proId; ?>;
-    var schId = <?php echo $schId; ?>;
+    // AJAX Function to add Machines to Project
+    $(document).on('click', '#add-machine', function() {
+        var machineId = $(this).data('machine-id');
+        var machineName = $(this).data('machine-name');
+        var proId = <?php echo $proId; ?>;
+        var schId = <?php echo $schId; ?>;
 
-    // Send AJAX request to the PHP script
-    $.ajax({
-        url: 'saveMachine.php',
-        method: 'POST',
-        data: {
-            machine_id: machineId,
-            machine_name: machineName,
-            project_id: proId,
-            schedule_id: schId
-        },
-        success: function(response) {
-            alert(response); // Display a success message or perform any other action
+        // Send AJAX request to the PHP script
+        $.ajax({
+            url: 'saveMachine.php',
+            method: 'POST',
+            data: {
+                machine_id: machineId,
+                machine_name: machineName,
+                project_id: proId,
+                schedule_id: schId
+            },
+            success: function(response) {
+                alert(response); // Display a success message or perform any other action
 
-            // Remove "+" icon from button
-            $(this).find('i').remove();
+                // Remove "+" icon from button
+                $(this).find('i').remove();
 
-            // Add Correct sign to Button
-            $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
+                // Add Correct sign to Button
+                $(this).append('<img src="<?= SYSTEM_PATH; ?>assets/icons/verified.png" alt="Flaticon Icon">');
 
-            // Disable the button
-            $(this).prop('disabled', true);
+                // Disable the button
+                $(this).prop('disabled', true);
 
-        }.bind(this),
+            }.bind(this),
 
-        error: function() {
-            alert('Error occurred while saving the resource.'); // Display an error message
-        }
+            error: function() {
+                alert('Error occurred while saving the resource.'); // Display an error message
+            }
+        });
     });
-});
-
 </Script>
 
 <?php include '../footer.php'; ?>

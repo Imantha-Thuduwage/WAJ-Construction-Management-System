@@ -18,7 +18,7 @@ if (isset($_GET['allocate_id'])) {
 function deleteRecord($recordId)
 {
     // Delete the record from the database
-    $sql = "DELETE FROM tbl_project_resource WHERE allocate_id = $recordId";
+    $sql = "DELETE FROM tbl_project_tool WHERE allocate_id = $recordId";
     $db = dbConn();
     if ($db->query($sql)) {
         echo "Resource Deleted successfully";

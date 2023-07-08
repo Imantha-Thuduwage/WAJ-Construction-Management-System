@@ -32,12 +32,10 @@
         $description = $row['special_note'];
         $payedSlip = $row['payed_slip'];
     }
-    echo $payedSlip;
     ?>
 
     <div class="card shadow" method="POST" id="form-card" action="saveEditPayment.php" enctype="multipart/form-data">
         <div class="card-body">
-
             <form method="post" class="form" id="payment-form">
                 <div class="container field p-0">
                     <div class="row justify-content-start gx-5">
@@ -129,8 +127,8 @@
                         <i class="uil uil-navigator"></i>
                     </button>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
     </div>
 </main>

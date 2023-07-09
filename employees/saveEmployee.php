@@ -34,9 +34,6 @@ if (empty($phoneNum)) {
 if (empty($joinDate)) {
     $errors['error_joinDate'] = "Joined Date is Required";
 }
-if (empty($basicSal)) {
-    $errors['error_basicSal'] = "Basic Salary is Required";
-}
 
 // Advanced Validation 
 else if (!empty($nicNumber)) {
@@ -120,9 +117,9 @@ if (!empty($errors)) {
     // Calling DB Connection
     $sql = "INSERT INTO tbl_employee
             (`title`, `first_name`, `last_name`, `nic_number`, `date_of_birth`, `gender`, `street_line_one`, `street_line_two`,
-            `city`, `contact_number`, `date_of_joining`, `basic_salary`, `employee_status`, `profile_image`, `add_user`, `add_date`) 
+            `city`, `contact_number`, `date_of_joining`,`employee_status`, `profile_image`, `add_user`, `add_date`) 
             VALUES ('$title', '$firstName', '$lastName', '$nicNumber', '$dob', '$gender', '$street1', '$street2', 
-            '$city', '$phoneNum', '$joinDate', '$basicSal', '$empStatus', '$fileNameNew', '$addUser', '$addDate')";
+            '$city', '$phoneNum', '$joinDate', '$empStatus', '$fileNameNew', '$addUser', '$addDate')";
     $db = dbConn();
     if ($db->query($sql)) {
         echo json_encode(array('success' => "Form submitted successfully"));

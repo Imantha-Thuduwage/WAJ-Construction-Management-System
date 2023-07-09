@@ -85,12 +85,6 @@ $(document).ready(function () {
             .attr("placeholder", response.error_joinDate)
             .addClass("placeholder-set");
         }
-        if (response.hasOwnProperty("error_basicSal")) {
-          $("#basicSal")
-            .addClass("error")
-            .attr("placeholder", response.error_basicSal)
-            .addClass("placeholder-set");
-        }
       },
       error: function (response) {
         Swal.fire("Failed", response.error, "error");

@@ -184,12 +184,6 @@
                                             <input class="p-3 bg-body" id="joinDate" type="text" onfocus="(this.type='date')" placeholder="Joined Date" name="joinDate" value="<?php echo @$joinDate; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-4 ">
-                                        <div class="input-field">
-                                            <label for="basic_salary">Basic Salary</label>
-                                            <input class="p-3 bg-body" id="basicSal" type="number" placeholder="Basic Salary" name="basicSal" value="<?php echo @$basicSal; ?>">
-                                        </div>
-                                    </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>

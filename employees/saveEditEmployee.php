@@ -34,9 +34,6 @@ if (empty($phoneNum)) {
 if (empty($joinDate)) {
     $errors['error_joinDate'] = "Joined Date is Required";
 }
-if (empty($basicSal)) {
-    $errors['error_basicSal'] = "Basic Salary is Required";
-}
 
 // Advanced Validation 
 else if (!empty($nicNumber)) {
@@ -118,7 +115,7 @@ if (!empty($errors)) {
     $sql = "UPDATE tbl_employee
     SET `title` = '$title', `first_name` = '$firstName', `last_name` = '$lastName', `nic_number` = '$nicNumber', `date_of_birth` = '$dob',
     `gender` = '$gender', `street_line_one` = '$street1', `street_line_two` = '$street2', `city` = '$city',
-    `contact_number` = '$phoneNum', `date_of_joining` = '$joinDate', `basic_salary` = '$basicSal', `profile_image` = '$fileNameNew',
+    `contact_number` = '$phoneNum', `date_of_joining` = '$joinDate', `profile_image` = '$fileNameNew',
      `update_user` = '$updateUser', `update_date` = '$updateDate'
     WHERE `employee_id` = '$empId'";
     $db = dbConn();

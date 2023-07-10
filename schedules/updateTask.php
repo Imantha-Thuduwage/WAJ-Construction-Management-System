@@ -6,14 +6,18 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Update Task Details</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
                 View Schedules
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 700px !important;
+        }
+    </style>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -139,7 +143,7 @@
                                                             ?>
                                                                     <tr class="shadow-sm">
                                                                         <td class="align-middle"><?= $row['allocate_id']; ?></td>
-                                                                        <td class="align-middle"><?= $row['resource_name']; ?></td>
+                                                                        <td class="align-middle"><?= $row['tool_name']; ?></td>
                                                                         <td>
                                                                             <button type="button" class="resource-btn-add">
                                                                                 <a href='deleteResource.php?allocate_id=<?= $row['allocate_id']; ?>' onclick='return confirmDelete()'>

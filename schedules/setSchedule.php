@@ -4,16 +4,21 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Set New Schedule</h4>
+        <h4>Here! Set New Schedule</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
-                View Schedules
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <!-- Link to add project form -->
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View Schedule
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 630px !important;
+        }
+    </style>
 
     <?php
     // Cheking Submit button is clicked
@@ -60,7 +65,7 @@
                     if ($db3->query($sql3)) {
 
                         // Construct the URL for the desired page
-                        $anotherPageUrl = SYSTEM_PATH . 'schedules/schedule.php?project_id=';
+                        $anotherPageUrl = SYSTEM_PATH . 'schedules/schedule.php';
 
                         // Redirect the user to the desired page
                         echo '<meta http-equiv="refresh" content="0;url=' . $anotherPageUrl . '">';

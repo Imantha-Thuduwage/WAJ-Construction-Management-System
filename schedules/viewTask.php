@@ -6,21 +6,24 @@
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     extract($_GET);
-
 } ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Schedule <?php echo $schedule_id ?></h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/setSchedule.php'">
-                Add Schedule
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View Schedule
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 630px !important;
+        }
+    </style>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">

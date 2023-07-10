@@ -4,16 +4,24 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Manage Employees </h4>
+        <h4>Here! Your Employees Portal</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>employees/addEmployee.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>employees/addEmployee.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/plus.png" class="me-2">
                 Add Employee
             </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/filter.png" class="me-2">
                 Filter
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 480px !important;
+        }
+    </style>
 
     <!-- Modal for Popup Filters -->
     <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -99,7 +107,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="input-field">
-                                    <label for="phone_number">Phone Number</label>
+                                        <label for="phone_number">Phone Number</label>
                                         <input class="bg-body" id="contactNum" type="text" placeholder="Contact Number" name="contactNum" value="">
                                     </div>
                                 </div>
@@ -122,7 +130,7 @@
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
-            <h4>List of Projects</h4>
+            <h4>List of Employees</h4>
             <div class="table-responsive">
                 <?php
                 // Create SQL Query
@@ -160,11 +168,6 @@
 <?php include '../footer.php'; ?>
 
 <script>
-    // Function to delete selected Record From the Project Table
-    function confirmDelete() {
-        return confirm("Are you sure you want to inactive this employee?");
-    }
-
     $(document).ready(function() {
         // AJAX request to get all records initially
         $.ajax({
@@ -196,4 +199,30 @@
             });
         });
     });
+
+    // Function to delete selected Record From the employee Table
+    function confirmDelete(event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // Retrieve the employee ID from the href attribute
+        var employeeId = event.currentTarget.getAttribute('href').match(/employee_id=(\d+)/)[1];
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Employee',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and employeeId is defined, proceed with the deletion by navigating to the link
+                if (employeeId) {
+                    window.location.href = 'inactiveEmployee.php?employee_id=' + employeeId;
+                }
+            }
+        });
+    }
 </script>

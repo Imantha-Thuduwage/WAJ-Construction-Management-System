@@ -4,7 +4,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Manage Projects</h4>
+        <h4>Here! Your Projects Portal</h4>
         <div>
             <!-- Link to add project form -->
             <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/addProject.php'">
@@ -22,7 +22,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 630px !important;
+            padding-right: 535px !important;
         }
     </style>
 

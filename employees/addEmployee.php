@@ -6,26 +6,24 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Add New Employee</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
-                View Emplyees
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View Employees
             </button>
         </div>
     </div>
 
+    <style>
+        #form-header>h4 {
+            padding-right: 660px !important;
+        }
+    </style>
 
     <div class="card shadow" method="POST" id="form-card" action="saveEmployee.php" enctype="multipart/form-data">
         <div class="card-body">
 
             <form method="post" class="form" id="employee-form">
                 <div class="container field p-0">
-                    <div class="row justify-content-start gx-5">
-                        <div class="col-sm">
-                            <h6 class="pt-3 pb-2 mb-0">Basic Details</h6>
-                        </div>
-                    </div>
                     <div class="row justify-content-start gx-5">
                         <div class="col-sm">
                             <label for="title" class="mb-1">Title</label>

@@ -4,16 +4,24 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Add New Employee</h4>
+        <h4>Update With New Details</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
-                View Emplyees
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View Employees
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 600px !important;
+        }
+
+        #form-card {
+            margin-top: 45px;
+        }
+    </style>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -50,11 +58,10 @@
                         <div class="col-sm-5">
                             <div class="card id-section d-flex align-items-start border-0">
                                 <div class="card-body mb-2 p-2" style="display: flex; justify-content: center; align-items: center;">
-                                    <img class="img-fluid rounded-circle" src="<?= SYSTEM_PATH; ?>assets/images/profileImages/<?= !empty($profileImg)?$profileImg:'myProfile.png' ?>" style="width: 300px; height: 300px;">
+                                    <img class="img-fluid rounded-circle" src="<?= SYSTEM_PATH; ?>assets/images/profileImages/<?= !empty($profileImg) ? $profileImg : 'myProfile.png' ?>" style="width: 300px; height: 300px;">
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-sm">
                             <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">

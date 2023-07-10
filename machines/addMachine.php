@@ -6,15 +6,18 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Add New Machine</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>machines/addmachine.php'">
-                View Machines
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>machines/machine.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View Machine
             </button>
         </div>
     </div>
 
+    <style>
+        #form-header>h4 {
+            padding-right: 700px !important;
+        }
+    </style>
 
     <div class="card shadow" method="POST" id="form-card" action="saveMachine.php" enctype="multipart/form-data">
         <div class="card-body">

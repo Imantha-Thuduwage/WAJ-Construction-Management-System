@@ -38,10 +38,7 @@
           </ul>
 
           <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-warning text-uppercase">
-            <span>Report Portal</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-              <span data-feather="plus-circle" class="align-text-bottom text-warning"></span>
-            </a>
+            <span class="text-warning">Report Portal</span>
           </h5>
 
           <ul class="nav flex-column mb-2">

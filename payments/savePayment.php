@@ -71,6 +71,7 @@ if (empty($errors)) {
     }
 }
 
+
 if (!empty($errors)) {
     echo json_encode($errors);
 } else {

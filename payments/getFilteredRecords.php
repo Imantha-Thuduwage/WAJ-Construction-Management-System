@@ -51,7 +51,7 @@ $result = $db->query($sql);
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-info btn-sm inactive-circle">
+                    <button type="button" class="btn btn-outline-info btn-sm">
                         <a href='deletePayment.php?payment_id=<?= $row['payment_id']; ?>' onclick='return confirmDelete()'>
                             <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
                         </a>

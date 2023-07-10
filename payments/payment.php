@@ -4,16 +4,24 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Manage Payments </h4>
+        <h4>Here! Your Payment Portal</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payments/addPayment.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payments/addPayment.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/plus.png" class="me-2">
                 Add Payments
             </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/filter.png" class="me-2">
                 Filter
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 500px !important;
+        }
+    </style>
 
     <!-- Modal for Popup Filters -->
     <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -76,19 +84,19 @@
                                     <select class="bg-body" id="payedMethod" name="payedMethod">
                                         <option value="" selected disabled hidden>Select Payed Method/option>
 
-                                        <?php
-                                        // Retrieve data from MySQL database
-                                        $sql = "SELECT `payed_method` FROM tbl_payment";
-                                        $db = dbConn();
-                                        $result = $db->query($sql);
+                                            <?php
+                                            // Retrieve data from MySQL database
+                                            $sql = "SELECT `payed_method` FROM tbl_payment";
+                                            $db = dbConn();
+                                            $result = $db->query($sql);
 
-                                        // Display options in dropdown list
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['payed_method'] . "'>" . $row['payed_method'] . "</option>";
+                                            // Display options in dropdown list
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<option value='" . $row['payed_method'] . "'>" . $row['payed_method'] . "</option>";
+                                                }
                                             }
-                                        }
-                                        ?>
+                                            ?>
                                     </select>
                                 </div>
                             </div>

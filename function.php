@@ -1,14 +1,6 @@
 <?php
-function clean_input($input)
-{
-    $input = trim($input);
-    $input = stripslashes($input);
-    $input = htmlspecialchars($input);
 
-    return $input;
-}
-
-//db connection
+//define db connection
 function dbConn()
 {
     //create variables to connect db
@@ -28,6 +20,7 @@ function dbConn()
     }
 }
 
+// Function for show sweet alert message inside php files
 function showMessage(){
     $alert = "Swal.fire(
         'Recorded',

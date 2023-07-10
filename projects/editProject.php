@@ -4,16 +4,20 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Add New Project</h4>
+        <h4>Update With New Details</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <button type="button" class="btn btn-sm px-4 bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
                 View Projects
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 620px !important;
+        }
+    </style>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -386,10 +390,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="nextBtn" type="submit" id="submit">
-                    <span class="btnText">Save</span>
-                    <i class="uil uil-navigator"></i>
-                </button>
+                <div class="col-2">
+                    <button class="nextBtn" type="submit" id="submit">
+                        <span class="btnText">Save</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </div>

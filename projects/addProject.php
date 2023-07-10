@@ -6,15 +6,18 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Add New Project</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <button type="button" class="btn btn-sm px-4 bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
                 View Projects
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
             </button>
         </div>
     </div>
 
+    <style>
+        #form-header>h4 {
+            padding-right: 720px !important;
+        }
+    </style>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
@@ -57,7 +60,7 @@
                                     <div class="input-field">
                                         <label for="project_manager">Project Manager</label>
                                         <select class="bg-body" id="proManager" name="proManager">
-                                            <option value = "" selected disabled hidden>Select Project Manager</option>
+                                            <option value="" selected disabled hidden>Select Project Manager</option>
 
                                             <?php
                                             // Retrieve data from MySQL database

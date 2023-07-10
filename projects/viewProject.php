@@ -4,16 +4,20 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Add New Project</h4>
+        <h4>Let's See Details</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <button type="button" class="btn btn-sm px-4 bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
                 View Projects
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 720px !important;
+        }
+    </style>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -78,7 +82,7 @@
             <div class="container">
                 <div class="row justify-content-start mb-4" style="background-color:rgb(0 33 88);">
                     <div class="col-sm">
-                        <h4 class="pt-3 text-center" style="color: white;">Project Details of <?php echo $pName?></h4>
+                        <h4 class="pt-3 text-center" style="color: white;">Project Details of <?php echo $pName ?></h4>
                     </div>
                 </div>
                 <div class="row justify-content-start gx-5">

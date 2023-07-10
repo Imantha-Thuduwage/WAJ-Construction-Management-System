@@ -4,8 +4,10 @@ session_start();
 include '../function.php';
 include '../config.php';
 
+// This function uses array keys as variable names and values as variable values
 extract($_POST);
 
+// Create variable to store sql queries
 $where = "";
 
 if (!empty($proId)) {
@@ -55,7 +57,7 @@ $result = $db->query($sql);
                 </td>
                 <td>
                     <button type="button" class="btn btn-outline-info btn-sm">
-                        <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='return confirmDelete()'>
+                        <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='confirmDelete(event)'>
                             <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
                         </a>
                     </button>

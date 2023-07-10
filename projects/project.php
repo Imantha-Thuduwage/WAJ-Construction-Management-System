@@ -4,16 +4,27 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Manage Projects </h4>
+        <h4>Manage Projects</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/addProject.php'">
+            <!-- Link to add project form -->
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>projects/addProject.php'">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/plus.png" class="me-2">
                 Add Project
             </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+
+            <!-- Open filter modal when click on this button -->
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/filter.png" class="me-2">
                 Filter
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 630px !important;
+        }
+    </style>
 
     <!-- Modal for Popup Filters -->
     <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -168,12 +179,9 @@
 
 <?php include '../footer.php'; ?>
 
-<script>
-    // Function to delete selected Record From the Project Table
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
-    }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<script>
     $(document).ready(function() {
         // AJAX request to get all records initially
         $.ajax({
@@ -205,4 +213,30 @@
             });
         });
     });
+
+    // Function to delete selected Record From the Project Table
+    function confirmDelete(event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // Retrieve the project ID from the href attribute
+        var projectID = event.currentTarget.getAttribute('href').match(/project_id=(\d+)/)[1];
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Project',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and projectID is defined, proceed with the deletion by navigating to the link
+                if (projectID) {
+                    window.location.href = 'deleteProject.php?project_id=' + projectID;
+                }
+            }
+        });
+    }
 </script>

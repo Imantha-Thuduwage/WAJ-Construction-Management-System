@@ -30,7 +30,7 @@ $result = $db->query($sql);
                 </td>
                 <td>
                     <button type="button" class="btn btn-outline-info btn-sm">
-                        <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='return confirmDelete()'>
+                        <a href='deleteProject.php?project_id=<?= $row['project_id']; ?>' onclick='confirmDelete(event)'>
                             <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
                         </a>
                     </button>

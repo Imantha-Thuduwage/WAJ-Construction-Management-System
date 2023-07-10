@@ -5,7 +5,6 @@
 }
 
 #form-header > h4 {
-  padding-right: 550px !important;
   color: #33515c;
 }
 
@@ -27,14 +26,6 @@ form .field {
   flex-direction: column;
   margin: 4px 0;
   /* flex-wrap: wrap; */
-}
-
-.field-2 {
-  width: calc(100% / 2 - 15px);
-}
-
-.field-3 {
-  width: calc(100% / 3 - 15px);
 }
 
 .input-field label {

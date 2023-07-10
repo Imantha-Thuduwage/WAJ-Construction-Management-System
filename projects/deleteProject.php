@@ -16,12 +16,13 @@ function deleteRecord($recordId)
     $sql = "DELETE FROM tbl_project WHERE project_id = $recordId";
     $db = dbConn();
     if ($db->query($sql)) {
-        echo "Form submitted successfully";
+        $_SESSION['success_message'] = "Record deleted successfully";
     } else {
-        echo "Form submission failed";
+        $_SESSION['error_message'] = "Failed to delete the record";
     }
 
     // Redirect back to the previous page
     header("Location: project.php");
     exit();
 }
+

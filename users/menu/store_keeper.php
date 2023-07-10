@@ -24,13 +24,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>tools/assign/assign.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>assign/tools/assign.php">
                 <span data-feather="bar-chart-2" class="align-text-bottom"></span>
                Tool Assign
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>machines/assign/assign.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>assign/machines/assign.php">
                 <span data-feather="users" class="align-text-bottom"></span>
                 Machine Assigning
               </a>

@@ -84,6 +84,15 @@ $(document).ready(function () {
             .attr("placeholder", response.error_joinDate)
             .addClass("placeholder-set");
         }
+        if (response.hasOwnProperty("error_supervisor")) {
+          $("#supervisor").addClass("error").addClass("option-color-set");
+          $("#supervisor").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue != "") {
+              $("#supervisor").removeClass("option-color-set");
+            }
+          });
+        }
       },
       error: function (response) {
         Swal.fire("Failed", response.error, "error");

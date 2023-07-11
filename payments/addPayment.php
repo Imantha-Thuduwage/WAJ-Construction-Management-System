@@ -6,7 +6,7 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Add New Payment</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
             <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">    
             View Payments
             </button>

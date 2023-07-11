@@ -191,6 +191,30 @@
                                             <input class="p-3 bg-body" id="joinDate" type="text" onfocus="(this.type='date')" placeholder="Joined Date" name="joinDate" value="<?php echo @$joinDate; ?>">
                                         </div>
                                     </div>
+                                    <div class="col-4">
+                                    <div class="input-field">
+                                        <label for="project_manager">Supervisor</label>
+                                        <select class="bg-body" id="supervisor" name="supervisor">
+                                            <option value="" disabled hidden>Select Project Manager</option>
+
+                                            <?php
+                                            // Retrieve data from MySQL database
+                                            $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
+                                            FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'supervisor'";
+                                            $db = dbConn();
+                                            $result = $db->query($sql);
+
+                                            // Display options in dropdown list
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($row['user_id'] == $supervisor) ? 'selected' : '';
+                                                    echo "<option value='" . $row['user_id'] . "' " . $selected . ">" . $row['last_name'] . "</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>

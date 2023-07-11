@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
             </td>
             <td>
                 <button type="button" class="btn btn-outline-info btn-sm">
-                    <a href='inactiveEmployee.php?employee_id=<?= $row['employee_id']; ?>' onclick='confirmDelete(event)'>
+                    <a href='#' onclick="confirmDelete('<?= $row['employee_id']; ?>')">
                         <img src="<?= SYSTEM_PATH; ?>assets/icons/inactive.png">
                     </a>
                 </button>

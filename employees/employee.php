@@ -201,11 +201,7 @@
     });
 
     // Function to delete selected Record From the employee Table
-    function confirmDelete(event) {
-        event.preventDefault(); // Prevent the default link behavior
-
-        // Retrieve the employee ID from the href attribute
-        var employeeId = event.currentTarget.getAttribute('href').match(/employee_id=(\d+)/)[1];
+    function confirmDelete(employeeId) {
 
         // Use SweetAlert2 to show a confirmation dialog
         Swal.fire({

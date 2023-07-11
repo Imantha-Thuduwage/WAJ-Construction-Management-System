@@ -3,6 +3,8 @@ session_start();
 
 include '../function.php';
 
+$fileNameNew = NULL;
+
 // Create array to store error messages
 $errors = array();
 
@@ -30,7 +32,7 @@ else if (empty($_SESSION['status'])) {
     $addDate = date('y-m-d');
 }
 
-if (empty($errors)) {
+if (empty($errors) && !empty($_FILES['payedSlip']['name'])) {
     // Check if 'profileImg' key exists in $_FILES array
     $pImage = $_FILES['payedSlip'];
 

@@ -4,11 +4,11 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Here! Your Payment Portal</h4>
+        <h4>Here! Your Attendance Portal</h4>
         <div>
-            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payments/addPayment.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>attendance/markAttendance.php'">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/plus.png" class="me-2">
-                Add Payments
+                Mark Attendance
             </button>
             <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" data-bs-toggle="modal" data-bs-target="#filterModal">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/filter.png" class="me-2">
@@ -19,7 +19,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 500px !important;
+            padding-right: 450px !important;
         }
     </style>
 
@@ -36,20 +36,20 @@
                         <div class="row row-cols-2 row-cols-lg-1">
                             <div class="col-4">
                                 <div class="input-field">
-                                    <label>Payment ID</label>
-                                    <select class="bg-body" id="paymentId" name="paymentId">
-                                        <option value="" selected disabled hidden>Select Payment ID</option>
+                                    <label>Attenadnce ID</label>
+                                    <select class="bg-body" id="attendanceId" name="attendanceId">
+                                        <option value="" selected disabled hidden>Select Attendance ID</option>
 
                                         <?php
                                         // Retrieve data from MySQL database
-                                        $sql = "SELECT `payment_id` FROM tbl_payment";
+                                        $sql = "SELECT `attendance_id` FROM tbl_attendance";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['payment_id'] . "'>" . $row['payment_id'] . "</option>";
+                                                echo "<option value='" . $row['attendance_id'] . "'>" . $row['attendance_id'] . "</option>";
                                             }
                                         }
                                         ?>
@@ -58,20 +58,20 @@
                             </div>
                             <div class="col-4">
                                 <div class="input-field">
-                                    <label>Project ID</label>
-                                    <select class="bg-body" id="proId" name="proId">
-                                        <option value="" selected disabled hidden>Select Project Name</option>
+                                    <label>Employee ID</label>
+                                    <select class="bg-body" id="empId" name="empId">
+                                        <option value="" selected disabled hidden>Select Employee ID</option>
 
                                         <?php
                                         // Retrieve data from MySQL database
-                                        $sql = "SELECT `project_id` FROM tbl_project";
+                                        $sql = "SELECT `employee_id` FROM tbl_employee";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['project_id'] . "'>" . $row['project_id'] . "</option>";
+                                                echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
                                             }
                                         }
                                         ?>
@@ -80,53 +80,30 @@
                             </div>
                             <div class="col-4">
                                 <div class="input-field">
-                                    <label for="payed_method">Payed Method</label>
-                                    <select class="bg-body" id="payedMethod" name="payedMethod">
-                                        <option value="" selected disabled hidden>Select Payed Method/option>
+                                    <label>Date</label>
+                                    <input class="bg-body" id="attendDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="attendDate" value="">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-field">
+                                    <label>Attend Type</label>
+                                    <select class="bg-body" id="attendType" name="attendType">
+                                        <option value="" selected disabled hidden>Select Attend Type/option>
 
                                             <?php
                                             // Retrieve data from MySQL database
-                                            $sql = "SELECT `payed_method` FROM tbl_payment";
+                                            $sql = "SELECT `attend_type` FROM tbl_attendance";
                                             $db = dbConn();
                                             $result = $db->query($sql);
 
                                             // Display options in dropdown list
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
-                                                    echo "<option value='" . $row['payed_method'] . "'>" . $row['payed_method'] . "</option>";
+                                                    echo "<option value='" . $row['attend_type'] . "'>" . $row['attend_type'] . "</option>";
                                                 }
                                             }
                                             ?>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="startDate">From</label>
-                                        <input class="bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="startDate">To</label>
-                                        <input class="bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="payed_cost1">Min Payed Cost</label>
-                                        <input class="bg-body" id="minCost" type="Number" placeholder="Total Cost" name="minCost" value="">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="payed_cost2">Max Payed Cost</label>
-                                        <input class="bg-body" id="maxCost" type="Number" placeholder="Total Cost" name="maxCost" value="">
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,11 +116,11 @@
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
-            <h4>List of Payments</h4>
+            <h4>List of Attendance</h4>
             <div class="table-responsive">
                 <?php
                 // Create SQL Query
-                $sql = "SELECT `payment_id`, `project_id`,`payed_amount`,`payed_date`,`payed_method` FROM tbl_payment";
+                $sql = "SELECT `attendance_id`, `employee_id`,`attendance_date`,`attend_type` FROM tbl_attendance";
 
                 // Calling to the Connection
                 $db = dbConn();
@@ -154,11 +131,10 @@
                 <table class="table table-sm">
                     <thead class="shadow">
                         <tr>
-                            <th scope="col">Payment ID</th>
-                            <th scope="col">Project ID</th>
-                            <th scope="col">Payed Amount</th>
-                            <th scope="col">Payed Date</th>
-                            <th scope="col">Payed Method</th>
+                            <th scope="col">Attendance ID</th>
+                            <th scope="col">Employee ID</th>
+                            <th scope="col">Attendance Date</th>
+                            <th scope="col">Attend Type</th>
                             <th scope="col">More Details</th>
                             <th scope="col">Remove</th>
                         </tr>
@@ -168,7 +144,7 @@
                 </table>
             </div>
         </div>
-    <div>
+        <div>
 </main>
 
 <?php include '../footer.php'; ?>

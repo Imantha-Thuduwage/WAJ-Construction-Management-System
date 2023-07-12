@@ -52,13 +52,13 @@
 
                                         <!-- Get count of existing task related to relevant schedule -->
                                         <?php
-                                        $sql = "SELECT COUNT(`schedule_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
+                                        $sql = "SELECT COUNT(`task_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
                                         if ($result) {
                                             $row = $row = $result->fetch_assoc();
-                                            $count = $row['COUNT(`schedule_id`)'];
+                                            $count = $row['COUNT(`task_id`)'];
 
                                             if ($count == 0) { ?>
                                                 <h6 class="pt-3 pb-2 mb-0">Task 01</h6>

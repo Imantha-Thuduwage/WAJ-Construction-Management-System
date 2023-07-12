@@ -18,15 +18,21 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>schedules/schedule.php">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/bill.png" class="me-2">
+                Schedules
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<?= SYSTEM_PATH ?>machines/machine.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/tool-box.png" class="me-2">
                 Machines
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>schedules/schedule.php">
-                <img src="<?= SYSTEM_PATH; ?>assets/icons/bill.png" class="me-2">
-                Schedules
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>tools/tool.php">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/tool-box.png" class="me-2">
+                Tools
               </a>
             </li>
             <li class="nav-item">

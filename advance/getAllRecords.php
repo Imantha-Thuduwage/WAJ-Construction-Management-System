@@ -27,9 +27,9 @@ $result = $db->query($sql);
                 </td>
                 <td>
                     <button type="button" class="btn btn-outline-info btn-sm">
-                        <a href='deleteAdvance.php?payment_id=<?= $row['payment_id']; ?>' onclick='return confirmDelete()'>
-                            <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
-                        </a>
+                    <a href='#' onclick="confirmDelete('<?= $row['advance_id']; ?>')">
+                        <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
+                    </a>
                     </button>
                 </td>
             </tr>

@@ -61,7 +61,7 @@
 
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>payroll/payroll.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>payroll/genaratePayrollRep.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
                 Payroll
               </a>

@@ -88,7 +88,7 @@ $(document).ready(function () {
         }
         // Check for errors
         if (response.hasOwnProperty("error_pName")) {
-          // $("#pName").val('');
+          $("#pName").val('');
           $("#pName").addClass("error")
             .attr("placeholder", response.error_pName)
             .addClass("placeholder-set");

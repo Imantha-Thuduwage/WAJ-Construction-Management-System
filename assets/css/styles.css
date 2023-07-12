@@ -11,7 +11,7 @@ body {
 
 header{
   color: rgb(255, 255, 255);
-  background-color: rgb(0 33 88);
+  background-color: rgb(26, 0, 88);
 }
 
 /* Change logout dropdown arrow colour into white */
@@ -27,7 +27,7 @@ header{
 
 /*Styles for Nav Bar Section */
 #sidebarMenu{
-  background-color: rgb(0 33 88);
+  background-color: rgb(26, 0, 88);
 }
 
 #company-name {

@@ -67,21 +67,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>reportPortal/reportPortal.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
-                Last quarter
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
-                Social engagement
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
-                Year-end sale
+                Get My Report
               </a>
             </li>
           </ul>

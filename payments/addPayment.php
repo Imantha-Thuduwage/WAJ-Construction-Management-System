@@ -19,10 +19,10 @@
         }
     </style>
 
-    <div class="card shadow" method="POST" id="form-card" action="savePayment.php" enctype="multipart/form-data">
+    <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form" id="payment-form">
+            <form method="post" class="form" id="payment-form" action="savePayment.php" enctype="multipart/form-data">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">

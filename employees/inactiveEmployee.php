@@ -16,7 +16,7 @@ function inactiveEmployee($recordId)
     $sql = "UPDATE tbl_employee SET `employee_status` = 0 WHERE employee_id = $recordId";
     $db = dbConn();
     if ($db->query($sql)) {
-        echo "Form submitted successfully";
+        showMessage();
     } else {
         echo "Form submission failed";
     }

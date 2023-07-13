@@ -1,33 +1,29 @@
-// JQuery Function function for submitting data using AJAX
 $(document).ready(function () {
-  $("#payroll-form").submit(function (e) {
-    e.preventDefault();
+  $("#submit").click(function (event) {
+    event.preventDefault();
 
     // Remove Border Styles from Data Filled Input Fields
     $(".bg-body").removeClass("error");
 
-    var data = new FormData(this);
+    var data = $("#payroll-form").serialize();
 
     // Submit form data to PHP script using AJAX
     $.ajax({
-      url: "saveReport.php",
+      url: "createReport.php",
       type: "POST",
       data: data,
-      dataType: "json",
-      cache: false,
-      contentType: false,
-      processData: false,
-
       success: function (response) {
-        //Checking if Form data is Successfully Submitted
-        if (response.hasOwnProperty("success")) {
-          // Send Successfull Alert Messsage to User
-          Swal.fire("Completed", response.success, "success");
-          // Clear form data
-          $("#payroll-form")[0].reset();
+        // Check for error message
+        if (response === "Form submission failed") {
+          Swal.fire("Failed", response, "error");
+        } else {
+          // Display the result
+          $("#output").html(response);
+          alert(response);
         }
-        // // Check for errors
-        if (response.hasOwnProperty("error_empId")) {
+
+        // Handle specific error messages
+        if (response.indexOf("error_empId") !== -1) {
           $("#empId").addClass("error").addClass("option-color-set");
           $("#empId").change(function () {
             var selectedValue = $(this).val();
@@ -36,22 +32,21 @@ $(document).ready(function () {
             }
           });
         }
-        if (response.hasOwnProperty("error_startDate")) {
-          // $("#pName").val('');
+        if (response.indexOf("error_startDate") !== -1) {
           $("#startDate")
             .addClass("error")
-            .attr("placeholder", response.error_startDate)
+            .attr("placeholder", response.split(": ")[1])
             .addClass("placeholder-set");
         }
-        if (response.hasOwnProperty("error_endDate")) {
+        if (response.indexOf("error_endDate") !== -1) {
           $("#endDate")
             .addClass("error")
-            .attr("placeholder", response.error_endDate)
+            .attr("placeholder", response.split(": ")[1])
             .addClass("placeholder-set");
         }
       },
       error: function (response) {
-        Swal.fire("Failed", response.error, "error");
+        Swal.fire("Failed", "Form submission failed", "error");
       },
     });
   });

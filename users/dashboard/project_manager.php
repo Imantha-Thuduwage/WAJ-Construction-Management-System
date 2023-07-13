@@ -36,7 +36,7 @@ if ($result) {
   echo "Error executing the query: " . $db->error;
 }
 
-// SQL Query for Get Count of All Completed Projects
+// SQL Query for Get Count of Over Due Tasks
 $sql = "SELECT COUNT(task_id) AS overdue_count
 FROM tbl_schedule_task WHERE ending_date < '$currentDate'";
 $db = dbConn();
@@ -49,7 +49,7 @@ if ($result) {
   echo "Error executing the query: " . $db->error;
 }
 
-// SQL Query for Get Count of All Completed Projects
+// SQL Query for Get Count of Over Due Tasks Coming in This Month
 $sql = "SELECT COUNT(task_id) as overdue_count
 FROM tbl_schedule_task WHERE ending_date = '$thismonth'";
 $db = dbConn();

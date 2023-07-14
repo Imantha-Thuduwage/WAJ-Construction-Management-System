@@ -21,7 +21,6 @@
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
-
             <form method="post" class="form" id="allTask-form" action="getAllTask.php">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">

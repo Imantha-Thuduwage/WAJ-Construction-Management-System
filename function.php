@@ -24,7 +24,7 @@ function dbConn()
 function showMessage(){
     $alert = "Swal.fire(
         'Recorded',
-        'Data Saved in Data Base Successfully',
+        'Recorded Successfully',
         'success'
       )";
 

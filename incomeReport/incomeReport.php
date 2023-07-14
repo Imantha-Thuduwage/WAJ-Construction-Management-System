@@ -4,48 +4,36 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
-        <h4>Create Payroll</h4>
-        <div>
-            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payroll/genaratePayroll.php'">
-            <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">    
-            View PettyCash
-            </button>
-        </div>
+        <h4>Income Reports</h4>
     </div>
-
-    <style>
-        #form-header>h4 {
-            padding-right: 650px !important;
-        }
-    </style>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form"  id="payroll-form" action="createReport.php">
+            <form method="post" class="form" id="payroll-form" action="createReport.php">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
-                            <h6 class="pt-3 pb-2 mb-0">Enter Your Payment Details Here</h6>
+                            <h6 class="pt-3 pb-2 mb-0">Enter Your Details Here</h6>
                         </div>
                     </div>
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
                             <div class="input-field">
-                                <label for="emp_id" class="mb-1">Employee ID</label>
-                                <select class="bg-body" id="empId" name="empId">
-                                    <option value="" selected disabled hidden>Pick Employee ID</option>
+                                <label for="emp_id" class="mb-1">Project ID</label>
+                                <select class="bg-body" id="proIdId" name="proIdId">
+                                    <option value="" selected disabled hidden>Pick Project ID</option>
 
                                     <?php
                                     // Retrieve data from MySQL database
-                                    $sql = "SELECT employee_id FROM tbl_employee";
+                                    $sql = "SELECT project_id FROM tbl_project";
                                     $db = dbConn();
                                     $result = $db->query($sql);
 
                                     // Display options in dropdown list
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
+                                            echo "<option value='" . $row['project_id'] . "'>" . $row['project_id'] . "</option>";
                                         }
                                     }
                                     ?>
@@ -69,7 +57,7 @@
                     </div>
                     <div class="row justify-content-center gx-5">
                         <div class="col-6">
-                            <button class="nextBtn" type="submit" id="submit">
+                            <button class="nextBtn" type="button" id="genarate">
                                 <span class="btnText">Genarate</span>
                                 <i class="uil uil-navigator"></i>
                             </button>
@@ -77,22 +65,62 @@
                     </div>
                 </div>
             </form>
+            <div class="table-responsive">
+                <table class="table table-strips">
+                    <thead class="shadow">
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Project Name</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Total Cost(Rs)</th>
+                            <th scope="col">Total Income</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="output"></div>
-    <button type="button" onclick="printSlip('output')">Print</button>
+    <button class="nextBtn" type="button" onclick="printSlip('output')">
+        <span class="btnText">Print</span>
+        <i class="uil uil-navigator"></i>
+    </button>
 </main>
 
-<script src="<?= SYSTEM_PATH; ?>assets/js/payroll/genaratePayroll.js"></script>
+<script>
+    // AJAX request to filter records
+    $('#genarate').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'genarateIncomeReport.php',
+            method: 'POST',
+            data: $('#filter-form').serialize(),
+            success: function(response) {
+                // Close the modal
+                $('#filterModal').modal('hide');
+
+                // Showing data inside HTML Table
+                $('#table-body').html(response);
+
+                // Clear Modal FormData
+                $("#filter-form")[0].reset();
+            }
+        });
+    });
+</script>
+</script>
 
 <!-- Function for print paysheet as PDF -->
 <script>
-    function printSlip(divId){
+    function printSlip(divId) {
         var printContents = document.getElementById(divId).innerHTML;
-      var originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
     }
 </script>
 

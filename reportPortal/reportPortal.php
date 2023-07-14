@@ -8,8 +8,8 @@
             <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>reportPortal/allTaskofProject.php'">
                 All Task Details of Project
             </button>
-            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/addPettyCash.php'">
-                Add PettyCash
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>reportPortal/overollIncomeProject.php'">
+                Get Overoll Income From Projects in This Month
             </button>
             <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/addPettyCash.php'">
                 Add PettyCash

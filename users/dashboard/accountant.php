@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/form.css">
+<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/dashboard.css">
 
 <?php
 
@@ -11,32 +11,29 @@ $thismonth = date("m");
 // Get Today Year to Filter Overdue Tasks
 $currentYear = date("Y");
 
-// SQL Query for Get Count of All Projects 
-$sql = "SELECT COUNT(`project_id`) AS project_count FROM tbl_project";
+// SQL Query for Get Total Income in this Month
+$sql = "SELECT SUM(`payed_amount`) AS total_income FROM tbl_payment 
+WHERE YEAR(payed_date) = '$currentYear' AND MONTH(payed_date) = '$thismonth'";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $projectCount = $row['project_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $TotalIncome = $row['total_income'];
 }
 
-// SQL Query for Get Count of All Completed Projects
-$sql = "SELECT COUNT(DISTINCT project_id) AS completed_projects_count
-FROM tbl_schedule_task WHERE current_status <> 1 AND current_status <> 2 AND current_status <> 3 AND current_status <> 5";
+// SQL Query for Get Total Expensive in this Month
+$sql = "SELECT SUM(`payed_amount`) AS total_petty_cash FROM tbl_petty_cash
+WHERE YEAR(payed_date) = '$currentYear' AND MONTH(payed_date) = '$thismonth'";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $completedCount = $row['completed_projects_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $TotalExpensive = $row['total_petty_cash'];
 }
 
-// SQL Query for Get Count of All Completed Projects
+// SQL Query for Get Count of Over Due Tasks
 $sql = "SELECT COUNT(task_id) AS overdue_count
 FROM tbl_schedule_task WHERE ending_date < '$currentDate'";
 $db = dbConn();
@@ -49,7 +46,7 @@ if ($result) {
   echo "Error executing the query: " . $db->error;
 }
 
-// SQL Query for Get Count of All Completed Projects
+// SQL Query for Get Count of Over Due Tasks Coming in This Month
 $sql = "SELECT COUNT(task_id) as overdue_count
 FROM tbl_schedule_task WHERE ending_date = '$thismonth'";
 $db = dbConn();
@@ -119,80 +116,51 @@ if ($result) {
     <div class="row justify-content-start gx-5">
       <div class="col-sm">
         <div class="row row-cols-2 row-cols-lg-1">
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Total Projects</label>
-              <h4><?= $projectCount ?></h4>
+          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <div class="card-body">
+              <h5 for="project_name" class="mb-2">Total Income in this Month (Rs)</h5>
+              <h4><?= $TotalIncome ?></h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Total Projects Completed</label>
+          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <div class="card-body">
+              <h6 for="project_name" class="mb-2">Total Expensive for Projects(Rs)</h6>
+              <h4><?= $TotalExpensive ?></h4>
+            </div>
+          </div>
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+            <div class="card-body">
+              <h6 for="project_name" class="mb-2">Amount of Overdue Tasks to Today</h6>
               <h4><?= $completedCount ?></h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Amount of Overdue Tasks as of Today</label>
-              <h4><?= $completedCount ?></h4>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Task List, Deadline Coming This Month</label>
-              <div class="table-responsive">
-                <?php
-                // Get Today Date to Filter Overdue Tasks
-                $thismonth = date("m");
+        </div>
+      </div>
+    </div>
 
-                $sql = "SELECT `task_id`, `project_id`, `task_name`, `ending_date` 
-                FROM tbl_schedule_task WHERE YEAR(`ending_date`) = '$currentYear' AND MONTH(ending_date) = $thismonth";
-
-                // Calling to the Connection
-                $db = dbConn();
-
-                // Get Result
-                $result = $db->query($sql);
-                ?>
-                <table class="table table-sm">
-                  <thead class="shadow">
-                    <tr>
-                      <th scope="col">Task ID</th>
-                      <th scope="col">Project ID</th>
-                      <th scope="col">Task Name</th>
-                      <th scope="col">Ending Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-
-                    ?>
-                        <tr class="shadow-sm">
-                          <td class="align-middle"><?= $row['task_id']; ?></td>
-                          <td class="align-middle"><?= $row['project_id']; ?></td>
-                          <td class="align-middle"><?= $row['task_name']; ?></td>
-                          <td class="align-middle"><?= $row['ending_date']; ?></td>
-                        </tr>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </tbody>
-                </table>
+    <div class="row justify-content-start gx-5">
+      <div class="col-sm-5">
+        <div class="border bg-light">
+          <div class="card id-section text-center" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+              <div class="p-1 border border-0">
+                <canvas id="project-chart"></canvas>
               </div>
             </div>
           </div>
-          <div class="col-4">
-            <label for="project_name">Overdue Task List to Today</label>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
+          <div class="col-sm border" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+            <h4 for="project_name" class="my-4">Task List, Deadline Coming This Month</h4>
             <div class="table-responsive">
               <?php
               // Get Today Date to Filter Overdue Tasks
-              $todayDate = date("Y-m-d");
+              $thismonth = date("m");
 
               $sql = "SELECT `task_id`, `project_id`, `task_name`, `ending_date` 
-              FROM tbl_schedule_task WHERE ending_date < '$todayDate'";
+                FROM tbl_schedule_task WHERE YEAR(`ending_date`) = '$currentYear' AND MONTH(ending_date) = $thismonth";
 
               // Calling to the Connection
               $db = dbConn();
@@ -200,8 +168,8 @@ if ($result) {
               // Get Result
               $result = $db->query($sql);
               ?>
-              <table class="table table-sm">
-                <thead class="shadow">
+              <table class="table table-sm custom-shadow-red">
+                <thead class="shadow-lg">
                   <tr>
                     <th scope="col">Task ID</th>
                     <th scope="col">Project ID</th>
@@ -215,7 +183,7 @@ if ($result) {
                     while ($row = $result->fetch_assoc()) {
 
                   ?>
-                      <tr class="shadow-sm">
+                      <tr class="shadow-lg">
                         <td class="align-middle"><?= $row['task_id']; ?></td>
                         <td class="align-middle"><?= $row['project_id']; ?></td>
                         <td class="align-middle"><?= $row['task_name']; ?></td>
@@ -229,69 +197,109 @@ if ($result) {
               </table>
             </div>
           </div>
-          <div class="col-4">
-            <label for="project_name">Project List of Estimated to End This Month</label>
-            <div class="table-responsive">
-              <?php
+        </div>
+      </div>
+    </div>
 
-              $sql = "SELECT `project_id`, `project_name`, `end_date` 
+    <div class="row justify-content-start gx-5">
+      <div class="col-sm my-4">
+        <div class="border bg-light">
+          <div class="card id-section text-center" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+            <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+              <div class="p-1 border border-0">
+                <canvas id="task-count"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-start gx-5">
+      <div class="col-6" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <h4 for="project_name" class="my-4">Overdue Task List to Today</h4>
+        <div class="table-responsive custom-shadow-red">
+          <?php
+          // Get Today Date to Filter Overdue Tasks
+          $todayDate = date("Y-m-d");
+
+          $sql = "SELECT `task_id`, `project_id`, `task_name`, `ending_date` 
+              FROM tbl_schedule_task WHERE ending_date < '$todayDate'";
+
+          // Calling to the Connection
+          $db = dbConn();
+
+          // Get Result
+          $result = $db->query($sql);
+          ?>
+          <table class="table table-sm custom-shadow-red">
+            <thead class="shadow-lg">
+              <tr>
+                <th scope="col">Task ID</th>
+                <th scope="col">Project ID</th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Ending Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+
+              ?>
+                  <tr class="shadow-lg">
+                    <td class="align-middle"><?= $row['task_id']; ?></td>
+                    <td class="align-middle"><?= $row['project_id']; ?></td>
+                    <td class="align-middle"><?= $row['task_name']; ?></td>
+                    <td class="align-middle"><?= $row['ending_date']; ?></td>
+                  </tr>
+              <?php
+                }
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-6" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <h4 for="project_name" class="my-4">Project List of Estimated to End This Month</h4>
+        <div class="table-responsive">
+          <?php
+
+          $sql = "SELECT `project_id`, `project_name`, `end_date` 
               FROM tbl_project WHERE YEAR(`end_date`) = '$currentYear' AND MONTH(`end_date`) = '$thismonth'";
 
-              // Calling to the Connection
-              $db = dbConn();
+          // Calling to the Connection
+          $db = dbConn();
 
-              // Get Result
-              $result = $db->query($sql);
+          // Get Result
+          $result = $db->query($sql);
+          ?>
+          <table class="table table-sm custom-shadow-red">
+            <thead class="shadow-lg">
+              <tr>
+                <th scope="col">Project ID</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">Ending Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+
               ?>
-              <table class="table table-sm">
-                <thead class="shadow">
-                  <tr>
-                    <th scope="col">Project ID</th>
-                    <th scope="col">Project Name</th>
-                    <th scope="col">Ending Date</th>
+                  <tr class="shadow-lg">
+                    <td class="align-middle"><?= $row['project_id']; ?></td>
+                    <td class="align-middle"><?= $row['project_name']; ?></td>
+                    <td class="align-middle"><?= $row['end_date']; ?></td>
                   </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-
-                  ?>
-                      <tr class="shadow-sm">
-                        <td class="align-middle"><?= $row['project_id']; ?></td>
-                        <td class="align-middle"><?= $row['project_name']; ?></td>
-                        <td class="align-middle"><?= $row['end_date']; ?></td>
-                      </tr>
-                  <?php
-                    }
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="border bg-light">
-              <div class="card id-section text-center">
-                <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
-                  <div class="p-1 border border-0">
-                    <canvas id="project-chart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="border bg-light">
-              <div class="card id-section text-center">
-                <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
-                  <div class="p-1 border border-0">
-                    <canvas id="task-count"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              <?php
+                }
+              }
+              ?>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

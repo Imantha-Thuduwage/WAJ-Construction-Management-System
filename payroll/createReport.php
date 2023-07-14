@@ -94,7 +94,7 @@ if (!empty($errors)) {
         // Output the calculated values
         $output = '<div class="pay-sheet">';
             $output .= '<h2>Pay Sheet</h2>';
-            $output .= '<table>';
+            $output .= '<table class = "table table-strips">';
                 $output .= '<tr>
                     <th>Employee ID</th>
                     <td>' . $employeeId . '</td>

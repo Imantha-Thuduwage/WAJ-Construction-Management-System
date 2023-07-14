@@ -9,12 +9,14 @@
             <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>users/user.php'">
                 View Users
             </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
-            </button>
         </div>
     </div>
 
+    <style>
+        #form-header>h4 {
+            padding-right: 790px !important;
+        }
+    </style>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">

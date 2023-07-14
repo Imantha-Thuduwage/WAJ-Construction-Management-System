@@ -50,7 +50,9 @@ else if (!empty($serialNumber)) {
     }
 }
 
-if (empty($errors)) {
+$fileNameNew = NULL;
+
+if (empty($errors)&& !empty($_FILES['machineImg']['name'])) {
     // Check if 'profileImg' key exists in $_FILES array
     $pImage = $_FILES['machineImg'];
 

@@ -39,7 +39,7 @@ if (empty($supervisor)) {
 }
 
 // Advanced Validation 
-else if (!empty($nicNumber)) {
+if (!empty($nicNumber)) {
     $sql = "SELECT * FROM tbl_employee WHERE nic_number = '$nicNumber'";
     $db = dbConn();
     $result = $db->query($sql);
@@ -48,14 +48,20 @@ else if (!empty($nicNumber)) {
     if ($result->num_rows > 0) {
         $errors['error_nicNumber'] = "NIC is Already Exists";
     }
-} else if (!empty($phoneNum)) {
-    $sql = "SELECT * FROM tbl_employee WHERE contact_number = '$phoneNum'";
-    $db = dbConn();
-    $result = $db->query($sql);
+} 
+if (!empty($phoneNum)) {
+    // Check if the phone number has more than 10 digits or less than 10 digits
+    if (strlen($phoneNum) != 10) {
+        $errors['error_phoneNum'] = "Invalid Number";
+    } else {
+        $sql = "SELECT * FROM tbl_employee WHERE contact_number = '$phoneNum'";
+        $db = dbConn();
+        $result = $db->query($sql);
 
-    // Check if another employee with the same contact number already exists
-    if ($result->num_rows > 0) {
-        $errors['error_phoneNum'] = "Contact Number Already Exists";
+        // Check if another employee with the same contact number already exists
+        if ($result->num_rows > 0) {
+            $errors['error_phoneNum'] = "Contact Number Already Exists";
+        }
     }
 }
 
@@ -66,50 +72,49 @@ if (empty($_SESSION['status'])) {
     $addDate = date('y-m-d');
 }
 
-if (empty($errors)) {
+$fileNameNew = NULL;
+
+if (empty($errors) && !empty($_FILES['profileImg']['name'])) {
     // Check if 'profileImg' key exists in $_FILES array
-    if (isset($_FILES['profileImg'])) {
-        $pImage = $_FILES['profileImg'];
+    $pImage = $_FILES['profileImg'];
 
-        // Change properties as needed
-        $fileName = $pImage['name'];
-        $fileSize = $pImage['size'];
-        $tmpFilePath = $pImage['tmp_name'];
-        $fileError = $pImage['error'];
+    // Change properties as needed
+    $fileName = $pImage['name'];
+    $fileSize = $pImage['size'];
+    $tmpFilePath = $pImage['tmp_name'];
+    $fileError = $pImage['error'];
 
-        // Get file extension
-        $file_ext = explode('.', $fileName);
-        $file_ext = strtolower(end($file_ext));
+    // Get file extension
+    $file_ext = explode('.', $fileName);
+    $file_ext = strtolower(end($file_ext));
 
-        // Allowed file types
-        $allowed = array('png', 'jpg', 'jpeg');
+    // Allowed file types
+    $allowed = array('png', 'jpg', 'jpeg');
 
-        // Check if the file is allowed
-        if (in_array($file_ext, $allowed)) {
-            if ($fileError === 0) {
-                if ($fileSize < 5242880) {
-                    // Create a new file name to avoid conflicts
-                    $fileNameNew = uniqid('', true) . '.' . $file_ext;
-                    $fileDestination = '../assets/images/profileImages/' . $fileNameNew;
+    // Check if the file is allowed
+    if (in_array($file_ext, $allowed)) {
+        if ($fileError === 0) {
+            if ($fileSize < 5242880) {
+                // Create a new file name to avoid conflicts
+                $fileNameNew = uniqid('', true) . '.' . $file_ext;
+                $fileDestination = '../assets/images/profileImages/' . $fileNameNew;
 
-                    // Upload the file to the destination
-                    if (move_uploaded_file($tmpFilePath, $fileDestination)) {
-                    } else {
-                        $errors['error_profileImg'] = "Error uploading the file.";
-                    }
+                // Upload the file to the destination
+                if (move_uploaded_file($tmpFilePath, $fileDestination)) {
                 } else {
-                    $errors['error_profileImg'] = "File Size is Invalid";
+                    $errors['error_profileImg'] = "Error uploading the file.";
                 }
             } else {
-                $errors['error_profileImg'] = "File Has Error";
+                $errors['error_profileImg'] = "File Size is Invalid";
             }
         } else {
-            $errors['error_profileImg'] = "Invalid File Type";
+            $errors['error_profileImg'] = "File Has Error";
         }
     } else {
-        $errors['error_profileImg'] = "Profile Image is Required";
+        $errors['error_profileImg'] = "Invalid File Type";
     }
 }
+
 
 // Set employee status
 $empStatus = 1;
@@ -130,4 +135,3 @@ if (!empty($errors)) {
         echo json_encode(array('error' => "Form submission failed"));
     }
 }
-?>

@@ -1,114 +1,85 @@
-<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/form.css">
+<link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/dashboard.css">
 
 <?php
 
-// Get Today Date to Filter Overdue Tasks
+// Get Today Date 
 $currentDate = date("Y-m-d");
 
-// Get Today Date to Filter Overdue Tasks
+// Get Today Date 
 $thismonth = date("m");
 
-// Get Today Year to Filter Overdue Tasks
+// Get Today Year 
 $currentYear = date("Y");
 
-// SQL Query for Get Count of All Projects 
-$sql = "SELECT COUNT(`project_id`) AS project_count FROM tbl_project";
+// SQL Query for Get Total Number of Tools
+$sql = "SELECT COUNT(`tool_id`) AS total_tools FROM tbl_tool";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $projectCount = $row['project_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $TotalTools = $row['total_tools'];
 }
 
-// SQL Query for Get Count of All Completed Projects
-$sql = "SELECT COUNT(DISTINCT project_id) AS completed_projects_count
-FROM tbl_schedule_task WHERE current_status <> 1 AND current_status <> 2 AND current_status <> 3 AND current_status <> 5";
+// SQL Query for Get Total Number of Machines
+$sql = "SELECT COUNT(`machine_id`) AS total_machines FROM tbl_machine";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $completedCount = $row['completed_projects_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $TotalMachines = $row['total_machines'];
 }
 
-// SQL Query for Get Count of All Completed Projects
-$sql = "SELECT COUNT(task_id) AS overdue_count
-FROM tbl_schedule_task WHERE ending_date < '$currentDate'";
+// SQL Query for Get Count of All Maintenance
+$sql = "SELECT COUNT(t_maintenance_id) AS total_t_maintenance FROM tbl_tool_maintenance";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $overdueCount = $row['overdue_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $totalToolMaintenance = $row['total_t_maintenance'];
 }
-
-// SQL Query for Get Count of All Completed Projects
-$sql = "SELECT COUNT(task_id) as overdue_count
-FROM tbl_schedule_task WHERE ending_date = '$thismonth'";
+$sql = "SELECT COUNT(m_maintenance_id) AS total_m_maintenance FROM tbl_machine_maintenance";
 $db = dbConn();
 $result = $db->query($sql);
 
 if ($result) {
   $row = $result->fetch_assoc();
-  $overdueCount = $row['overdue_count'];
-} else {
-  echo "Error executing the query: " . $db->error;
+  $totalMachineMaintenance = $row['total_m_maintenance'];
 }
+$totalMaintenance = $totalToolMaintenance + $totalMachineMaintenance;
 
-// SQL Query for get data to showing completed project using Chart
-// SQL Query for Get Count of All Completed Projects
-$sql = "SELECT COUNT(DISTINCT project_id) AS completed_projects_count
-FROM tbl_schedule_task WHERE current_status <> 1 AND current_status <> 2 AND current_status <> 3 AND current_status <> 5";
+// Query to retrieve all tool count
+$sql = "SELECT tbl_calendar.month, COUNT(tbl_tool.tool_id) AS total_tools
+FROM tbl_calendar
+LEFT JOIN tbl_tool
+ON MONTH(tbl_tool.tool_id) = tbl_calendar.month
+GROUP BY tbl_calendar.month
+HAVING tbl_calendar.month <= MONTH(CURDATE())
+ORDER BY tbl_calendar.month";
 $db = dbConn();
 $result = $db->query($sql);
-
-if ($result) {
-  $row = $result->fetch_assoc();
-  $completedCount = $row['completed_projects_count'];
+// Fetch the data into an array
+$totalToolsCh = array();
+while ($row = $result->fetch_assoc()) {
+  $totalToolsCh[$row['month']] = $row['total_tools'];
 }
 
-$sql = "SELECT COUNT(*) as all_projects FROM tbl_project";
+// Query to retrieve all machine count
+$sql = "SELECT tbl_calendar.month, COUNT(tbl_machine.machine_id) AS total_machines
+FROM tbl_calendar
+LEFT JOIN tbl_machine
+ON MONTH(tbl_machine.machine_id) = tbl_calendar.month
+GROUP BY tbl_calendar.month
+HAVING tbl_calendar.month <= MONTH(CURDATE())
+ORDER BY tbl_calendar.month";
 $db = dbConn();
 $result = $db->query($sql);
-
-if ($result) {
-  $row = $result->fetch_assoc();
-  $allProjects = $row['all_projects'];
-}
-
-// Calculate the progress percentage
-$completed = ($allProjects > 0) ? (($completedCount / $allProjects) * 100) : 0;
-
-// Pass the progress value to JavaScript
-echo '<script>const projects = ' . $completed . ';</script>';
-
-// Query for get Task Count for Each Project
-$sql = "SELECT project_id, COUNT(*) AS task_count
-        FROM tbl_schedule_task
-        WHERE YEAR(add_date) >= '$currentYear' AND MONTH(add_date) >= '$thismonth'
-        GROUP BY project_id
-        ORDER BY project_id DESC
-        LIMIT 10";
-$db = dbConn();
-
-$result = $db->query($sql);
-
-// Step 3: Fetch the results and store them in variables
-$projectIDs = [];
-$taskCounts = [];
-
-if ($result) {
-  while ($row = $result->fetch_assoc()) {
-    $projectIDs[] = $row['project_id'];
-    $taskCounts[] = $row['task_count'];
-  }
+// Fetch the data into an array
+$totalMachinesCh = array();
+while ($row = $result->fetch_assoc()) {
+  $totalMachinesCh[$row['month']] = $row['total_machines'];
 }
 
 ?>
@@ -118,81 +89,58 @@ if ($result) {
   <div class="container field p-3">
     <div class="row justify-content-start gx-5">
       <div class="col-sm">
-        <div class="row row-cols-2 row-cols-lg-1">
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Total Projects</label>
-              <h4><?= $projectCount ?></h4>
+        <div class="row row-cols-2 row-cols-lg-1 justify-content-between">
+          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <div class="card-body">
+              <h5 for="project_name" class="mb-2">Total Tools We Have</h5>
+              <h4><?= $TotalTools ?></h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Total Projects Completed</label>
-              <h4><?= $completedCount ?></h4>
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <div class="card-body">
+              <h5 for="project_name" class="mb-2">Total Machines We Have</h5>
+              <h4><?= $TotalMachines ?></h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Amount of Overdue Tasks as of Today</label>
-              <h4><?= $completedCount ?></h4>
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+            <div class="card-body">
+              <h5 for="project_name" class="mb-2">Total Maintenance We Did</h5>
+              <h4><?= $totalMaintenance ?></h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="p-1 border bg-light display-data">
-              <label for="project_name">Task List, Deadline Coming This Month</label>
-              <div class="table-responsive">
-                <?php
-                // Get Today Date to Filter Overdue Tasks
-                $thismonth = date("m");
-
-                $sql = "SELECT `task_id`, `project_id`, `task_name`, `ending_date` 
-                FROM tbl_schedule_task WHERE YEAR(`ending_date`) = '$currentYear' AND MONTH(ending_date) = $thismonth";
-
-                // Calling to the Connection
-                $db = dbConn();
-
-                // Get Result
-                $result = $db->query($sql);
-                ?>
-                <table class="table table-sm">
-                  <thead class="shadow">
-                    <tr>
-                      <th scope="col">Task ID</th>
-                      <th scope="col">Project ID</th>
-                      <th scope="col">Task Name</th>
-                      <th scope="col">Ending Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-
-                    ?>
-                        <tr class="shadow-sm">
-                          <td class="align-middle"><?= $row['task_id']; ?></td>
-                          <td class="align-middle"><?= $row['project_id']; ?></td>
-                          <td class="align-middle"><?= $row['task_name']; ?></td>
-                          <td class="align-middle"><?= $row['ending_date']; ?></td>
-                        </tr>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </tbody>
-                </table>
-              </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-start gx-5">
+      <div class="col-6 mx-auto">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+            <div class="p-1 border border-0" style="width: 100%;">
+              <canvas id="lineChartTools"></canvas>
             </div>
           </div>
-          <div class="col-4">
-            <label for="project_name">Overdue Task List to Today</label>
+        </div>
+      </div>
+      <div class="col-6 mx-auto">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+            <div class="p-1 border border-0" style="width: 100%;">
+              <canvas id="lineChartMachines"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-start gx-5">
+          <div class="col-6" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <h4 class="my-4">Tool Maintenance We Did This Month</h4>
             <div class="table-responsive">
               <?php
               // Get Today Date to Filter Overdue Tasks
-              $todayDate = date("Y-m-d");
+              $thismonth = date("m");
 
-              $sql = "SELECT `task_id`, `project_id`, `task_name`, `ending_date` 
-              FROM tbl_schedule_task WHERE ending_date < '$todayDate'";
+              $sql = "SELECT t_maintenance_id, tool_id, maintenance_date
+              FROM tbl_tool_maintenance WHERE MONTH(maintenance_date) = $thismonth";
 
               // Calling to the Connection
               $db = dbConn();
@@ -200,13 +148,12 @@ if ($result) {
               // Get Result
               $result = $db->query($sql);
               ?>
-              <table class="table table-sm">
-                <thead class="shadow">
+              <table class="table table-sm custom-shadow-red">
+                <thead class="shadow-lg">
                   <tr>
-                    <th scope="col">Task ID</th>
-                    <th scope="col">Project ID</th>
-                    <th scope="col">Task Name</th>
-                    <th scope="col">Ending Date</th>
+                    <th scope="col">Maintenance ID</th>
+                    <th scope="col">Machine ID</th>
+                    <th scope="col">Maintenance Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -215,11 +162,10 @@ if ($result) {
                     while ($row = $result->fetch_assoc()) {
 
                   ?>
-                      <tr class="shadow-sm">
-                        <td class="align-middle"><?= $row['task_id']; ?></td>
-                        <td class="align-middle"><?= $row['project_id']; ?></td>
-                        <td class="align-middle"><?= $row['task_name']; ?></td>
-                        <td class="align-middle"><?= $row['ending_date']; ?></td>
+                      <tr class="shadow-lg">
+                        <td class="align-middle"><?= $row['t_maintenance_id']; ?></td>
+                        <td class="align-middle"><?= $row['tool_id']; ?></td>
+                        <td class="align-middle"><?= $row['maintenance_date']; ?></td>
                       </tr>
                   <?php
                     }
@@ -229,13 +175,15 @@ if ($result) {
               </table>
             </div>
           </div>
-          <div class="col-4">
-            <label for="project_name">Project List of Estimated to End This Month</label>
+          <div class="col-6" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+            <h4 class="my-4">Machine Maintenance We Did This Month</h4>
             <div class="table-responsive">
               <?php
+              // Get Today Date to Filter Overdue Tasks
+              $thismonth = date("m");
 
-              $sql = "SELECT `project_id`, `project_name`, `end_date` 
-              FROM tbl_project WHERE YEAR(`end_date`) = '$currentYear' AND MONTH(`end_date`) = '$thismonth'";
+              $sql = "SELECT m_maintenance_id, machine_id, maintenance_date
+              FROM tbl_machine_maintenance WHERE MONTH(maintenance_date) = $thismonth";
 
               // Calling to the Connection
               $db = dbConn();
@@ -243,12 +191,12 @@ if ($result) {
               // Get Result
               $result = $db->query($sql);
               ?>
-              <table class="table table-sm">
-                <thead class="shadow">
+              <table class="table table-sm custom-shadow-red">
+                <thead class="shadow-lg">
                   <tr>
-                    <th scope="col">Project ID</th>
-                    <th scope="col">Project Name</th>
-                    <th scope="col">Ending Date</th>
+                    <th scope="col">Maintenance ID</th>
+                    <th scope="col">Machine ID</th>
+                    <th scope="col">Maintenance Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -257,10 +205,10 @@ if ($result) {
                     while ($row = $result->fetch_assoc()) {
 
                   ?>
-                      <tr class="shadow-sm">
-                        <td class="align-middle"><?= $row['project_id']; ?></td>
-                        <td class="align-middle"><?= $row['project_name']; ?></td>
-                        <td class="align-middle"><?= $row['end_date']; ?></td>
+                      <tr class="shadow-lg">
+                        <td class="align-middle"><?= $row['m_maintenance_id']; ?></td>
+                        <td class="align-middle"><?= $row['machine_id']; ?></td>
+                        <td class="align-middle"><?= $row['maintenance_date']; ?></td>
                       </tr>
                   <?php
                     }
@@ -268,105 +216,154 @@ if ($result) {
                   ?>
                 </tbody>
               </table>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="border bg-light">
-              <div class="card id-section text-center">
-                <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
-                  <div class="p-1 border border-0">
-                    <canvas id="project-chart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="border bg-light">
-              <div class="card id-section text-center">
-                <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
-                  <div class="p-1 border border-0">
-                    <canvas id="task-count"></canvas>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  </div>
 
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- Line chart to showing monthly income for projects -->
 <script>
-  // Access the projectProgress variable from PHP
-  const progress = projects;
+  // Get current year and months
+  var currentDate = new Date();
+  var currentYear = currentDate.getFullYear();
+  var months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
-  // Create the chart
-  const ctx = document.getElementById('project-chart').getContext('2d');
+  // Get data from PHP
+  var toolsData = <?php echo json_encode(array_values($totalToolsCh)); ?>;
 
-  const data = {
-    labels: ['Progress', 'Remaining'],
-    datasets: [{
-      data: [progress, 100 - progress],
-      backgroundColor: ['#002158', '#f0e51a'],
-      borderWidth: 0
-    }]
-  };
-
-  const config = {
-    type: 'doughnut',
-    data: data,
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Progress of Project'
-        }
-      }
-    }
-  };
-
-  new Chart(ctx, config);
-</script>
-
-<script>
-  // Retrieve data from the database (replace with your query and actual data)
-  // Use the retrieved data to create a bar chart using Chart.js
-  var projectIDs = <?php echo json_encode($projectIDs); ?>;
-  var taskCounts = <?php echo json_encode($taskCounts); ?>;
-
-  // Step 2: Create a bar chart using Chart.js
-  var id = document.getElementById('task-count').getContext('2d');
-  var chart = new Chart(id, {
-    type: 'bar',
-    data: {
-      labels: projectIDs,
-      datasets: [{
-        label: 'Task Count',
-        data: taskCounts,
-        backgroundColor: '#e014cf', // Change the color as desired
-        borderWidth: 1,
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            stepSize: 1, // Set the step size to 1 to display whole numbers
-            precision: 0 // Set the precision to 0 to remove decimal places
+  // Create the line chart
+  document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById("lineChartTools").getContext("2d");
+    var lineChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [{
+          label: "monthly tool count",
+          data: toolsData,
+          borderColor: "rgb(75, 192, 192)",
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false // Remove vertical grid lines
+            }
+          },
+          y: {
+            grid: {
+              display: false // Remove horizontal grid lines
+            },
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                if (Number.isInteger(value)) {
+                  return value;
+                }
+              }
+            }
           }
         }
       }
-    },
-    dataset: {
-      barPercentage: 0.5, // Adjust the bar width to be half of the default width
-      categoryPercentage: 1.0 // Keep the category width the same as the default width
-    }
+    });
+  });
+</script>
+
+<!-- Line chart to showing monthly expensive for projects -->
+<script>
+  // Get current year and months
+  var currentDate = new Date();
+  var currentYear = currentDate.getFullYear();
+  var months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  // Get data from PHP
+  var machineData = <?php echo json_encode(array_values($totalMachinesCh)); ?>;
+
+  // Create the line chart
+  document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById("lineChartMachines").getContext("2d");
+    var lineChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [{
+          label: "Monthly Machine Count",
+          data: machineData,
+          borderColor: "rgb(75, 192, 192)",
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false // Remove vertical grid lines
+            }
+          },
+          y: {
+            grid: {
+              display: false // Remove horizontal grid lines
+            },
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                if (Number.isInteger(value)) {
+                  return value;
+                }
+              }
+            }
+          }
+        }
+      }
+    });
   });
 </script>

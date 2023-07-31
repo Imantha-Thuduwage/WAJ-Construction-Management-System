@@ -49,6 +49,7 @@ $(document).ready(function () {
             .addClass("placeholder-set");
         }
         if (response.hasOwnProperty("error_nicNumber")) {
+          $("#nicNumber").val('')
           $("#nicNumber")
             .addClass("error")
             .attr("placeholder", response.error_nicNumber)
@@ -73,6 +74,7 @@ $(document).ready(function () {
             .addClass("placeholder-set");
         }
         if (response.hasOwnProperty("error_phoneNum")) {
+          $("#phoneNum").val('')
           $("#phoneNum")
             .addClass("error")
             .attr("placeholder", response.error_phoneNum)

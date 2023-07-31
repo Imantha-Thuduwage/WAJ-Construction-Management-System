@@ -77,8 +77,7 @@ LEFT JOIN tbl_employee
 ON MONTH(tbl_employee.date_of_joining) = tbl_calendar.month
 GROUP BY tbl_calendar.month
 HAVING tbl_calendar.month <= MONTH(CURDATE())
-ORDER BY tbl_calendar.month
-";
+ORDER BY tbl_calendar.month";
 $db = dbConn();
 $result = $db->query($sql);
 // Fetch the data into an array

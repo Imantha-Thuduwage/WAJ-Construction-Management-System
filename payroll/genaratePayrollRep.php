@@ -7,8 +7,8 @@
         <h4>Create Payroll</h4>
         <div>
             <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payroll/genaratePayroll.php'">
-            <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">    
-            View PettyCash
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
+                View PettyCash
             </button>
         </div>
     </div>
@@ -22,48 +22,19 @@
     <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form"  id="payroll-form" action="createReport.php">
+            <form method="post" class="form" id="payroll-form" action="createReport.php">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
-                            <h6 class="pt-3 pb-2 mb-0">Enter Your Payment Details Here</h6>
+                            <h6 class="pt-3 pb-2 mb-0">Generate Payroll Reports</h6>
                         </div>
                     </div>
                     <div class="row justify-content-center gx-5">
-                        <div class="col-sm-6">
+                        <div class="col-4">
                             <div class="input-field">
-                                <label for="emp_id" class="mb-1">Employee ID</label>
-                                <select class="bg-body" id="empId" name="empId">
-                                    <option value="" selected disabled hidden>Pick Employee ID</option>
-
-                                    <?php
-                                    // Retrieve data from MySQL database
-                                    $sql = "SELECT employee_id FROM tbl_employee";
-                                    $db = dbConn();
-                                    $result = $db->query($sql);
-
-                                    // Display options in dropdown list
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center gx-5">
-                        <div class="col-3">
-                            <div class="input-field">
-                                <label>Start Date</label>
-                                <input class="p-3 bg-body" id="startDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="startDate" value="">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="input-field">
-                                <label>End Date</label>
-                                <input class="p-3 bg-body" id="endDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="endDate" value="">
+                                <label>Month</label>
+                                <input class="p-3 bg-body" id="month" type="text" onfocus="(this.type='month')" placeholder="Pickup Month" name="month" value="">
+                                <div class="error-message text-danger" id="error_month"></div>
                             </div>
                         </div>
                     </div>
@@ -77,6 +48,20 @@
                     </div>
                 </div>
             </form>
+            <table class="table table-sm">
+                <thead class="shadow">
+                    <tr>
+                        <th scope="col">Petty Cash ID</th>
+                        <th scope="col">Project ID</th>
+                        <th scope="col">Payed Amount</th>
+                        <th scope="col">Payed Date</th>
+                        <th scope="col">More Details</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
         </div>
     </div>
     <div id="output"></div>
@@ -87,13 +72,24 @@
 
 <!-- Function for print paysheet as PDF -->
 <script>
-    function printSlip(divId){
+    function printSlip(divId) {
         var printContents = document.getElementById(divId).innerHTML;
-      var originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
     }
+</script>
+
+<!-- Change date picker to select only month -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const monthPickerInput = document.getElementById("month");
+
+  monthPickerInput.addEventListener("change", function() {
+    const selectedMonth = monthPickerInput.value;
+  });
+});
 </script>
 
 <?php include '../footer.php'; ?>

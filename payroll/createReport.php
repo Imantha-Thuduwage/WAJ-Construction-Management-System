@@ -7,17 +7,11 @@ include '../function.php';
 $errors = array();
 
 // This function uses array keys as variable names and values as variable values
-extract($_POST);
+$month = $_POST['month'];
 
 // Required Fields Validation
-if (empty($empId)) {
-    $errors['error_empId'] = "Employee ID is Required";
-}
-if (empty($startDate)) {
-    $errors['error_startDate'] = "Start Date is Required";
-}
-if (empty($endDate)) {
-    $errors['error_endDate'] = "End Date is Required";
+if (empty($month)) {
+    $errors['error_month'] = "Month is Required";
 }
 
 // Check Validation is Completed
@@ -34,7 +28,6 @@ if (!empty($errors)) {
     $db = dbConn();
 
     // Retrieve employee details
-    $employeeId = $empId;
     $employeeName = '';
     $attendanceCount = 0;
     $basicSalary = 0;
@@ -42,23 +35,31 @@ if (!empty($errors)) {
     $totalAdvance = 0;
 
     // Query to retrieve employee details
-    $sql = "SELECT employee_id, first_name, last_name FROM tbl_employee WHERE employee_id = '$employeeId'";
+    $sql = "SELECT employee_id, first_name, last_name FROM tbl_employee";
     $employeeResult = $db->query($sql);
+
+    $epfsql1 = "DELETE FROM tbl_epf WHERE `month` = '$month-01'";
+    $db = dbConn();
+    $db->query($epfsql1);
+
+    $payrollsql = "DELETE FROM tbl_payroll WHERE `month` = '$month-01'";
+    $db = dbConn();
+    $db->query($payrollsql);
 
     if ($employeeResult->num_rows > 0) {
         while ($row = $employeeResult->fetch_assoc()) {
             $employeeName = $row['first_name'] . ' ' . $row['last_name'];
-        }
+            $employeeId = $row['employee_id'];
 
-        // Query to retrieve attendance count
-        $attendanceSql = "SELECT COUNT(attendance_id) AS attendance_count FROM tbl_attendance WHERE employee_id = '$employeeId' 
-                AND attendance_date BETWEEN '$startDate' AND '$endDate' AND attend_type = 'full day'";
-        $attendanceResult = $db->query($attendanceSql);
-        if ($attendanceResult->num_rows > 0) {
-            while ($row = $attendanceResult->fetch_assoc()) {
-                $attendanceCount = $row['attendance_count'];
+            // Query to retrieve attendance count
+            $attendanceSql = "SELECT COUNT(attendance_id) AS attendance_count FROM tbl_attendance WHERE employee_id = '$employeeId' 
+            AND MONTH(attendance_date) = '$month' AND attend_type = 'full day'";
+            $attendanceResult = $db->query($attendanceSql);
+            if ($attendanceResult->num_rows > 0) {
+                while ($row = $attendanceResult->fetch_assoc()) {
+                    $attendanceCount = $row['attendance_count'];
+                }
             }
-
             // Query to retrieve salary details
             $salarySql = "SELECT basic_salary, company_allowance FROM tbl_salary WHERE employee_id = '$employeeId'";
             $salaryResult = $db->query($salarySql);
@@ -67,73 +68,53 @@ if (!empty($errors)) {
                     $basicSalary = $row['basic_salary'];
                     $companyAllowance = $row['company_allowance'];
                 }
-
-                // Query to retrieve total advance
-                $advanceSql = "SELECT COALESCE(SUM(advance_amount), 0) AS total_advance FROM tbl_advance WHERE employee_id = '$employeeId' 
-                        AND given_date BETWEEN '$startDate' AND '$endDate'";
-                $advanceResult = $db->query($advanceSql);
-                if ($advanceResult->num_rows > 0) {
-                    while ($row = $advanceResult->fetch_assoc()) {
-                        $totalAdvance = $row['total_advance'];
-                    }
+            }
+            // Query to retrieve total advance
+            $advanceSql = "SELECT COALESCE(SUM(advance_amount), 0) AS total_advance FROM tbl_advance WHERE employee_id = '$employeeId' 
+            AND MONTH(given_date) = $month";
+            $advanceResult = $db->query($advanceSql);
+            if ($advanceResult->num_rows > 0) {
+                while ($row = $advanceResult->fetch_assoc()) {
+                    $totalAdvance = $row['total_advance'];
                 }
             }
+
+            // Calculate EPF Contribution Employee and Employer
+            $employeeEpfContri = ($basicSalary / 100) * 8;
+            $employerEpfContri = ($basicSalary / 100) * 12;
+            $employerEtfContri = ($basicSalary / 100) * 3;
+            $totalContribution = ($employerEpfContri + $employerEtfContri);
+
+            // Perform the necessary calculations to determine the monthly salary and net salary
+            if ($attendanceCount > 20) {
+                $monthlySalary = ($basicSalary + $companyAllowance);
+                $totalDeduction = ($totalAdvance + $employeeEpfContri);
+                $netSalary = $monthlySalary - $totalDeduction;
+            } else {
+                $noPayDays = 20 - $attendanceCount;
+                $monthlySalary = $basicSalary - (($basicSalary / 30) * $noPayDays);
+                $totalDeduction = ($totalAdvance + $employeeEpfContri);
+                $netSalary = $monthlySalary - $totalDeduction;
+            }
+            $epfsql2 = "INSERT INTO tbl_epf
+                (`employee_id`, `employee_contribution`, `employer_contribution`, `total_contribution`, `month`, `add_user`, `add_date`) 
+                VALUES ('$employeeId', '$employeeEpfContri', '$employerEpfContri', '$totalContribution', '$month-01', '$addUser', '$addDate')";
+            $db = dbConn();
+            $db->query($epfsql2);
+
+            // in month attribute we use -01 to get full date
+            $payrollsq2 = "INSERT INTO tbl_payroll
+                (`employee_id`, `employee_name`, `month`, `attendance_count`, `basic_salary`, `company_allowance`, `monthly_salary`
+                , `total_advance`, `emp_epf_contribution`, `total_deduction`, `net_salary`, `employer_epf_contri`
+                , `employer_etf_contri`, `total_comp_contri`, `add_user`, `add_date`) 
+                VALUES ('$employeeId', '$employeeName', '$month-01', '$attendanceCount', '$basicSalary', '$companyAllowance', '$monthlySalary'
+                , '$totalAdvance', '$employeeEpfContri', '$totalDeduction', '$netSalary', '$employerEpfContri', '$employerEtfContri'
+                , '$totalContribution', '$addUser', '$addDate')";
+
+            $db = dbConn();
+            $db->query($payrollsq2);
         }
-
-        // Perform the necessary calculations to determine the monthly salary and net salary
-        // Replace the placeholder calculation with your actual payroll calculation logic
-        if ($attendanceCount > 20) {
-            $monthlySalary = ($basicSalary + $companyAllowance);
-            $netSalary = $monthlySalary - $totalAdvance;
-        } else {
-            $noPayDays = 20 - $attendanceCount;
-            $monthlySalary = $basicSalary - (($basicSalary / 30) * $noPayDays);
-            $netSalary = $monthlySalary - $totalAdvance;
-        }
-
-        // Output the calculated values
-        $output = '<div class="pay-sheet">';
-            $output .= '<h2>Pay Sheet</h2>';
-            $output .= '<table class = "table table-strips">';
-                $output .= '<tr>
-                    <th>Employee ID</th>
-                    <td>' . $employeeId . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Employee Name</th>
-                    <td>' . $employeeName . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Attendance Count</th>
-                    <td>' . $attendanceCount . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Basic Salary</th>
-                    <td>' . $basicSalary . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Company Allowance</th>
-                    <td>' . $companyAllowance . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Total Advance</th>
-                    <td>' . $totalAdvance . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Monthly Salary</th>
-                    <td>' . $monthlySalary . '</td>
-                </tr>';
-                $output .= '<tr>
-                    <th>Net Salary</th>
-                    <td>' . $netSalary . '</td>
-                </tr>';
-                $output .= '</table>';
-            $output .= '</div>';
-
-        echo $output;
-
-  } else {
-        echo json_encode(array('error' => "Form submission failed"));
     }
+
+    echo json_encode(array('success' => "Form submission Success"));
 }
-?>

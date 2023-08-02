@@ -12,41 +12,34 @@ $(document).ready(function () {
       url: "createReport.php",
       type: "POST",
       data: data,
+      dataType: "json",
       success: function (response) {
-        // Check for error message
-        if (response === "Form submission failed") {
-          Swal.fire("Failed", response, "error");
+        alert(response);
+        // Checking if Form data is Successfully Submitted
+        if (response.hasOwnProperty("success")) {
+          // Send Successful Alert Message to User
+          Swal.fire("Completed", response.success, "success");
+          // Clear form data
+          $("#payroll-form")[0].reset();
+        } else if (response.hasOwnProperty("error_month")) {
+          // Show error for the month field
+          $("#month")
+            .addClass("error")
+            .next(".error-message")
+            .html(response.error_month);
+        } 
+        else if (response.hasOwnProperty("error_already")) {
+          // Show error if payroll for the selected month already exists
+          Swal.fire("Error", response.error_already, "error");
         } else {
-          // Display the result
-          $("#output").html(response);
-          alert(response);
-        }
-
-        // Handle specific error messages
-        if (response.indexOf("error_empId") !== -1) {
-          $("#empId").addClass("error").addClass("option-color-set");
-          $("#empId").change(function () {
-            var selectedValue = $(this).val();
-            if (selectedValue != "") {
-              $("#empId").removeClass("option-color-set");
-            }
-          });
-        }
-        if (response.indexOf("error_startDate") !== -1) {
-          $("#startDate")
-            .addClass("error")
-            .attr("placeholder", response.split(": ")[1])
-            .addClass("placeholder-set");
-        }
-        if (response.indexOf("error_endDate") !== -1) {
-          $("#endDate")
-            .addClass("error")
-            .attr("placeholder", response.split(": ")[1])
-            .addClass("placeholder-set");
+          // Show a generic error message
+          Swal.fire("Error", "Form submission failed", "error");
         }
       },
       error: function (response) {
-        Swal.fire("Failed", "Form submission failed", "error");
+        // Show the error message from the server
+        alert(JSON.stringify(response));
+        Swal.fire("Failed", response.responseText, "error");
       },
     });
   });

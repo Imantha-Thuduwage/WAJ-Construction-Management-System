@@ -39,7 +39,7 @@ if (empty($supervisor)) {
 }
 
 // Advanced Validation 
-else if (!empty($nicNumber)) {
+if (!empty($nicNumber)) {
     $sql = "SELECT * FROM tbl_employee WHERE nic_number = '$nicNumber' AND employee_id <> '$empId'";
     $db = dbConn();
     $result = $db->query($sql);
@@ -47,8 +47,24 @@ else if (!empty($nicNumber)) {
     // Check if another employee with the same NIC number already exists
     if ($result->num_rows > 0) {
         $errors['error_nicNumber'] = "NIC is Already Exists";
+    } else {
+        if (strlen($nicNumber) == 10) {
+            // Check nic length is 10
+            $lastCharactor = strtoupper(substr($nicNumber, -1)); //get last charactor by converting uppercase.
+            //check last character equal to V or X and check first 9 charactors are numeric.
+            if (!(($lastCharactor == "V" || $lastCharactor == "X") && is_numeric(substr($nicNumber, 0, 9)))) {
+                $errors['error_nicNumber'] = "You Entered Invalid Old NIC Number";
+            }
+        } else if (strlen($nicNumber) == 12) { // Check NIC length is 12
+            if (!is_numeric($nicNumber)) { // Check all characters are numeric
+                $errors['error_nicNumber'] = "You Entered Invalid New NIC Number";
+            }
+        } else {
+            $errors['error_nicNumber'] = "Please Enter Valid NIC Number";
+        }
     }
-} else if (!empty($phoneNum)) {
+}
+if (!empty($phoneNum)) {
     $sql = "SELECT * FROM tbl_employee WHERE contact_number = '$phoneNum' AND employee_id <> '$empId'";
     $db = dbConn();
     $result = $db->query($sql);
@@ -56,6 +72,8 @@ else if (!empty($nicNumber)) {
     // Check if another employee with the same contact number already exists
     if ($result->num_rows > 0) {
         $errors['error_phoneNum'] = "Contact Number Already Exists";
+    } else if (strlen($phoneNum) != 9) {
+        $errors['error_phoneNum'] = "Invalid Phone Number";
     }
 }
 

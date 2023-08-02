@@ -140,7 +140,10 @@
                                     <div class="col-4">
                                         <div class="input-field">
                                             <label for="mobile_number">Phone Number</label>
-                                            <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="">
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="countryCode">+94</span>
+                                                <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -150,32 +153,33 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                    <div class="input-field">
-                                        <label>Supervisor</label>
-                                        <select class="bg-body" id="supervisor" name="supervisor">
-                                            <option value="" selected disabled hidden>Select Supervisor</option>
+                                        <div class="input-field">
+                                            <label>Supervisor</label>
+                                            <select class="bg-body" id="supervisor" name="supervisor">
+                                                <option value="" selected disabled hidden>Select Supervisor</option>
 
-                                            <?php
-                                            // Retrieve data from MySQL database
-                                            $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
+                                                <?php
+                                                // Retrieve data from MySQL database
+                                                $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
                                             FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'supervisor'";
-                                            $db = dbConn();
-                                            $result = $db->query($sql);
+                                                $db = dbConn();
+                                                $result = $db->query($sql);
 
-                                            // Display options in dropdown list
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo "<option value='" . $row['user_id'] . "'>" . $row['last_name'] . "</option>";
+                                                // Display options in dropdown list
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo "<option value='" . $row['user_id'] . "'>" . $row['last_name'] . "</option>";
+                                                    }
                                                 }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>
                                             <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
+                                            <div class="error-message text-danger" id="error_profileImg"></div>
                                         </div>
                                     </div>
                                 </div>

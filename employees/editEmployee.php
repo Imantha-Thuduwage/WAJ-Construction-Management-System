@@ -44,7 +44,6 @@
         $city = $row['city'];
         $phoneNum = $row['contact_number'];
         $joinDate = $row['date_of_joining'];
-        $basicSal = $row['basic_salary'];
         $profileImg = $row['profile_image'];
     }
     ?>
@@ -182,7 +181,10 @@
                                     <div class="col-4">
                                         <div class="input-field">
                                             <label for="mobile_number">Phone Number</label>
-                                            <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="<?php echo @$phoneNum; ?>">
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="countryCode">+94</span>
+                                                <input class="p-3 bg-body" id="phoneNum" type="number" placeholder="Phone Number" name="phoneNum" value="<?php echo @$phoneNum; ?>">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -192,35 +194,36 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                    <div class="input-field">
-                                        <label for="project_manager">Supervisor</label>
-                                        <select class="bg-body" id="supervisor" name="supervisor">
-                                            <option value="" disabled hidden>Select Project Manager</option>
+                                        <div class="input-field">
+                                            <label for="project_manager">Supervisor</label>
+                                            <select class="bg-body" id="supervisor" name="supervisor">
+                                                <option value="" disabled hidden>Select Project Manager</option>
 
-                                            <?php
-                                            // Retrieve data from MySQL database
-                                            $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
+                                                <?php
+                                                // Retrieve data from MySQL database
+                                                $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
                                             FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'supervisor'";
-                                            $db = dbConn();
-                                            $result = $db->query($sql);
+                                                $db = dbConn();
+                                                $result = $db->query($sql);
 
-                                            // Display options in dropdown list
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    $selected = ($row['user_id'] == $supervisor) ? 'selected' : '';
-                                                    echo "<option value='" . $row['user_id'] . "' " . $selected . ">" . $row['last_name'] . "</option>";
+                                                // Display options in dropdown list
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        $selected = ($row['user_id'] == $supervisor) ? 'selected' : '';
+                                                        echo "<option value='" . $row['user_id'] . "' " . $selected . ">" . $row['last_name'] . "</option>";
+                                                    }
                                                 }
-                                            }
-                                            ?>
-                                        </select>
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
                                     <div class="col-8">
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>
                                             <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
                                             <!-- Set prvious image value to save DB when user is not update new image -->
                                             <input type="hidden" name="sameProfileImg" value="<?php echo @$profileImg; ?>">
+                                            <div class="error-message text-danger" id="error_profileImg"></div>
                                         </div>
                                     </div>
                                 </div>

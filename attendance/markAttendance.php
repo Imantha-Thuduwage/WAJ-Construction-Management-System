@@ -63,6 +63,7 @@
                             <div class="input-field">
                                 <label for="attend_date">Attend Date</label>
                                 <input class="p-3 bg-body" id="attendDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="attendDate" value="">
+                                <div class="error-message text-danger" id="error_already"></div>
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
         $empId = $row['employee_id'];
-        $attendDate = $row['attendance_id'];
+        $attendDate = $row['attendance_date'];
         $attendanceType = $row['attend_type'];
     }
     ?>
@@ -82,6 +82,7 @@
                                 <label for="attend_date">Attend Date</label>
                                 <input class="p-3 bg-body" id="attendDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" 
                                 name="attendDate" value="<?php echo $attendDate ?>">
+                                <div class="error-message text-danger" id="error_already"></div>
                             </div>
                         </div>
                     </div>

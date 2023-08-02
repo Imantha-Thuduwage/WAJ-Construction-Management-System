@@ -29,7 +29,7 @@ else if (empty($errors)) {
 
     // Checks if another project name already exists with the same name
     if ($result->num_rows > 0) {
-        $errors['error_attendDate'] = "Already Marked This Day Attendance";
+        $errors['error_already'] = "Already Marked This Day Attendance";
     }
 }
 

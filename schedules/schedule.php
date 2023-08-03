@@ -22,12 +22,12 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 510px !important;
+            padding-right: 630px !important;
         }
     </style>
 
     <!-- Modal for Popup Filters -->
-    <!-- <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal fade blur-overlay" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -39,20 +39,20 @@
                         <div class="row row-cols-2 row-cols-lg-1">
                             <div class="col-4">
                                 <div class="input-field">
-                                    <label>Salary ID</label>
-                                    <select class="bg-body" id="salaryId" name="salaryId">
-                                        <option value="" selected disabled hidden>Select Salary ID</option>
+                                    <label>Schedule ID</label>
+                                    <select class="bg-body" id="scheduleId" name="scheduleId">
+                                        <option value="" selected disabled hidden>Select Schedule ID</option>
 
                                         <?php
                                         // Retrieve data from MySQL database
-                                        $sql = "SELECT `salary_id` FROM tbl_salary";
+                                        $sql = "SELECT `schedule_id` FROM tbl_schedule";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['salary_id'] . "'>" . $row['salary_id'] . "</option>";
+                                                echo "<option value='" . $row['schedule_id'] . "'>" . $row['schedule_id'] . "</option>";
                                             }
                                         }
                                         ?>
@@ -61,38 +61,24 @@
                             </div>
                             <div class="col-4">
                                 <div class="input-field">
-                                    <label>Employee ID</label>
-                                    <select class="bg-body" id="employeeId" name="employeeId">
-                                        <option value="" selected disabled hidden>Select Employee Name</option>
+                                    <label>Project ID</label>
+                                    <select class="bg-body" id="projectId" name="projectId">
+                                        <option value="" selected disabled hidden>Select Project ID</option>
 
                                         <?php
                                         // Retrieve data from MySQL database
-                                        $sql = "SELECT `employee_id` FROM tbl_employee";
+                                        $sql = "SELECT `project_id` FROM tbl_schedule";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
+                                                echo "<option value='" . $row['project_id'] . "'>" . $row['project_id'] . "</option>";
                                             }
                                         }
                                         ?>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="basic_sal1">Min Basic Salary</label>
-                                        <input class="bg-body" id="minCost" type="Number" placeholder="Min Basic Salary" name="minCost" value="">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-field">
-                                        <label for="basic_sal2">Max Basic Salary</label>
-                                        <input class="bg-body" id="maxCost" type="Number" placeholder="Max Basic Salary" name="maxCost" value="">
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +87,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <div class="card shadow" id="form-card">
         <div class="card-body">
@@ -127,31 +113,7 @@
                             <th scope="col">More</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-
-                        ?>
-                                <tr class="shadow-sm">
-                                    <td class="align-middle"><?= $row['schedule_id']; ?></td>
-                                    <td class="align-middle"><?= $row['project_id']; ?></td>
-                                    <td class="align-middle"><?= $row['project_name']; ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
-                                            Create Tasks
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
-                                            View Tasks
-                                        </button>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        }
-                        ?>
+                    <tbody id="table-body">
                     </tbody>
                 </table>
             </div>
@@ -160,3 +122,42 @@
 </main>
 
 <?php include '../footer.php'; ?>
+
+<script>
+    // Function to delete selected Record From the Project Table
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this record?");
+    }
+
+    $(document).ready(function() {
+        // AJAX request to get all records initially
+        $.ajax({
+            url: 'getAllRecords.php',
+            method: 'POST',
+            data: '',
+            success: function(response) {
+                $('#table-body').html(response);
+            }
+        });
+
+        // AJAX request to filter records
+        $('#btn-filter').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'getFilteredRecords.php',
+                method: 'POST',
+                data: $('#filter-form').serialize(),
+                success: function(response) {
+                    // Close the modal
+                    $('#filterModal').modal('hide');
+
+                    // Showing data inside HTML Table
+                    $('#table-body').html(response);
+
+                    // Clear Modal FormData
+                    $("#filter-form")[0].reset();
+                }
+            });
+        });
+    });
+</script>

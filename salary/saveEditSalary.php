@@ -28,7 +28,7 @@ else if (!empty($employeeId)) {
 
     // Checks if another project name already exists with the same name
     if ($result->num_rows > 0) {
-        $errors['error_employeeId'] = "Employee ID is Already Exists";
+        $errors['error_already'] = "Employee ID is Already Exists";
     }
     // Check Validation is Completed
     else if (empty($_SESSION['status'])) {

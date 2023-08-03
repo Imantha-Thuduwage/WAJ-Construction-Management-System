@@ -26,7 +26,7 @@ $(document).ready(function () {
             // Clear form data
             $("#salary-form")[0].reset();
           }
-          // // Check for errors
+          // Check for errors
           if (response.hasOwnProperty("error_employeeId")) {
             $("#employeeId").addClass("error").addClass("option-color-set");
             $("#employeeId").change(function () {
@@ -48,6 +48,11 @@ $(document).ready(function () {
               .addClass("error")
               .attr("placeholder", response.error_companyAllowance)
               .addClass("placeholder-set");
+          }
+          if(response.hasOwnProperty("error_already")) {
+            $("#employeeId")
+              .next(".error-message")
+              .html(response.error_already);
           }
         },
         error: function (response) {

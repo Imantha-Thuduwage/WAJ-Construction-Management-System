@@ -51,6 +51,7 @@
                                     }
                                     ?>
                                 </select>
+                                <div class="error-message text-danger" id="error_already"></div>
                             </div>
                         </div>
                     </div>

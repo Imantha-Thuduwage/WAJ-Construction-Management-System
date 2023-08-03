@@ -49,6 +49,11 @@ $(document).ready(function () {
               .attr("placeholder", response.error_companyAllowance)
               .addClass("placeholder-set");
           }
+          if(response.hasOwnProperty("error_already")) {
+            $("#employeeId")
+              .next(".error-message")
+              .html(response.error_already);
+          }
         },
         error: function (response) {
           Swal.fire("Failed", response.error, "error");

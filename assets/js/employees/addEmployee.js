@@ -12,9 +12,9 @@ $(document).ready(function () {
     var gender = document.querySelector('input[name="gender"]:checked').value;
 
     var data = new FormData(this);
-    
-    data.append("title",title);
-    data.append("gender",gender);
+
+    data.append("title", title);
+    data.append("gender", gender);
 
     // Submit form data to PHP script using AJAX
     $.ajax({
@@ -49,7 +49,7 @@ $(document).ready(function () {
             .addClass("placeholder-set");
         }
         if (response.hasOwnProperty("error_nicNumber")) {
-          $("#nicNumber").val('');
+          $("#nicNumber").val("");
           $("#nicNumber")
             .addClass("error")
             .attr("placeholder", response.error_nicNumber)
@@ -74,7 +74,7 @@ $(document).ready(function () {
             .addClass("placeholder-set");
         }
         if (response.hasOwnProperty("error_phoneNum")) {
-          $("#phoneNum").val('')
+          $("#phoneNum").val("");
           $("#phoneNum")
             .addClass("error")
             .attr("placeholder", response.error_phoneNum)
@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
           });
         }
-        if(response.hasOwnProperty("error_profileImg")) {
+        else if(response.hasOwnProperty("error_profileImg")) {
           $("#profileImg")
             .addClass("error")
             .next(".error-message")

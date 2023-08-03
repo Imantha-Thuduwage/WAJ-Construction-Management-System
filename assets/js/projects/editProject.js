@@ -88,7 +88,7 @@ $(document).ready(function () {
         }
         // Check for errors
         if (response.hasOwnProperty("error_pName")) {
-          $("#pName").val('');
+          // $("#pName").val('');
           $("#pName").addClass("error")
             .attr("placeholder", response.error_pName)
             .addClass("placeholder-set");
@@ -270,6 +270,12 @@ $(document).ready(function () {
             .addClass("error")
             .attr("placeholder", response.error_pCost)
             .addClass("placeholder-set");
+        }
+         if(response.hasOwnProperty("error_already")) {
+          $("#pName")
+            .addClass("error")
+            .next(".error-message")
+            .html(response.error_already);
         }
       },
       error: function (response) {

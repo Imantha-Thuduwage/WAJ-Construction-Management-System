@@ -94,7 +94,7 @@ else if (!empty($pName)) {
 
     // Checks if another project name already exists with the same name
     if ($result->num_rows > 0) {
-        $errors['error_pName'] = "Project Name is Already Exists";
+        $errors['error_already'] = "Project Name is Already Exists";
     }
     // Check Validation is Completed
     else if (empty($_SESSION['status'])) {

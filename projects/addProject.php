@@ -36,6 +36,7 @@
                                     <div class="input-field">
                                         <label for="project_name">Project Name</label>
                                         <input class="p-3 bg-body" id="pName" type="text" placeholder="Enter Project Name" name="pName" value="">
+                                        <div class="error-message text-danger" id="error_already"></div>
                                     </div>
                                 </div>
                                 <div class="col-4">

@@ -6,14 +6,17 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Edit Assign</h4>
         <div>
-            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>tools/assign/assign.php'">
+            <button type="button" class="btn btn-sm px-5-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>assign/tools/assign.php'">
                 View Assigns
-            </button>
-            <button type="button" class="btn btn-sm px-5 border-bottom border-end border-2">
-                Filters
             </button>
         </div>
     </div>
+
+    <style>
+        #form-header>h4 {
+            padding-right: 950px !important;
+        }
+    </style>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {

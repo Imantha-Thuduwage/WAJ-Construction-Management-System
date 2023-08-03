@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../function.php';
+include '../../function.php';
 
 if (isset($_GET['maintenance_id'])) {
     $maintenanceId = $_GET['maintenance_id'];
@@ -13,7 +13,7 @@ if (isset($_GET['maintenance_id'])) {
 function deleteRecord($recordId)
 {
     // Delete the record from the database
-    $sql = "DELETE FROM tbl_maintenance WHERE maintenance_id = $recordId";
+    $sql = "DELETE FROM tbl_tool_maintenance WHERE maintenance_id = $recordId";
     $db = dbConn();
     if ($db->query($sql)) {
         echo "Form submitted successfully";

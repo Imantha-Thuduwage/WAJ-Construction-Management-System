@@ -36,9 +36,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>maintenance/maintenance.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>maintenance/machines/maintenance.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/workers.png" class="me-2">
-                Maintenance
+                Machine Maintenance
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>maintenance/tools/maintenance.php">
+                <img src="<?= SYSTEM_PATH; ?>assets/icons/workers.png" class="me-2">
+                Tools Maintenance
               </a>
             </li>
             <li class="nav-item">

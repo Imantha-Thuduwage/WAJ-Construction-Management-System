@@ -10,7 +10,7 @@ $(document).ready(function () {
   
       // Submit form data to PHP script using AJAX
       $.ajax({
-        url: "saveEditMaintenance.php",
+        url: "saveMaintenance.php",
         type: "POST",
         data: data,
         dataType: "json",
@@ -27,6 +27,15 @@ $(document).ready(function () {
             $("#maintenance-form")[0].reset();
           }
           // // Check for errors
+          if (response.hasOwnProperty("error_machineId")) {
+            $("#machineId").addClass("error").addClass("option-color-set");
+            $("#machineId").change(function () {
+              var selectedValue = $(this).val();
+              if (selectedValue != "") {
+                $("#machineId").removeClass("option-color-set");
+              }
+            });
+          }
           if (response.hasOwnProperty("error_maintainedDate")) {
             $("#maintainedDate")
               .addClass("error")

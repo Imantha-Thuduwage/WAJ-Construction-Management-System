@@ -1,12 +1,12 @@
-<?php include '../header.php'; ?>
+<?php include '../../header.php'; ?>
 <link rel="stylesheet" href="<?= SYSTEM_PATH; ?>assets/css/project.css">
-<?php include '../menu.php'; ?>
+<?php include '../../menu.php'; ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Here! Your Maintenance Portal</h4>
         <div>
-            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>maintenance/addMaintenance.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>maintenance/machines/addMaintenance.php'">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/plus.png" class="me-2">
                 Add Maintenance
             </button>
@@ -19,7 +19,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 440px !important;
+            padding-right: 540px !important;
         }
     </style>
 
@@ -42,7 +42,7 @@
 
                                         <?php
                                         // Retrieve data from MySQL database
-                                        $sql = "SELECT `maintenance_id` FROM tbl_maintenance";
+                                        $sql = "SELECT `maintenance_id` FROM tbl_machine_maintenance";
                                         $db = dbConn();
                                         $result = $db->query($sql);
 
@@ -54,28 +54,7 @@
                                         }
                                         ?>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-field">
-                                    <label>Tool ID</label>
-                                    <select class="bg-body" id="toolId" name="toolId">
-                                        <option value="" selected disabled hidden>Select Tool ID</option>
 
-                                        <?php
-                                        // Retrieve data from MySQL database
-                                        $sql = "SELECT `tool_id` FROM tbl_tool";
-                                        $db = dbConn();
-                                        $result = $db->query($sql);
-
-                                        // Display options in dropdown list
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['tool_id'] . "'>" . $row['tool_id'] . "</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -93,7 +72,7 @@
                                         // Display options in dropdown list
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['machine_id'] . "'>" . $row['machine_id'] . "</option>";
+                                                echo "<option value='" . $row['machine_id'] . "'> " . $row['machine_id'] . "</option>";
                                             }
                                         }
                                         ?>
@@ -128,7 +107,7 @@
             <div class="table-responsive">
                 <?php
                 // Create SQL Query
-                $sql = "SELECT `maintenance_id`, `tool_id`,`machine_id`,`maintenance_date` FROM tbl_maintenance";
+                $sql = "SELECT `maintenance_id`, `machine_id`,`maintenance_date` FROM tbl_machine_maintenance";
 
                 // Calling to the Connection
                 $db = dbConn();
@@ -140,7 +119,6 @@
                     <thead class="shadow">
                         <tr>
                             <th scope="col">Maintenance ID</th>
-                            <th scope="col">Tool ID</th>
                             <th scope="col">Machine ID</th>
                             <th scope="col">Maintained Date</th>
                             <th scope="col">More Details</th>
@@ -155,7 +133,7 @@
         <div>
 </main>
 
-<?php include '../footer.php'; ?>
+<?php include '../../footer.php'; ?>
 
 <script>
     $(document).ready(function() {
@@ -173,7 +151,7 @@
         $('#btn-filter').click(function() {
             $.ajax({
                 type: 'POST',
-                url: 'getFilteredRecords.php',
+                url: 'getFilteredRecord.php',
                 method: 'POST',
                 data: $('#filter-form').serialize(),
                 success: function(response) {
@@ -189,4 +167,26 @@
             });
         });
     });
+
+    // Function to delete selected Record 
+    function confirmDelete(maintenanceId) {
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Record',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and maintenanceId is defined, proceed with the deletion by navigating to the link
+                if (maintenanceId) {
+                    window.location.href = 'deleteMaintenance.php?maintenance_id=' + maintenanceId;
+                }
+            }
+        });
+    }
 </script>

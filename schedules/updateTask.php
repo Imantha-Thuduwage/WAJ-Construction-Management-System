@@ -15,7 +15,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 700px !important;
+            padding-right: 820px !important;
         }
     </style>
 
@@ -248,7 +248,7 @@
                                                 <tr>
                                                     <td>
                                                         <button type="button" class="task-btn" onclick="document.location='updateTask.php?task_id=<?= $row['task_id']; ?>'">
-                                                            Task <b><?= $row['task_name'] ?> </b>. Click to More or Edit
+                                                            Task <b><?= $row['task_name'] ?> </b> Task
                                                         </button>
                                                     </td>
                                                 </tr>

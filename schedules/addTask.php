@@ -16,7 +16,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 730px !important;
+            padding-right: 860px !important;
         }
     </style>
 
@@ -266,7 +266,7 @@
                                                 <tr>
                                                     <td>
                                                         <button type="button" class="task-btn" onclick="document.location='addTask.php?schedule_id=<?= $row['schedule_id']; ?>'">
-                                                            <?= $row['task_name'] ?> Is Added. Click to More
+                                                            <?= $row['task_name'] ?> Task
                                                         </button>
                                                     </td>
                                                 </tr>

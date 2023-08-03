@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     <style>
         #form-header>h4 {
-            padding-right: 630px !important;
+            padding-right: 840px !important;
         }
     </style>
 

@@ -13,6 +13,9 @@ extract($_POST);
 if (empty($userName)) {
     $errors['error_userName'] = "User Name is Required";
 }
+if (!filter_var($userName, FILTER_VALIDATE_EMAIL)){
+    $message['error_userName'] = "Invalid Email";
+}
 if (empty($password)) {
     $errors['error_password'] = "Password is Required";
 }
@@ -34,7 +37,7 @@ else if (!empty($userName)) {
 
     // Checks if another project name already exists with the same name
     if ($result->num_rows > 0) {
-        $errors['error_userName'] = "User Name is Already Exists";
+        $errors['error_already'] = "User Name is Already Exists";
     }
     // Check Validation is Completed
     else if (empty($_SESSION['status'])) {

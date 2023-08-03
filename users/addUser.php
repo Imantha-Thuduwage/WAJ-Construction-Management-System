@@ -35,6 +35,7 @@
                                     <div class="input-field">
                                         <label for="user_name">User Name</label>
                                         <input class="p-3 bg-body" id="userName" type="email" placeholder="Enter User Name" name="userName" value="">
+                                        <div class="error-message text-danger" id="error_already"></div>
                                     </div>
                                 </div>
                                 <div class="col-4">

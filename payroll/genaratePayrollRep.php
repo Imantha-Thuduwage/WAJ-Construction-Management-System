@@ -48,23 +48,8 @@
                     </div>
                 </div>
             </form>
-            <table class="table table-sm">
-                <thead class="shadow">
-                    <tr>
-                        <th scope="col">Petty Cash ID</th>
-                        <th scope="col">Project ID</th>
-                        <th scope="col">Payed Amount</th>
-                        <th scope="col">Payed Date</th>
-                        <th scope="col">More Details</th>
-                        <th scope="col">Remove</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                </tbody>
-            </table>
         </div>
     </div>
-    <div id="output"></div>
     <button type="button" onclick="printSlip('output')">Print</button>
 </main>
 

@@ -28,9 +28,6 @@ if (empty($fuelType)) {
 if (empty($brand)) {
     $errors['error_brand'] = "Brand is Required";
 }
-if (empty($description)) {
-    $errors['error_description'] = "Description is Required";
-}
 
 // Advanced Validation 
 else if (!empty($serialNumber)) {
@@ -40,7 +37,7 @@ else if (!empty($serialNumber)) {
 
     // Checks if another project name already exists with the same name
     if ($result->num_rows > 0) {
-        $errors['error_serialNumber'] = "Serial Number is Already Exists";
+        $errors['error_already'] = "Serial Number is Already Exists";
     }
     // Check Validation is Completed
     else if (empty($_SESSION['status'])) {

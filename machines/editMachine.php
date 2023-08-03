@@ -63,6 +63,7 @@
                                     <div class="input-field">
                                         <label for="serial_name">Serial Number</label>
                                         <input class="p-3 bg-body" id="serialNumber" type="text" placeholder="Tool Name" name="serialNumber" value="<?php echo $serialNumber ?>">
+                                        <div class="error-message text-danger" id="error_already"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -158,6 +159,7 @@
                             <div class="input-field">
                                 <label>Upload Machine Image (Not Mandatory)</label>
                                 <input class="p-3 bg-body" type="file" id="machineImg" name="machineImg">
+                                <div class="error-message text-danger" id="error_machineImg"></div>
                                 <!-- Set prvious image value to save DB when user is not update new image -->
                                 <input type="hidden" name="sameMachineImg" value="<?php echo @$machineImg; ?>">
                             </div>

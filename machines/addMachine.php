@@ -37,6 +37,7 @@
                                     <div class="input-field">
                                         <label for="serial_name">Serial Number</label>
                                         <input class="p-3 bg-body" id="serialNumber" type="text" placeholder="Tool Name" name="serialNumber" value="">
+                                        <div class="error-message text-danger" id="error_already"></div>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -127,6 +128,7 @@
                                     <div class="input-field">
                                         <label>Upload Machine Image (Not Mandatory)</label>
                                         <input class="p-3 bg-body" type="file" id="machineImg" name="machineImg">
+                                        <div class="error-message text-danger" id="error_machineImg"></div>
                                     </div>
                                 </div>
                             </div>

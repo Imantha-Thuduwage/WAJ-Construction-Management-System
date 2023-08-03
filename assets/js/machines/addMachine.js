@@ -19,7 +19,6 @@ $(document).ready(function () {
         processData: false,
   
         success: function (response) {
-          alert(response);
           //Checking if Form data is Successfully Submitted
           if (response.hasOwnProperty("success")) {
             // Send Successfull Alert Messsage to User
@@ -78,6 +77,18 @@ $(document).ready(function () {
               .addClass("error")
               .attr("placeholder", response.error_description)
               .addClass("placeholder-set");
+          }
+          if(response.hasOwnProperty("error_machineImg")) {
+            $("#machineImg")
+              .addClass("error")
+              .next(".error-message")
+              .html(response.error_machineImg);
+          }
+          else if(response.hasOwnProperty("error_already")) {
+            $("#serialNumber")
+              .addClass("error")
+              .next(".error-message")
+              .html(response.error_already);
           }
         },
         error: function (response) {

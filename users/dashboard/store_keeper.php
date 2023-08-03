@@ -54,7 +54,7 @@ $totalMaintenance = $totalToolMaintenance + $totalMachineMaintenance;
 $sql = "SELECT tbl_calendar.month, COUNT(tbl_tool.tool_id) AS total_tools
 FROM tbl_calendar
 LEFT JOIN tbl_tool
-ON MONTH(tbl_tool.tool_id) = tbl_calendar.month
+ON MONTH(tbl_tool.purchase_date) = tbl_calendar.month
 GROUP BY tbl_calendar.month
 HAVING tbl_calendar.month <= MONTH(CURDATE())
 ORDER BY tbl_calendar.month";
@@ -70,7 +70,7 @@ while ($row = $result->fetch_assoc()) {
 $sql = "SELECT tbl_calendar.month, COUNT(tbl_machine.machine_id) AS total_machines
 FROM tbl_calendar
 LEFT JOIN tbl_machine
-ON MONTH(tbl_machine.machine_id) = tbl_calendar.month
+ON MONTH(tbl_machine.purchase_date) = tbl_calendar.month
 GROUP BY tbl_calendar.month
 HAVING tbl_calendar.month <= MONTH(CURDATE())
 ORDER BY tbl_calendar.month";

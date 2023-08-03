@@ -36,7 +36,7 @@
                                 <div class="col-6">
                                     <div class="input-field">
                                         <label for="serial_name">Serial Number</label>
-                                        <input class="p-3 bg-body" id="serialNumber" type="text" placeholder="Tool Name" name="serialNumber" value="">
+                                        <input class="p-3 bg-body" id="serialNumber" type="text" placeholder="Serial Number" name="serialNumber" value="">
                                         <div class="error-message text-danger" id="error_already"></div>
                                     </div>
                                 </div>

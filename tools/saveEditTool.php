@@ -13,6 +13,9 @@ extract($_POST);
 if (empty($toolName)) {
     $errors['error_toolName'] = "Tool Name is Required";
 }
+if (empty($serialNumber)) {
+    $errors['error_serialNumber'] = "Serial Number is Required";
+}
 if (empty($purchaseDate)) {
     $errors['error_purchaseDate'] = "Purchase Date is Required";
 }
@@ -23,11 +26,22 @@ if (empty($description)) {
     $errors['error_description'] = "Description is Required";
 }
 
-// Check Validation is Completed
-else if (empty($_SESSION['status'])) {
-    // Retrieving values for fields that are not in the form
-    $updateUser = $_SESSION['userid'];
-    $updateDate = date('y-m-d');
+// Advanced Validation 
+else if (!empty($serialNumber)) {
+    $sql = "SELECT * FROM tbl_tool WHERE serial_number = '$serialNumber' AND tool_id <> '$toolId'";
+    $db = dbConn();
+    $result = $db->query($sql);
+
+    // Checks if another project name already exists with the same name
+    if ($result->num_rows > 0) {
+        $errors['error_already'] = "Serial Number is Already Exists";
+    }
+    // Check Validation is Completed
+    else if (empty($_SESSION['status'])) {
+        // Retrieving values for fields that are not in the form
+        $updateUser = $_SESSION['userid'];
+        $updateDate = date('y-m-d');
+    }
 }
 
 if (empty($errors) && !empty($pImage = $_FILES['toolImg']['name'])) {
@@ -80,7 +94,7 @@ if (!empty($errors)) {
 } else {
     // Calling DB Connection
     $sql = "UPDATE tbl_tool
-    SET `tool_id` = '$toolId', `tool_name` = '$toolName', `description` = '$description', `purchase_date` = '$purchaseDate', 
+    SET `tool_id` = '$toolId', `tool_name` = '$toolName', `serial_number` = '$serialNumber', `description` = '$description', `purchase_date` = '$purchaseDate', 
     `current_condition` = '$status', `tool_image` = '$fileNameNew', `update_user` = '$updateUser', `update_date` = '$updateDate'
     WHERE `tool_id` = '$toolId'";
     $db = dbConn();

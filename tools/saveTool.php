@@ -13,6 +13,9 @@ extract($_POST);
 if (empty($toolName)) {
     $errors['error_toolName'] = "Tool Name is Required";
 }
+if (empty($serialNumber)) {
+    $errors['error_serialNumber'] = "Serial Number is Required";
+}
 if (empty($purchaseDate)) {
     $errors['error_purchaseDate'] = "Purchase Date is Required";
 }
@@ -23,14 +26,27 @@ if (empty($description)) {
     $errors['error_description'] = "Description is Required";
 }
 
-// Check Validation is Completed
-else if (empty($_SESSION['status'])) {
-    // Retrieving values for fields that are not in the form
-    $addUser = $_SESSION['userid'];
-    $addDate = date('y-m-d');
+// Advanced Validation 
+else if (!empty($serialNumber)) {
+    $sql = "SELECT * FROM tbl_tool WHERE serial_number = '$serialNumber'";
+    $db = dbConn();
+    $result = $db->query($sql);
+
+    // Checks if another project name already exists with the same name
+    if ($result->num_rows > 0) {
+        $errors['error_already'] = "Serial Number is Already Exists";
+    }
+    // Check Validation is Completed
+    else if (empty($_SESSION['status'])) {
+        // Retrieving values for fields that are not in the form
+        $addUser = $_SESSION['userid'];
+        $addDate = date('y-m-d');
+    }
 }
 
-if (empty($errors)) {
+$fileNameNew = NULL;
+
+if (empty($errors)&& !empty($_FILES['toolImg']['name'])) {
     // Check if 'profileImg' key exists in $_FILES array
     $pImage = $_FILES['toolImg'];
 
@@ -76,8 +92,8 @@ if (!empty($errors)) {
 } else {
     // Calling DB Connection
     $sql = "INSERT INTO tbl_tool
-            (`tool_name`, `description`, `purchase_date`, `current_condition`, `tool_image`, `add_user`, `add_date`) 
-            VALUES ('$toolName', '$description', '$purchaseDate', '$status', '$fileNameNew', '$addUser','$addDate')";
+            (`tool_name`, `serial_number`, `description`, `purchase_date`, `current_condition`, `tool_image`, `add_user`, `add_date`) 
+            VALUES ('$toolName', '$serialNumber', '$description', '$purchaseDate', '$status', '$fileNameNew', '$addUser','$addDate')";
     $db = dbConn();
     if ($db->query($sql)) {
         echo json_encode(array('success' => "Form submitted successfully"));

@@ -84,7 +84,7 @@ $(document).ready(function () {
               .next(".error-message")
               .html(response.error_machineImg);
           }
-          else if(response.hasOwnProperty("error_already")) {
+          if(response.hasOwnProperty("error_already")) {
             $("#serialNumber")
               .addClass("error")
               .next(".error-message")

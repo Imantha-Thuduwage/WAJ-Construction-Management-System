@@ -56,6 +56,18 @@ $(document).ready(function () {
               .attr("placeholder", response.error_description)
               .addClass("placeholder-set");
           }
+          if(response.hasOwnProperty("error_toolImg")) {
+            $("#toolImg")
+              .addClass("error")
+              .next(".error-message")
+              .html(response.error_toolImg);
+          }
+          if(response.hasOwnProperty("error_already")) {
+            $("#serialNumber")
+              .addClass("error")
+              .next(".error-message")
+              .html(response.error_already);
+          }
         },
         error: function (response) {
           Swal.fire("Failed", response.error, "error");

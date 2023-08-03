@@ -33,6 +33,13 @@
                                         <input class="p-3 bg-body" id="toolName" type="text" placeholder="Tool Name" name="toolName" value="">
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="input-field">
+                                        <label for="serial_name">Serial Number</label>
+                                        <input class="p-3 bg-body" id="serialNumber" type="text" placeholder="Serial Number" name="serialNumber" value="">
+                                        <div class="error-message text-danger" id="error_already"></div>
+                                    </div>
+                                </div>
                                 <div class="col-3">
                                     <div class="input-field">
                                         <label for="purchase_date">Purchase Date</label>
@@ -77,6 +84,7 @@
                                     <div class="input-field">
                                         <label>Upload Tool Image (Not Mandatory)</label>
                                         <input class="p-3 bg-body" type="file" id="toolImg" name="toolImg">
+                                        <div class="error-message text-danger" id="error_toolImg"></div>
                                     </div>
                                 </div>
                             </div>

@@ -15,7 +15,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 700px !important;
+            padding-right: 800px !important;
         }
     </style>
 
@@ -105,6 +105,7 @@
                             <div class="input-field">
                                 <label for="assignment_date">Assignment Date</label>
                                 <input class="p-3 bg-body" id="assignDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="assignDate" value="<?php echo $assignDate ?>">
+                                <div class="error-message text-danger" id="error_already_booked"></div>
                             </div>
                         </div>
                     </div>

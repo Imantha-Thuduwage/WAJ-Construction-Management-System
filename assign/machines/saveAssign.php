@@ -19,8 +19,18 @@ if (empty($machineId)) {
 if (empty($assignDate)) {
     $errors['error_assignDate'] = "Assign Date is Required";
 }
-if (empty($returnDate)) {
-    $errors['error_returnDate'] = "Return Date is Required";
+
+// Advanced Validation
+else if (empty($errors)) {
+    $sql = "SELECT * FROM tbl_machine_assign WHERE machine_id = '$machineId'
+    AND assign_date = '$assignDate'";
+    $db = dbConn();
+    $result = $db->query($sql);
+
+    // Checks if another project name already exists with the same name
+    if ($result->num_rows > 0) {
+        $errors['error_already_booked'] = "Already reserved for that date";
+    }
 }
 
 // Check Validation is Completed

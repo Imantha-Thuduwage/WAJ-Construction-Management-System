@@ -19,7 +19,6 @@ $(document).ready(function () {
         processData: false,
   
         success: function (response) {
-          alert(response);
           //Checking if Form data is Successfully Submitted
           if (response.hasOwnProperty("success")) {
             // Send Successfull Alert Messsage to User
@@ -57,6 +56,12 @@ $(document).ready(function () {
               .addClass("error")
               .attr("placeholder", response.error_returnDate)
               .addClass("placeholder-set");
+          }
+          if (response.hasOwnProperty("error_already_booked")) {
+            $("#assignDate")
+              .addClass("error")
+              .next(".error-message")
+              .html(response.error_already_booked);
           }
         },
         error: function (response) {

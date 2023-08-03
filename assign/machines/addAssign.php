@@ -15,20 +15,25 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 700px !important;
+            padding-right: 800px !important;
         }
     </style>
 
 
-    <div class="card shadow" method="POST" id="form-card" action="saveAssign.php">
+    <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form" id="assign-form">
+            <form method="post" class="form" id="assign-form" action="saveAssign.php">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
                             <h6 class="pt-3 pb-2 mb-0">Enter Your Machine Assgining Details Here</h6>
                         </div>
+                    </div>
+                    <div class="row justify-content-center gx-5">
+                    <div class="col-sm-6" id="showError">
+
+                    </div>
                     </div>
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
@@ -83,6 +88,7 @@
                             <div class="input-field">
                                 <label for="assignment_date">Assignment Date</label>
                                 <input class="p-3 bg-body" id="assignDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="assignDate" value="">
+                                <div class="error-message text-danger" id="error_already_booked"></div>
                             </div>
                         </div>
                     </div>

@@ -58,6 +58,12 @@ $(document).ready(function () {
             .attr("placeholder", response.error_returnDate)
             .addClass("placeholder-set");
         }
+        if (response.hasOwnProperty("error_already_booked")) {
+          $("#assignDate")
+            .addClass("error")
+            .next(".error-message")
+            .html(response.error_already_booked);
+        }
       },
       error: function (response) {
         Swal.fire("Failed", response.error, "error");

@@ -19,12 +19,22 @@ if (empty($toolId)) {
 if (empty($assignDate)) {
     $errors['error_assignDate'] = "Assign Date is Required";
 }
-if (empty($returnDate)) {
-    $errors['error_returnDate'] = "Return Date is Required";
+
+// Advanced Validation
+else if (empty($errors)) {
+    $sql = "SELECT * FROM tbl_tool_assign WHERE tool_id = '$toolId' 
+    AND assign_date = '$assignDate'";
+    $db = dbConn();
+    $result = $db->query($sql);
+
+    // Checks if another project name already exists with the same name
+    if ($result->num_rows > 0) {
+        $errors['error_already_booked'] = "Already reserved for that date";
+    }
 }
 
 // Check Validation is Completed
-else if (empty($_SESSION['status'])) {
+if (empty($_SESSION['status'])) {
     // Retrieving values for fields that are not in the form
     $addUser = $_SESSION['userid'];
     $addDate = date('y-m-d');

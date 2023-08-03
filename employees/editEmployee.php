@@ -221,9 +221,9 @@
                                         <div class="input-field">
                                             <label for="formFile">Upload Profile Image</label>
                                             <input class="p-3 bg-body" type="file" id="profileImg" name="profileImg">
+                                            <div class="error-message text-danger" id="error_profileImg"></div>
                                             <!-- Set prvious image value to save DB when user is not update new image -->
                                             <input type="hidden" name="sameProfileImg" value="<?php echo @$profileImg; ?>">
-                                            <div class="error-message text-danger" id="error_profileImg"></div>
                                         </div>
                                     </div>
                                 </div>

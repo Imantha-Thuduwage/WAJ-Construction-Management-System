@@ -66,7 +66,7 @@ if (!empty($nicNumber)) {
 }
 if (!empty($phoneNum)) {
     // Check if the phone number has more than 10 digits or less than 10 digits
-    if (strlen($phoneNum) != 10) {
+    if (strlen($phoneNum) != 9) {
         $errors['error_phoneNum'] = "Invalid Number";
     } else {
         $sql = "SELECT * FROM tbl_employee WHERE contact_number = '$phoneNum'";
@@ -76,9 +76,10 @@ if (!empty($phoneNum)) {
         // Check if another employee with the same contact number already exists
         if ($result->num_rows > 0) {
             $errors['error_phoneNum'] = "Contact Number Already Exists";
-        } else if (strlen($phoneNum) != 9) {
-            $errors['error_phoneNum'] = "Invalid Phone Number";
-        }
+        } 
+        // else if (strlen($phoneNum) != 9) {
+        //     $errors['error_phoneNum'] = "Invalid Phone Number";
+        // }
     }
 }
 

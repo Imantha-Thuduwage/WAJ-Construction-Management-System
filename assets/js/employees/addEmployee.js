@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
           });
         }
-        else if(response.hasOwnProperty("error_profileImg")) {
+        if(response.hasOwnProperty("error_profileImg")) {
           $("#profileImg")
             .addClass("error")
             .next(".error-message")

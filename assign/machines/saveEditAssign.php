@@ -21,7 +21,7 @@ if (empty($assignDate)) {
 }
 
 // Advanced Validation
-if (empty($errors)) {
+else if (empty($errors)) {
     $sql = "SELECT * FROM tbl_machine_assign WHERE machine_id = '$machineId' 
     AND assign_date = '$assignDate' AND assign_id <> '$assignId'";
     $db = dbConn();

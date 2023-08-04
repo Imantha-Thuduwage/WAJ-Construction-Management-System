@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     // Submit form data to PHP script using AJAX
     $.ajax({
-      url: "saveAssign.php",
+      url: "saveEditAssign.php",
       type: "POST",
       data: data,
       dataType: "json",
@@ -19,7 +19,6 @@ $(document).ready(function () {
       processData: false,
 
       success: function (response) {
-        alert(response);
         //Checking if Form data is Successfully Submitted
         if (response.hasOwnProperty("success")) {
           // Send Successfull Alert Messsage to User

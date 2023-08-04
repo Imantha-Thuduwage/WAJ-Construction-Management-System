@@ -16,9 +16,6 @@ if (!empty($proId)) {
 if (!empty($proName)) {
     $where .= "project_name = '$proName' AND ";
 }
-if (!empty($proManager)) {
-    $where .= "project_manager = '$proManager' AND ";
-}
 if (!empty($startDate) && !empty($endDate)) {
     $where .= "start_date >= '$startDate' AND end_date <= '$endDate' AND ";
 }
@@ -48,7 +45,6 @@ $result = $db->query($sql);
                 <td class="align-middle"><?= $row['p_location']; ?></td>
                 <td class="align-middle"><?= $row['start_date']; ?></td>
                 <td class="align-middle"><?= $row['end_date']; ?></td>
-                <td class="align-middle"><?= $row['project_manager']; ?></td>
                 <td class="align-middle"><?= number_format($row['total_cost'], 2); ?></td>
                 <td>
                     <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='viewProject.php?project_id=<?= $row['project_id']; ?>'">

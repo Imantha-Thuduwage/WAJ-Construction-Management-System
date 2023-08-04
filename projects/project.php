@@ -22,7 +22,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 535px !important;
+            padding-right: 600px !important;
         }
     </style>
 
@@ -37,7 +37,7 @@
                 <div class="modal-body">
                     <form id="filter-form">
                         <div class="row row-cols-2 row-cols-lg-1">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="input-field">
                                     <label>Project ID</label>
                                     <select class="bg-body" id="proId" name="proId">
@@ -59,7 +59,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="input-field">
                                     <label>Project Name</label>
                                     <select class="bg-body" id="proName" name="proName">
@@ -75,29 +75,6 @@
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<option value='" . $row['project_name'] . "'>" . $row['project_name'] . "</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-field">
-                                    <label for="project_manager">Project Manager</label>
-                                    <select class="bg-body" id="proManager" name="proManager">
-                                        <option value="" selected disabled hidden>Select Project Manager</option>
-
-                                        <?php
-                                        // Retrieve data from MySQL database
-                                        $sql = "SELECT u.`user_id`,u.`last_name`,r.`role_id`,r.`user_role` 
-                                            FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE `user_role` = 'Project_Manager'";
-                                        $db = dbConn();
-                                        $result = $db->query($sql);
-
-                                        // Display options in dropdown list
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['user_id'] . "'>" . $row['last_name'] . "</option>";
                                             }
                                         }
                                         ?>
@@ -162,7 +139,6 @@
                             <th scope="col">Location</th>
                             <th scope="col">Starting Date</th>
                             <th scope="col">Ending Date</th>
-                            <th scope="col">Project Manager</th>
                             <th scope="col">Total Cost (Rs)</th>
                             <th scope="col">More Details</th>
                             <th scope="col">Remove</th>

@@ -47,30 +47,6 @@
                         <div class="card shadow" id="form-card">
                             <div class="card-body">
 
-                                <div class="row justify-content-start gx-5">
-                                    <div class="col-sm">
-
-                                        <!-- Get count of existing task related to relevant schedule -->
-                                        <?php
-                                        $sql = "SELECT COUNT(`task_id`) FROM tbl_schedule_task WHERE `schedule_id` = $schId";
-                                        $db = dbConn();
-                                        $result = $db->query($sql);
-
-                                        if ($result) {
-                                            $row = $row = $result->fetch_assoc();
-                                            $count = $row['COUNT(`task_id`)'];
-
-                                            if ($count == 0) { ?>
-                                                <h6 class="pt-3 pb-2 mb-0">Task 01</h6>
-                                            <?php } else { ?>
-                                                <h6 class="pt-3 pb-2 mb-0">Task <?php echo ($count + 1); ?></h6>
-                                        <?php }
-                                        }  ?>
-
-
-                                    </div>
-                                </div>
-
                                 <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
                                     <!-- Store Value of Schedule ID and Project ID to Further Use -->
@@ -307,7 +283,6 @@
                 schedule_id: schId
             },
             success: function(response) {
-                alert(response); // Display a success message or perform any other action
 
                 // Remove "+" icon from button
                 $(this).find('i').remove();
@@ -344,7 +319,6 @@
                 schedule_id: schId
             },
             success: function(response) {
-                alert(response); // Display a success message or perform any other action
 
                 // Remove "+" icon from button
                 $(this).find('i').remove();

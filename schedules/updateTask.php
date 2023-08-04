@@ -50,13 +50,7 @@
 
                         <div class="card shadow" id="form-card">
                             <div class="card-body">
-
-                                <div class="row justify-content-start gx-5">
-                                    <div class="col-sm">
-                                        <h6 class="pt-3 pb-2 mb-0">Task <?php echo $taskId; ?></h6>
-                                    </div>
-                                </div>
-
+                                
                                 <form method="post" class="form" id="task-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
                                     <!-- Store Value of Schedule ID And Task ID to Further Use -->

@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
                 </button>
             </td>
             <td>
-                <<button type="button" class="btn btn-outline-info btn-sm">
+                <button type="button" class="btn btn-outline-info btn-sm">
                     <a href='#' onclick="confirmDelete('<?= $row['maintenance_id']; ?>')">
                         <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
                     </a>

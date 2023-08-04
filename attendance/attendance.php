@@ -19,7 +19,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 450px !important;
+            padding-right: 550px !important;
         }
     </style>
 
@@ -186,4 +186,25 @@
             });
         });
     });
+    // Function to delete selected Record From the employee Table
+    function confirmDelete(attendanceId) {
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Employee',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and attendanceId is defined, proceed with the deletion by navigating to the link
+                if (attendanceId) {
+                    window.location.href = 'deleteAttendance.php?attendance_id=' + attendanceId;
+                }
+            }
+        });
+    }
 </script>

@@ -23,8 +23,7 @@ if (!empty($errors)) {
     FROM tbl_project p
     LEFT JOIN tbl_schedule s ON p.project_id = s.project_id
     LEFT JOIN tbl_schedule_task t ON p.project_id = t.project_id
-    WHERE p.project_id = '$proId' 
-    GROUP BY p.project_id";
+    WHERE p.project_id = '$proId'";
 
     $db = dbConn();
 

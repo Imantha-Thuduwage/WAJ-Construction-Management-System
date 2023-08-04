@@ -14,7 +14,6 @@ $(document).ready(function () {
       data: data,
       dataType: "json",
       success: function (response) {
-        alert(response);
         // Checking if Form data is Successfully Submitted
         if (response.hasOwnProperty("success")) {
           // Send Successful Alert Message to User
@@ -38,7 +37,6 @@ $(document).ready(function () {
       },
       error: function (response) {
         // Show the error message from the server
-        alert(JSON.stringify(response));
         Swal.fire("Failed", response.responseText, "error");
       },
     });

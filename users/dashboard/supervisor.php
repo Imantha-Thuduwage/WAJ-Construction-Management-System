@@ -115,13 +115,13 @@ echo '<script>const projects = ' . $completed . ';</script>';
               <h4><?= $completedCount ?></h4>
             </div>
           </div>
-          <div class="col-3 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-3 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Employess of  Company</h5>
               <h4><?= $totalEmployees ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-4 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Emplyees Under My Supervising</h5>
               <h4><?= $myEmployees ?></h4>
@@ -147,7 +147,7 @@ echo '<script>const projects = ' . $completed . ';</script>';
       <div class="col-7 pt-3">
         <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
           <h5 for="project_name" class="mb-2">Employees, Under My Supervising</h5>
-          <div class="col-sm border m-0" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-sm border m-0" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="table-responsive">
               <?php
               // Get Today Date to Filter Overdue Tasks

@@ -6,16 +6,16 @@
     <div class="d-flex p-2 justify-content-between flex-wrap flex-md-nowrap align-items-center" id="form-header">
         <h4>Create Payroll</h4>
         <div>
-            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payroll/genaratePayroll.php'">
+            <button type="button" class="btn btn-sm px-4 border-bottom border-end border-2" onclick="document.location='<?= SYSTEM_PATH; ?>payroll/payroll.php'">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/eye.png" class="me-2">
-                View PettyCash
+                View Payroll
             </button>
         </div>
     </div>
 
     <style>
         #form-header>h4 {
-            padding-right: 650px !important;
+            padding-right: 850px !important;
         }
     </style>
 
@@ -50,7 +50,6 @@
             </form>
         </div>
     </div>
-    <button type="button" onclick="printSlip('output')">Print</button>
 </main>
 
 <script src="<?= SYSTEM_PATH; ?>assets/js/payroll/genaratePayroll.js"></script>

@@ -51,77 +51,78 @@
         <div class="card-body">
             <div class="container">
                 <div class="pay-sheet">
-                    <h2>Pay Sheet</h2>
-                    <table class="table table-strips">
-                        <tr>
-                            <th>Employee ID</th>
-                            <td>$employeeId </td>
-                        </tr>
-                        <tr>
-                            <th>Employee Name</th>
-                            <td> $empName </td>
-                        </tr>
-                        <tr>
-                            <th>Month</th>
-                            <td> $month </td>
-                        </tr>
-                        <tr>
-                            <th>Attendance Count</th>
-                            <td> $attendanceCount </td>
-                        </tr>
-                        <tr>
-                            <th>Basic Salary</th>
-                            <td> $basicSal </td>
-                        </tr>
-                        <tr>
-                            <th>Company Allowance</th>
-                            <td> $comAllowance </td>
-                        </tr>
-                        <tr>
-                            <th>Monthly Salary</th>
-                            <td> $monthlySalary </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="3">Deduction</th>
-                        </tr>
+                    <!-- Add the output div before the button -->
+                    <div id="output">
+                        <h2>Pay Sheet</h2>
+                        <table class="table table-strips">
+                            <tr>
+                                <th>Employee ID</th>
+                                <td>$employeeId </td>
+                            </tr>
+                            <tr>
+                                <th>Employee Name</th>
+                                <td> $empName </td>
+                            </tr>
+                            <tr>
+                                <th>Month</th>
+                                <td> $month </td>
+                            </tr>
+                            <tr>
+                                <th>Attendance Count</th>
+                                <td> $attendanceCount </td>
+                            </tr>
+                            <tr>
+                                <th>Basic Salary</th>
+                                <td> $basicSal </td>
+                            </tr>
+                            <tr>
+                                <th>Company Allowance</th>
+                                <td> $comAllowance </td>
+                            </tr>
+                            <tr>
+                                <th>Monthly Salary</th>
+                                <td> $monthlySalary </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="3">Deduction</th>
+                            </tr>
 
-                        <tr>
-                            <th>Total Advance</th>
-                            <td> $totAdvance </td>
-                        </tr>
-                        <tr>
-                            <th>E.P.F (8%)</th>
-                            <td> $empEpfContri </td>
-                        </tr>
-                        <tr>
-                            <th>Total Deduction</th>
-                            <td> $totDeduction </td>
-                        </tr>
-                        <tr>
-                            <th>Net Salary</th>
-                            <td> $netSal </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="3">Company Contributions</th>
-                        </tr>
-                        <tr>
-                            <th>E.P.F (12%)</th>
-                            <td> $employerEpfContri </td>
-                        </tr>
-                        <tr>
-                            <th>E.T.F (3%)</th>
-                            <td> $employerEtfContri </td>
-                        </tr>
-                        <tr>
-                            <th>Total Company Contribution</th>
-                            <td> $$totComContribution </td>
-                        </tr>
-                    </table>
+                            <tr>
+                                <th>Total Advance</th>
+                                <td> $totAdvance </td>
+                            </tr>
+                            <tr>
+                                <th>E.P.F (8%)</th>
+                                <td> $empEpfContri </td>
+                            </tr>
+                            <tr>
+                                <th>Total Deduction</th>
+                                <td> $totDeduction </td>
+                            </tr>
+                            <tr>
+                                <th>Net Salary</th>
+                                <td> $netSal </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="3">Company Contributions</th>
+                            </tr>
+                            <tr>
+                                <th>E.P.F (12%)</th>
+                                <td> $employerEpfContri </td>
+                            </tr>
+                            <tr>
+                                <th>E.T.F (3%)</th>
+                                <td> $employerEtfContri </td>
+                            </tr>
+                            <tr>
+                                <th>Total Company Contribution</th>
+                                <td> $$totComContribution </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Add the output div before the button -->
-            <div id="output" style="display: none;"></div>
+            </div>
 
             <button type="button" class="nextBtn" onclick="printSlip('output')">
                 <span class="btnText">Download</span>

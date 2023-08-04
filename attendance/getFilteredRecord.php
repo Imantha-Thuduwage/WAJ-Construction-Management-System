@@ -17,9 +17,6 @@ if (!empty($empId)) {
 if (!empty($attendDate)) {
     $where .= "attendance_date = '$attendDate' AND ";
 }
-if (!empty($attendType)) {
-    $where .= "attend_type = '$attendType' AND ";
-}
 if (!empty($where)) {
     $where = substr($where, 0, -5); // Remove the extra "AND" and whitespace
     $where = "WHERE $where";

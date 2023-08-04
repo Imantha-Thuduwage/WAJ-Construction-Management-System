@@ -115,19 +115,19 @@ echo '<script>const projects = ' . $completed . ';</script>';
     <div class="row justify-content-start gx-5">
       <div class="col-sm">
         <div class="row row-cols-2 row-cols-lg-1 justify-content-between">
-          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Income in This Month (Rs)</h5>
               <h4><?= $TotalIncome ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/pettyCash.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Expensive for Projects This Month (Rs)</h5>
               <h4><?= $TotalExpensive ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Employees</h5>
               <h4><?= $totalEmployees ?></h4>
@@ -138,7 +138,7 @@ echo '<script>const projects = ' . $completed . ';</script>';
     </div>
     <div class="row justify-content-start gx-5">
       <div class="col-6 mx-auto">
-        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
           <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
             <div class="p-1 border border-0" style="width: 100%;">
               <canvas id="lineChartIncome"></canvas>
@@ -147,7 +147,7 @@ echo '<script>const projects = ' . $completed . ';</script>';
         </div>
       </div>
       <div class="col-6 mx-auto">
-        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/pettyCash.php'">
           <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
             <div class="p-1 border border-0" style="width: 100%;">
               <canvas id="lineChartExpensive"></canvas>
@@ -169,56 +169,6 @@ echo '<script>const projects = ' . $completed . ';</script>';
           </div>
         </div>
       </div>
-      <!-- <div class="col-7">
-        <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
-          <div class="col-sm border" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
-            <h4 for="project_name" class="my-4">Projects where work is completed but payments are not completed</h4>
-            <div class="table-responsive">
-              <?php
-              // Get Today Date to Filter Overdue Tasks
-              $thismonth = date("m");
-
-              $sql = "SELECT COUNT(DISTINCT project_id) AS completed_projects_count
-              -- Why we getting current_status like this because if we get status = 4, this will give if one task is done all project is done
-              FROM tbl_schedule_task WHERE current_status <> 1 AND current_status <> 2 AND current_status <> 3 AND current_status <> 5";;
-
-              // Calling to the Connection
-              $db = dbConn();
-
-              // Get Result
-              $result = $db->query($sql);
-              ?>
-              <table class="table table-sm custom-shadow-red">
-                <thead class="shadow-lg">
-                  <tr>
-                    <th scope="col">Task ID</th>
-                    <th scope="col">Project ID</th>
-                    <th scope="col">Task Name</th>
-                    <th scope="col">Ending Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-
-                  ?>
-                      <tr class="shadow-lg">
-                        <td class="align-middle"><?= $row['task_id']; ?></td>
-                        <td class="align-middle"><?= $row['project_id']; ?></td>
-                        <td class="align-middle"><?= $row['task_name']; ?></td>
-                        <td class="align-middle"><?= $row['ending_date']; ?></td>
-                      </tr>
-                  <?php
-                    }
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 

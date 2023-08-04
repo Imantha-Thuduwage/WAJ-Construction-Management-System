@@ -128,7 +128,7 @@ if ($result) {
               <h4><?= $completedCount ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Employees Count</h5>
               <h4><?= $totalEmployees ?></h4>
@@ -154,7 +154,7 @@ if ($result) {
       <div class="col-7 pt-3">
         <h5 for="project_name" class="mb-2">Monthly Employee Growth of Company</h5>
         <div class="col mx-auto">
-          <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
               <div class="p-1 border border-0" style="width: 100%;">
                 <canvas id="lineChart"></canvas>

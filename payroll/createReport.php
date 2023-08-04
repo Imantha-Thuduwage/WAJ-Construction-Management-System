@@ -8,6 +8,10 @@ $errors = array();
 
 // This function uses array keys as variable names and values as variable values
 $month = $_POST['month'];
+$monthBefore = $month;
+$month = explode("-", $month);
+$month = $month[1];
+$month = ltrim($month, "0");
 
 // Required Fields Validation
 if (empty($month)) {
@@ -53,7 +57,7 @@ if (!empty($errors)) {
 
             // Query to retrieve attendance count
             $attendanceSql = "SELECT COUNT(attendance_id) AS attendance_count FROM tbl_attendance WHERE employee_id = '$employeeId' 
-            AND MONTH(attendance_date) = '$month' AND attend_type = 'full day'";
+            AND MONTH(attendance_date) = '$month' AND attend_type IN ('full day', 'half day')";
             $attendanceResult = $db->query($attendanceSql);
             if ($attendanceResult->num_rows > 0) {
                 while ($row = $attendanceResult->fetch_assoc()) {
@@ -86,33 +90,35 @@ if (!empty($errors)) {
             $totalContribution = ($employerEpfContri + $employerEtfContri);
 
             // Perform the necessary calculations to determine the monthly salary and net salary
-            if ($attendanceCount > 20) {
-                $monthlySalary = ($basicSalary + $companyAllowance);
-                $totalDeduction = ($totalAdvance + $employeeEpfContri);
-                $netSalary = $monthlySalary - $totalDeduction;
-            } else {
-                $noPayDays = 20 - $attendanceCount;
-                $monthlySalary = $basicSalary - (($basicSalary / 30) * $noPayDays);
-                $totalDeduction = ($totalAdvance + $employeeEpfContri);
-                $netSalary = $monthlySalary - $totalDeduction;
-            }
-            $epfsql2 = "INSERT INTO tbl_epf
+            if ($attendanceCount > 0) {
+                if ($attendanceCount > 20) {
+                    $monthlySalary = ($basicSalary + $companyAllowance);
+                    $totalDeduction = ($totalAdvance + $employeeEpfContri);
+                    $netSalary = $monthlySalary - $totalDeduction;
+                } else {
+                    $noPayDays = 20 - $attendanceCount;
+                    $monthlySalary = $basicSalary - (($basicSalary / 30) * $noPayDays);
+                    $totalDeduction = ($totalAdvance + $employeeEpfContri);
+                    $netSalary = $monthlySalary - $totalDeduction;
+                }
+                $epfsql2 = "INSERT INTO tbl_epf
                 (`employee_id`, `employee_contribution`, `employer_contribution`, `total_contribution`, `month`, `add_user`, `add_date`) 
-                VALUES ('$employeeId', '$employeeEpfContri', '$employerEpfContri', '$totalContribution', '$month-01', '$addUser', '$addDate')";
-            $db = dbConn();
-            $db->query($epfsql2);
+                VALUES ('$employeeId', '$employeeEpfContri', '$employerEpfContri', '$totalContribution', '$monthBefore-01', '$addUser', '$addDate')";
+                $db = dbConn();
+                $db->query($epfsql2);
 
-            // in month attribute we use -01 to get full date
-            $payrollsq2 = "INSERT INTO tbl_payroll
+                // in month attribute we use -01 to get full date
+                $payrollsq2 = "INSERT INTO tbl_payroll
                 (`employee_id`, `employee_name`, `month`, `attendance_count`, `basic_salary`, `company_allowance`, `monthly_salary`
                 , `total_advance`, `emp_epf_contribution`, `total_deduction`, `net_salary`, `employer_epf_contri`
                 , `employer_etf_contri`, `total_comp_contri`, `add_user`, `add_date`) 
-                VALUES ('$employeeId', '$employeeName', '$month-01', '$attendanceCount', '$basicSalary', '$companyAllowance', '$monthlySalary'
+                VALUES ('$employeeId', '$employeeName', '$monthBefore-01', '$attendanceCount', '$basicSalary', '$companyAllowance', '$monthlySalary'
                 , '$totalAdvance', '$employeeEpfContri', '$totalDeduction', '$netSalary', '$employerEpfContri', '$employerEtfContri'
                 , '$totalContribution', '$addUser', '$addDate')";
 
-            $db = dbConn();
-            $db->query($payrollsq2);
+                $db = dbConn();
+                $db->query($payrollsq2);
+            }
         }
     }
 

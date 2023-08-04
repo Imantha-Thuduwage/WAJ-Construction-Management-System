@@ -79,12 +79,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>profitLossRep/profitLossRep.php">
-                <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
-                Profit/Loss Report
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="<?= SYSTEM_PATH ?>attendanceReport/attendanceReport.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
                 Attendance Report

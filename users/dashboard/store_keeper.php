@@ -90,19 +90,19 @@ while ($row = $result->fetch_assoc()) {
     <div class="row justify-content-start gx-5">
       <div class="col-sm">
         <div class="row row-cols-2 row-cols-lg-1 justify-content-between">
-          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>tools/tool.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Tools We Have</h5>
               <h4><?= $TotalTools ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>machines/machine.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Machines We Have</h5>
               <h4><?= $TotalMachines ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+          <div class="col-4 card shadow m-3 custom-shadow">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Maintenance We Did</h5>
               <h4><?= $totalMaintenance ?></h4>
@@ -113,7 +113,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
     <div class="row justify-content-start gx-5">
       <div class="col-6 mx-auto">
-        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>tools/tool.php'">
           <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
             <div class="p-1 border border-0" style="width: 100%;">
               <canvas id="lineChartTools"></canvas>
@@ -122,7 +122,7 @@ while ($row = $result->fetch_assoc()) {
         </div>
       </div>
       <div class="col-6 mx-auto">
-        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>schedules/schedule.php'">
+        <div class="card id-section text-center mb-3" onclick="document.location='<?= SYSTEM_PATH; ?>machines/machine.php'">
           <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
             <div class="p-1 border border-0" style="width: 100%;">
               <canvas id="lineChartMachines"></canvas>
@@ -132,7 +132,7 @@ while ($row = $result->fetch_assoc()) {
       </div>
     </div>
     <div class="row justify-content-start gx-5">
-          <div class="col-6" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-6" style="height: 345px; overflow: auto;">
             <h4 class="my-4">Tool Maintenance We Did This Month</h4>
             <div class="table-responsive">
               <?php
@@ -175,7 +175,7 @@ while ($row = $result->fetch_assoc()) {
               </table>
             </div>
           </div>
-          <div class="col-6" style="height: 345px; overflow: auto;" onclick="document.location='<?= SYSTEM_PATH; ?>projects/project.php'">
+          <div class="col-6" style="height: 345px; overflow: auto;">
             <h4 class="my-4">Machine Maintenance We Did This Month</h4>
             <div class="table-responsive">
               <?php

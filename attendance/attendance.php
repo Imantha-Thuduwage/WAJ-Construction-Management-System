@@ -84,28 +84,6 @@
                                     <input class="bg-body" id="attendDate" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="attendDate" value="">
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="input-field">
-                                    <label>Attend Type</label>
-                                    <select class="bg-body" id="attendType" name="attendType">
-                                        <option value="" selected disabled hidden>Select Attend Type/option>
-
-                                            <?php
-                                            // Retrieve data from MySQL database
-                                            $sql = "SELECT `attend_type` FROM tbl_attendance";
-                                            $db = dbConn();
-                                            $result = $db->query($sql);
-
-                                            // Display options in dropdown list
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo "<option value='" . $row['attend_type'] . "'>" . $row['attend_type'] . "</option>";
-                                                }
-                                            }
-                                            ?>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <button type="button" id="btn-filter" class="btn btn-primary">Apply Filter</button>
                     </form>
@@ -170,7 +148,7 @@
         $('#btn-filter').click(function() {
             $.ajax({
                 type: 'POST',
-                url: 'getFilteredRecords.php',
+                url: 'getFilteredRecord.php',
                 method: 'POST',
                 data: $('#filter-form').serialize(),
                 success: function(response) {

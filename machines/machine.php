@@ -228,11 +228,6 @@
 <?php include '../footer.php'; ?>
 
 <script>
-    // Function to delete selected Record From the Project Table
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
-    }
-
     $(document).ready(function() {
         // AJAX request to get all records initially
         $.ajax({
@@ -264,4 +259,26 @@
             });
         });
     });
+
+    // Function to delete selected Record 
+    function confirmDelete(machineId) {
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Record',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and machineId is defined, proceed with the deletion by navigating to the link
+                if (machineId) {
+                    window.location.href = 'deleteMachine.php?machine_id=' + machineId;
+                }
+            }
+        });
+    }
 </script>

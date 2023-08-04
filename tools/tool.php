@@ -19,7 +19,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 570px !important;
+            padding-right: 670px !important;
         }
     </style>
 
@@ -158,11 +158,6 @@
 <?php include '../footer.php'; ?>
 
 <script>
-    // Function to delete selected Record From the Project Table
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
-    }
-
     $(document).ready(function() {
         // AJAX request to get all records initially
         $.ajax({
@@ -194,4 +189,26 @@
             });
         });
     });
+
+    // Function to delete selected Record From the employee Table
+    function confirmDelete(ToolId) {
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Record',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and ToolId is defined, proceed with the deletion by navigating to the link
+                if (ToolId) {
+                    window.location.href = 'deleteTool.php?tool_id=' + ToolId;
+                }
+            }
+        });
+    }
 </script>

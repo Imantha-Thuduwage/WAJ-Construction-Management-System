@@ -3,17 +3,17 @@ session_start();
 
 include '../function.php';
 
-if (isset($_GET['payment_id'])) {
-    $paymentId = $_GET['payment_id'];
+if (isset($_GET['petty_id'])) {
+    $pettyId = $_GET['petty_id'];
 
     // Perform the deletion operation based on the record ID
-    deleteRecord($paymentId);
+    deleteRecord($pettyId);
 }
 // Function to delete the record from the database
 function deleteRecord($recordId)
 {
     // Delete the record from the database
-    $sql = "DELETE FROM tbl_payment WHERE payment_id = $recordId";
+    $sql = "DELETE FROM tbl_petty_cash WHERE petty_id = $recordId";
     $db = dbConn();
     if ($db->query($sql)) {
         echo "Form submitted successfully";
@@ -22,6 +22,6 @@ function deleteRecord($recordId)
     }
 
     // Redirect back to the previous page
-    header("Location: payment.php");
+    header("Location: pettyCash.php");
     exit();
 }

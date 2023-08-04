@@ -15,7 +15,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 600px !important;
+            padding-right: 700px !important;
         }
     </style>
 

@@ -48,7 +48,7 @@ if ($result->num_rows > 0) {
             </td>
             <td>
                 <button type="button" class="btn btn-outline-info btn-sm">
-                    <a href='deletePayment.php?payment_id=<?= $row['payment_id']; ?>' onclick='return confirmDelete()'>
+                    <a href='#' onclick="confirmDelete('<?= $row['petty_id']; ?>')">
                         <img src="<?= SYSTEM_PATH; ?>assets/icons/delete.png">
                     </a>
                 </button>

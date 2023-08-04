@@ -61,9 +61,9 @@
 
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" href="<?= SYSTEM_PATH ?>reportPortal/reportPortal.php">
+              <a class="nav-link" href="<?= SYSTEM_PATH ?>employeeReport/employeeRep.php">
                 <img src="<?= SYSTEM_PATH; ?>assets/icons/report.png" class="me-2">
-                Get My Report
+                Employee Report
               </a>
             </li>
           </ul>

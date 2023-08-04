@@ -32,7 +32,7 @@ if ($result) {
 }
 
 // SQL Query for Get Count of All Maintenance
-$sql = "SELECT COUNT(t_maintenance_id) AS total_t_maintenance FROM tbl_tool_maintenance";
+$sql = "SELECT COUNT(maintenance_id) AS total_t_maintenance FROM tbl_tool_maintenance";
 $db = dbConn();
 $result = $db->query($sql);
 
@@ -40,7 +40,7 @@ if ($result) {
   $row = $result->fetch_assoc();
   $totalToolMaintenance = $row['total_t_maintenance'];
 }
-$sql = "SELECT COUNT(m_maintenance_id) AS total_m_maintenance FROM tbl_machine_maintenance";
+$sql = "SELECT COUNT(maintenance_id) AS total_m_maintenance FROM tbl_machine_maintenance";
 $db = dbConn();
 $result = $db->query($sql);
 
@@ -139,7 +139,7 @@ while ($row = $result->fetch_assoc()) {
               // Get Today Date to Filter Overdue Tasks
               $thismonth = date("m");
 
-              $sql = "SELECT t_maintenance_id, tool_id, maintenance_date
+              $sql = "SELECT maintenance_id, tool_id, maintenance_date
               FROM tbl_tool_maintenance WHERE MONTH(maintenance_date) = $thismonth";
 
               // Calling to the Connection
@@ -163,7 +163,7 @@ while ($row = $result->fetch_assoc()) {
 
                   ?>
                       <tr class="shadow-lg">
-                        <td class="align-middle"><?= $row['t_maintenance_id']; ?></td>
+                        <td class="align-middle"><?= $row['maintenance_id']; ?></td>
                         <td class="align-middle"><?= $row['tool_id']; ?></td>
                         <td class="align-middle"><?= $row['maintenance_date']; ?></td>
                       </tr>
@@ -182,7 +182,7 @@ while ($row = $result->fetch_assoc()) {
               // Get Today Date to Filter Overdue Tasks
               $thismonth = date("m");
 
-              $sql = "SELECT m_maintenance_id, machine_id, maintenance_date
+              $sql = "SELECT maintenance_id, machine_id, maintenance_date
               FROM tbl_machine_maintenance WHERE MONTH(maintenance_date) = $thismonth";
 
               // Calling to the Connection
@@ -206,7 +206,7 @@ while ($row = $result->fetch_assoc()) {
 
                   ?>
                       <tr class="shadow-lg">
-                        <td class="align-middle"><?= $row['m_maintenance_id']; ?></td>
+                        <td class="align-middle"><?= $row['maintenance_id']; ?></td>
                         <td class="align-middle"><?= $row['machine_id']; ?></td>
                         <td class="align-middle"><?= $row['maintenance_date']; ?></td>
                       </tr>

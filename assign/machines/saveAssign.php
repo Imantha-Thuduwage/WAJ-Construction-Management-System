@@ -34,7 +34,7 @@ else if (empty($errors)) {
 }
 
 // Check Validation is Completed
-else if (empty($_SESSION['status'])) {
+if (empty($_SESSION['status'])) {
     // Retrieving values for fields that are not in the form
     $addUser = $_SESSION['userid'];
     $addDate = date('y-m-d');

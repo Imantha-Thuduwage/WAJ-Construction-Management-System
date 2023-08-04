@@ -118,7 +118,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row row-cols-2 row-cols-lg-1">
                                 <div class="col-6">
                                     <div class="input-field">

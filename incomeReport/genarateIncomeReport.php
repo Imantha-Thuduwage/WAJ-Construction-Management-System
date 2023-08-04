@@ -22,15 +22,11 @@ if (!empty($where)) {
     $where = "WHERE $where";
 }
 
-$sql = "SELECT p.project_id, project_name, start_date, end_date, total_cost, 
+$sql = "SELECT p.project_id, project_name, `start_date`, end_date, total_cost, 
 SUM(payed_amount) AS total_income 
 FROM tbl_project p
 LEFT JOIN tbl_payment py ON p.project_id = py.project_id $where";
 $db = dbConn();
-$result = $db->query($sql);
-
-
-// Execute the SQL query
 $result = $db->query($sql);
 
 ?>

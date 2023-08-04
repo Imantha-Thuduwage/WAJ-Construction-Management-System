@@ -25,8 +25,7 @@ if (!empty($where)) {
 $sql = "SELECT p.project_id, project_name, start_date, end_date, total_cost, 
 SUM(payed_amount) AS total_income 
 FROM tbl_project p
-LEFT JOIN tbl_payment py ON p.project_id = py.project_id $where 
-GROUP BY p.project_id";
+LEFT JOIN tbl_payment py ON p.project_id = py.project_id $where";
 $db = dbConn();
 $result = $db->query($sql);
 
@@ -44,8 +43,8 @@ if ($result->num_rows > 0) {
             <td class="align-middle"><?= $row['project_name']; ?></td>
             <td class="align-middle"><?= $row['start_date']; ?></td>
             <td class="align-middle"><?= $row['end_date']; ?></td>
-            <td class="align-middle"><?= $row['total_cost']; ?></td>
-            <td class="align-middle"><?= $row['total_income']; ?></td>
+            <td class="align-middle"><?= number_format($row['total_cost'], 2); ?></td>
+            <td class="align-middle"><?= number_format($row['total_income'], 2); ?></td>
         </tr>
         <?php
         $totalIncome += $row['total_income']; // Accumulate the total income

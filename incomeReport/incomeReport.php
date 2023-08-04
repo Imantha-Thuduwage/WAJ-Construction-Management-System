@@ -10,7 +10,7 @@
     <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form" id="payroll-form" action="createReport.php">
+            <form method="post" class="form" id="income-form" action="createReport.php">
                 <div class="container field p-0">
                     <div class="row justify-content-center gx-5">
                         <div class="col-sm-6">
@@ -83,11 +83,6 @@
             </div>
         </div>
     </div>
-    <div id="output"></div>
-    <button class="nextBtn" type="button" onclick="printSlip('output')">
-        <span class="btnText">Print</span>
-        <i class="uil uil-navigator"></i>
-    </button>
 </main>
 
 <script>
@@ -97,31 +92,17 @@
             type: 'POST',
             url: 'genarateIncomeReport.php',
             method: 'POST',
-            data: $('#filter-form').serialize(),
+            data: $('#income-form').serialize(),
             success: function(response) {
-                // Close the modal
-                $('#filterModal').modal('hide');
 
                 // Showing data inside HTML Table
                 $('#table-body').html(response);
 
                 // Clear Modal FormData
-                $("#filter-form")[0].reset();
+                $("#income-form")[0].reset();
             }
         });
     });
-</script>
-</script>
-
-<!-- Function for print paysheet as PDF -->
-<script>
-    function printSlip(divId) {
-        var printContents = document.getElementById(divId).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
 </script>
 
 <?php include '../footer.php'; ?>

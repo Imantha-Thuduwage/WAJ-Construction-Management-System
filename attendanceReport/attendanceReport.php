@@ -10,7 +10,7 @@
     <div class="card shadow" id="form-card">
         <div class="card-body">
 
-            <form method="post" class="form" id="payroll-form">
+            <form method="post" class="form" id="filter-form">
                 <div class="container field p-0">
                     <div class="row justify-content-start gx-5">
                         <div class="col-4">
@@ -21,14 +21,14 @@
 
                                     <?php
                                     // Retrieve data from MySQL database
-                                    $sql = "SELECT project_id FROM tbl_project";
+                                    $sql = "SELECT employee_id FROM tbl_employee";
                                     $db = dbConn();
                                     $result = $db->query($sql);
 
                                     // Display options in dropdown list
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='" . $row['project_id'] . "'>" . $row['project_id'] . "</option>";
+                                            echo "<option value='" . $row['employee_id'] . "'>" . $row['employee_id'] . "</option>";
                                         }
                                     }
                                     ?>

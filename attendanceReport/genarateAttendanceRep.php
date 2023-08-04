@@ -8,8 +8,8 @@ extract($_POST);
 
 $where = "";
 
-if (!empty($proId)) {
-    $where .= "project_id = '$proId' AND ";
+if (!empty($empId)) {
+    $where .= "e.employee_id = '$empId' AND ";
 }
 if (!empty($attendanceType)) {
     $where .= "attend_type = '$attendanceType' AND ";
@@ -22,10 +22,9 @@ if (!empty($where)) {
     $where = "WHERE $where";
 }
 
-$sql = "SELECT e.employee_id, first_name, nic_number, attendance_date, attend_type
-FROM tbl_employee e
-LEFT JOIN tbl_attendance a ON e.employee_id = a.employee_id $where 
-GROUP BY e.employee_id";
+echo $sql = "SELECT e.employee_id, first_name, nic_number, attendance_date, attend_type
+FROM tbl_employee e 
+LEFT JOIN tbl_attendance a ON e.employee_id = a.employee_id $where";
 $db = dbConn();
 $result = $db->query($sql);
 

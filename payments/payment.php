@@ -19,7 +19,7 @@
 
     <style>
         #form-header>h4 {
-            padding-right: 500px !important;
+            padding-right: 600px !important;
         }
     </style>
 
@@ -82,21 +82,21 @@
                                 <div class="input-field">
                                     <label for="payed_method">Payed Method</label>
                                     <select class="bg-body" id="payedMethod" name="payedMethod">
-                                        <option value="" selected disabled hidden>Select Payed Method/option>
+                                        <option value="" selected disabled hidden>Select Payed Method</option>
 
-                                            <?php
-                                            // Retrieve data from MySQL database
-                                            $sql = "SELECT `payed_method` FROM tbl_payment";
-                                            $db = dbConn();
-                                            $result = $db->query($sql);
+                                        <?php
+                                        // Retrieve data from MySQL database
+                                        $sql = "SELECT `payed_method` FROM tbl_payment";
+                                        $db = dbConn();
+                                        $result = $db->query($sql);
 
-                                            // Display options in dropdown list
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo "<option value='" . $row['payed_method'] . "'>" . $row['payed_method'] . "</option>";
-                                                }
+                                        // Display options in dropdown list
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . $row['payed_method'] . "'>" . $row['payed_method'] . "</option>";
                                             }
-                                            ?>
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                 </table>
             </div>
         </div>
-    <div>
+        <div>
 </main>
 
 <?php include '../footer.php'; ?>
@@ -210,4 +210,26 @@
             });
         });
     });
+
+    // Function to delete selected Record 
+    function confirmDelete(paymentId) {
+
+        // Use SweetAlert2 to show a confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You Are Going to Delete Your Record',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms and paymentId is defined, proceed with the deletion by navigating to the link
+                if (paymentId) {
+                    window.location.href = 'deletePayment.php?payment_id=' + paymentId;
+                }
+            }
+        });
+    }
 </script>

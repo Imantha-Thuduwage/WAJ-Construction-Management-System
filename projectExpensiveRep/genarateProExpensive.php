@@ -9,24 +9,20 @@ extract($_POST);
 $where = "";
 
 if (!empty($proId)) {
-    $where .= "project_id = '$proId' AND ";
+    $where .= "p.project_id = '$proId' AND ";
 }
 if (!empty($startDate)) {
     $where .= "start_date = '$startDate' AND ";
-}
-if (!empty($endDate)) {
-    $where .= "end_date = '$endDate' AND ";
 }
 if (!empty($where)) {
     $where = substr($where, 0, -5); // Remove the extra "AND" and whitespace
     $where = "WHERE $where";
 }
 
-$sql = "SELECT p.project_id, project_name, start_date, end_date, total_cost, payed_date,
+$sql = "SELECT p.project_id, project_name, `start_date`, end_date, total_cost, payed_date,
 SUM(payed_amount) AS total_expensive
 FROM tbl_project p
-LEFT JOIN tbl_petty_cash pc ON p.project_id = pc.project_id $where 
-GROUP BY p.project_id";
+LEFT JOIN tbl_petty_cash pc ON p.project_id = pc.project_id $where";
 $db = dbConn();
 $result = $db->query($sql);
 
@@ -44,9 +40,9 @@ if ($result->num_rows > 0) {
             <td class="align-middle"><?= $row['project_name']; ?></td>
             <td class="align-middle"><?= $row['start_date']; ?></td>
             <td class="align-middle"><?= $row['end_date']; ?></td>
-            <td class="align-middle"><?= $row['total_cost']; ?></td>
+            <td class="align-middle"><?= number_format($row['total_cost'], 2); ?></td>
             <td class="align-middle"><?= $row['payed_date']; ?></td>
-            <td class="align-middle"><?= $row['total_expensive']; ?></td>
+            <td class="align-middle"><?= number_format($row['total_expensive'], 2); ?></td>
         </tr>
         <?php
         $totalExpensive += $row['total_expensive']; // Accumulate the total income

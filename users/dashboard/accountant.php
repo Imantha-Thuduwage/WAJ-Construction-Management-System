@@ -33,6 +33,17 @@ if ($result) {
   $TotalExpensive = $row['total_petty_cash'];
 }
 
+// SQL Query for Get Total Expensive in this Month
+$sql = "SELECT SUM(`payed_amount`) AS total_petty_cash FROM tbl_petty_cash
+WHERE YEAR(payed_date) = '$currentYear' AND MONTH(payed_date) = '$thismonth'";
+$db = dbConn();
+$result = $db->query($sql);
+
+if ($result) {
+  $row = $result->fetch_assoc();
+  $TotalPettyCash = $row['total_petty_cash'];
+}
+
 // SQL Query for Get Count All Employees
 $sql = "SELECT COUNT(employee_id) AS total_employees
 FROM tbl_employee ";
@@ -78,7 +89,6 @@ while ($row = $result->fetch_assoc()) {
   $TotalExpensiveCh[$row['month']] = $row['total_expensive'];
 }
 
-
 // SQL Query for get data to showing completed project using Chart
 // SQL Query for Get Count of All Completed Projects
 $sql = "SELECT COUNT(DISTINCT project_id) AS completed_projects_count
@@ -115,19 +125,25 @@ echo '<script>const projects = ' . $completed . ';</script>';
     <div class="row justify-content-start gx-5">
       <div class="col-sm">
         <div class="row row-cols-2 row-cols-lg-1 justify-content-between">
-          <div class="col-3 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
+          <div class="col-3 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>payments/payment.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Income in This Month (Rs)</h5>
               <h4><?= $TotalIncome ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/pettyCash.php'">
+          <div class="col-3 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/pettyCash.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Expensive for Projects This Month (Rs)</h5>
               <h4><?= $TotalExpensive ?></h4>
             </div>
           </div>
-          <div class="col-4 card shadow m-3 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
+          <div class="col-3 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>pettyCash/pettyCash.php'">
+            <div class="card-body">
+              <h5 for="project_name" class="mb-2">Total Petty Cash for Projects This Month (Rs)</h5>
+              <h4><?= $TotalPettyCash ?></h4>
+            </div>
+          </div>
+          <div class="col-2 card shadow m-2 custom-shadow" onclick="document.location='<?= SYSTEM_PATH; ?>employees/employee.php'">
             <div class="card-body">
               <h5 for="project_name" class="mb-2">Total Employees</h5>
               <h4><?= $totalEmployees ?></h4>
@@ -277,7 +293,7 @@ echo '<script>const projects = ' . $completed . ';</script>';
       data: {
         labels: months,
         datasets: [{
-          label: "Total Income for Month",
+          label: "Total expensive for Month",
           data: expensiveData,
           borderColor: "rgb(75, 192, 192)",
           fill: false

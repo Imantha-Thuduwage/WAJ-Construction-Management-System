@@ -1,4 +1,5 @@
 <?php
+// session is a way to store and persist data across multiple page requests for a single user
 session_start();
 
 include '../function.php';
@@ -56,7 +57,7 @@ include '../function.php';
                                 $sql = "SELECT u.`user_id`,u.`user_name`,u.`password`,u.`first_name`,u.`last_name`,r.`role_id`,r.`user_role` 
                                 FROM tbl_user AS u INNER JOIN tbl_user_role AS r ON u.`role_id` = r.`role_id` WHERE user_name='$user_name' AND `password`='$password'";
 
-                                // Passing Mmy SQL qurey in to inbuild query function
+                                // Passing My SQL qurey in to inbuild query function
                                 $result = $db->query($sql);
 
                                 if ($result->num_rows <= 0) {

@@ -133,7 +133,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
     <div class="row justify-content-start gx-5">
           <div class="col-6" style="height: 345px; overflow: auto;">
-            <h4 class="my-4">Tool Maintenance We Did This Month</h4>
+            <h4 class="my-4">Tool Maintenance We Did Last Month</h4>
             <div class="table-responsive">
               <?php
               // Get Today Date to Filter Overdue Tasks
@@ -176,7 +176,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
           </div>
           <div class="col-6" style="height: 345px; overflow: auto;">
-            <h4 class="my-4">Machine Maintenance We Did This Month</h4>
+            <h4 class="my-4">Machine Maintenance We Did Last Month</h4>
             <div class="table-responsive">
               <?php
               // Get Today Date to Filter Overdue Tasks

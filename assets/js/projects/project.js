@@ -65,11 +65,13 @@ function enableAsphaltDetails(answer) {
 // JQuery Function function for submitting data using AJAX
 $(document).ready(function () {
   $("#submit").click(function (event) {
+    // Prevent the default behavior of the link (navigating to the href)
     event.preventDefault();
 
     // Remove Border Styles from Data Filled Input Fields
     $(".bg-body").removeClass("error");
 
+    // Serialize the form data into a URL-encoded string
     var data = $("#project-form").serialize();
 
     // Submit form data to PHP script using AJAX

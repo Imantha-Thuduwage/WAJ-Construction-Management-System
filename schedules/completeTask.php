@@ -34,7 +34,7 @@ if (empty($labourCount)) {
 
 // Advanced Validation 
 else if (!empty($taskName)) {
-    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName'";
+    $sql = "SELECT * FROM tbl_schedule_task WHERE task_name = '$taskName' AND schedule_id = '$scheduleId'";
     $db = dbConn();
     $result = $db->query($sql);
 
